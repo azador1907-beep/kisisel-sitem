@@ -4,19 +4,17 @@ import Navbar from './components/Navbar'
 import About from './components/About'
 import Contact from './components/Contact'
 import Products from './components/Products'
+import KabinTasarim from './components/KabinTasarim' // İSİM GÜNCELLENDİ
 
 function App() {
   const [showWelcome, setShowWelcome] = useState(false)
 
   useEffect(() => {
-    // Tarayıcı hafızasına bak: Daha önce girildi mi?
     const hasVisited = sessionStorage.getItem('hasVisited')
 
     if (!hasVisited) {
-      // İlk giriş: Hoş geldiniz ekranını göster
       setShowWelcome(true)
       
-      // 2 saniye sonra ekranı kapat ve "girildi" işaretini kaydet
       const timer = setTimeout(() => {
         setShowWelcome(false)
         sessionStorage.setItem('hasVisited', 'true')
@@ -61,6 +59,8 @@ function App() {
             <Route path="/hakkimizda" element={<About />} />
             <Route path="/iletisim" element={<Contact />} />
             <Route path="/urunler" element={<Products />} />
+            {/* ROTA GÜNCELLENDİ */}
+            <Route path="/kabin-tasarla" element={<KabinTasarim />} />
           </Routes>
         </main>
       </div>

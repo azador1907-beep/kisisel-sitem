@@ -7,9 +7,15 @@ function Navbar() {
       </div>
 
       {/* Menü Linkleri */}
-      <div className="flex gap-8 font-medium text-slate-700">
+      <div className="flex gap-8 font-medium text-slate-700 items-center">
         <a href="/" className="hover:text-blue-600 transition-colors">Ana Sayfa</a>
         <a href="/urunler" className="hover:text-blue-600 transition-colors">Ürünler</a>
+        
+        {/* YENİ EKLENEN KABİN TASARLA LİNKİ - Dikkat çekmesi için renklendirildi */}
+        <a href="/kabin-tasarla" className="text-orange-500 hover:text-orange-600 font-bold transition-colors">
+          Kabin Tasarla
+        </a>
+        
         <a href="/hakkimizda" className="hover:text-blue-600 transition-colors">Hakkımızda</a>
         <a href="/iletisim" className="hover:text-blue-600 transition-colors">İletişim</a>
       </div>

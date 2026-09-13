@@ -1,6 +1,6 @@
 import { useState, Suspense, useEffect, useMemo, useRef, useTransition, useDeferredValue, createContext, useContext } from 'react';
 import * as THREE from 'three';
-import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
+import { RectAreaLightUniformsLib } from 'three/addons/lights/RectAreaLightUniformsLib.js';
 import { Canvas, useThree } from '@react-three/fiber';
 import { OrbitControls, useTexture, Html } from '@react-three/drei';
 import { Layers3, ScanLine, LampCeiling, Grid2X2, RotateCcw, Undo2, Redo2, MousePointer2, Check, ArrowRight, Link2, Unlink2, Expand, ChevronDown, ImageDown, FileDown } from 'lucide-react';
@@ -9,6 +9,7 @@ import ekaMaterials from '../data/ekaMaterials.json';
 import { CEILING_COLORS, ceilingColor, composeCeiling } from './ceilingDesign';
 const ekaById = Object.fromEntries(ekaMaterials.map(item => [item.id, item]));
 const MetalEnvironment = createContext(null);
+RectAreaLightUniformsLib.init();
 const W = 1.72;
 const H = 2.38;
 const D = 1.78;
@@ -153,10 +154,26 @@ function MetalBox({ position, size, color }) {
 function CabinEnvironment({ children }) {
   const gl = useThree(state => state.gl);
   const environment = useMemo(() => {
-    const room = new RoomEnvironment();
+    // Reflect the proportions of a cabin, rather than a photographic studio box.
+    const room = new THREE.Scene();
+    room.background = new THREE.Color('#52565a');
+    const addSurface = (width, height, position, rotation, color, intensity = 1) => {
+      const mesh = new THREE.Mesh(new THREE.PlaneGeometry(width, height),
+        new THREE.MeshBasicMaterial({ color: new THREE.Color(color).multiplyScalar(intensity), side: THREE.DoubleSide }));
+      mesh.position.set(...position); mesh.rotation.set(...rotation); room.add(mesh);
+    };
+    addSurface(W, H, [0, 0, -D / 2], [0, 0, 0], '#8e9294');
+    for (const side of [-1, 1]) {
+      addSurface(D, H, [side * W / 2, 0, 0], [0, Math.PI / 2, 0], '#85898b');
+      addSurface(.035, D * .9, [side * W * .31, H / 2 - .005, 0], [Math.PI / 2, 0, 0], '#fff1da', 5);
+    }
+    addSurface(W, D, [0, -H / 2, 0], [Math.PI / 2, 0, 0], '#343435');
+    addSurface(W, D, [0, H / 2 + .01, 0], [Math.PI / 2, 0, 0], '#a3a09a');
+    addSurface(W * .55, D * .5, [0, H / 2, 0], [Math.PI / 2, 0, 0], '#fff4e4', 2);
+    addSurface(W * 3, H * 3, [0, 0, D * 2], [0, 0, 0], '#999c9e');
     const generator = new THREE.PMREMGenerator(gl);
     const target = generator.fromScene(room, 0.04);
-    room.dispose(); generator.dispose();
+    room.traverse(object => { object.geometry?.dispose(); object.material?.dispose(); }); generator.dispose();
     return target;
   }, [gl]);
   useEffect(() => () => environment.dispose(), [environment]);
@@ -189,8 +206,8 @@ function BrushedSteelMaterial({ path }) {
   }, []);
   useEffect(() => () => brushing.dispose(), [brushing]);
   const color = path.includes('paslanmaz-5.') ? '#326780' : path.includes('paslanmaz-6.') ? '#7196ab' : '#a2aaae';
-  return <meshPhysicalMaterial color={color} metalness={0.55} roughness={0.32}
-    envMap={environment} envMapIntensity={0.85} normalMap={brushing} normalScale={[0.16, 0.16]}
+  return <meshPhysicalMaterial color={color} metalness={0.58} roughness={0.36}
+    envMap={environment} envMapIntensity={1.15} normalMap={brushing} normalScale={[0.24, 0.24]}
     anisotropy={0.55} anisotropyRotation={Math.PI / 2} side={THREE.DoubleSide} />;
 }
 
@@ -205,7 +222,7 @@ function WallPanel({ path, width, x, selected, onSelect }) {
         <planeGeometry args={[width, H]} />
         {choice.normalMap ? <EkaSteelMaterial choice={choice} map={map} width={width} /> : !laminate ? <BrushedSteelMaterial path={path} /> : <meshStandardMaterial map={map} color={choice.color} metalness={0} roughness={0.72} envMapIntensity={0} side={THREE.DoubleSide} />}
       </mesh>
-      <MetalBox position={[width / 2 - 0.003, 0, 0.008]} size={[0.006, H, 0.01]} />
+      <mesh position={[width / 2 - 0.0015, 0, 0.002]}><planeGeometry args={[0.003, H]} /><meshBasicMaterial color="#42484b" /></mesh>
       {selected && <group userData={{ exportHidden: true }}>
         {[-1, 1].map(side => <mesh key={side} position={[side * (width / 2 - 0.009), 0, 0.017]}>
           <planeGeometry args={[0.009, H - 0.025]} /><meshBasicMaterial color="#ef784d" depthWrite={false} />
@@ -224,8 +241,8 @@ function WallShadow({ length, height = H }) {
     const context = canvas.getContext('2d');
     for (const horizontal of [true, false]) {
       const gradient = context.createLinearGradient(0, 0, horizontal ? 256 : 0, horizontal ? 0 : 256);
-      gradient.addColorStop(0, 'rgba(17,26,34,.40)'); gradient.addColorStop(.13, 'rgba(17,26,34,0)');
-      gradient.addColorStop(.87, 'rgba(17,26,34,0)'); gradient.addColorStop(1, 'rgba(17,26,34,.40)');
+      gradient.addColorStop(0, 'rgba(17,26,34,.22)'); gradient.addColorStop(.035, 'rgba(17,26,34,0)');
+      gradient.addColorStop(.965, 'rgba(17,26,34,0)'); gradient.addColorStop(1, 'rgba(17,26,34,.22)');
       context.fillStyle = gradient; context.fillRect(0, 0, 256, 256);
     }
     const texture = new THREE.CanvasTexture(canvas); texture.colorSpace = THREE.SRGBColorSpace; return texture;
@@ -276,6 +293,7 @@ function SceneCapture({ config, captureRef }) {
 }
 
 function KendiAsansorumuz({ config: requestedConfig, selection, onSelect, editing, onMirrorSelect, captureRef }) {
+  const environment = useContext(MetalEnvironment);
   const config = useDeferredValue(requestedConfig);
   const roofChoice = materialSource(config.ceiling);
   const floorChoice = materialSource(config.floor);
@@ -298,12 +316,12 @@ function KendiAsansorumuz({ config: requestedConfig, selection, onSelect, editin
     <SceneCapture config={config} captureRef={captureRef} />
     <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, -H / 2, 0]}>
       <planeGeometry args={[W, D]} />
-      <meshStandardMaterial map={floorMap} color={floorChoice.color} roughness={0.68} metalness={0} envMapIntensity={0} side={THREE.DoubleSide} />
+      <meshPhysicalMaterial map={floorMap} color={floorChoice.color} roughness={0.3} metalness={0} clearcoat={0.35} clearcoatRoughness={0.24} envMap={environment} envMapIntensity={0.4} side={THREE.DoubleSide} />
     </mesh>
     <group rotation={[-Math.PI / 2, 0, 0]} position={[0, -H / 2 + .002, 0]}><WallShadow length={W} height={D} /></group>
     <mesh rotation={[Math.PI / 2, 0, 0]} position={[0, H / 2, 0]}>
       <planeGeometry args={[W, D]} />
-      <meshStandardMaterial map={roofMap} color="#ffffff" emissive="#ffffff" emissiveMap={roofMap} emissiveIntensity={0.38} roughness={0.66} metalness={0} envMapIntensity={0} side={THREE.DoubleSide} />
+      <meshBasicMaterial map={roofMap} color="#ffffff" side={THREE.DoubleSide} />
     </mesh>
     {[-1, 1].map(side => {
       const wall = side === -1 ? 'left' : 'right';
@@ -590,8 +608,9 @@ export default function KabinTasarim() {
               <Canvas camera={{ position: [0, 0.02, 5.25], fov: 34 }} dpr={[1.5, 2]} gl={{ antialias: true, preserveDrawingBuffer: true }}
                 onCreated={({ gl }) => { gl.toneMapping = THREE.ACESFilmicToneMapping; gl.toneMappingExposure = 1; gl.outputColorSpace = THREE.SRGBColorSpace; }}>
                 <color attach="background" args={['#e9edef']} />
-                <hemisphereLight args={['#ffffff', '#d6dde2', 2.2]} />
-                <directionalLight position={[2.5, 3, 4]} intensity={1.5} /><directionalLight position={[-3, 0.5, 3]} intensity={0.85} />
+                <hemisphereLight args={['#fff8f0', '#bcc5cc', 2.2]} />
+                <rectAreaLight position={[0, H / 2 - .015, 0]} rotation={[Math.PI / 2, 0, 0]} width={1.1} height={1.45} intensity={4} color="#fff1df" />
+                <rectAreaLight position={[0, .5, 2.4]} width={3.5} height={3} intensity={2.7} color="#edf2f7" />
                 <Suspense fallback={<Html center><span className="text-xs whitespace-nowrap bg-white p-3 rounded-lg shadow-sm">Kabin hazırlanıyor…</span></Html>}>
                   <CabinEnvironment><KendiAsansorumuz config={config} selection={selection} onSelect={choosePanel} editing={section === 'walls'} onMirrorSelect={() => setSection('mirror')} captureRef={captureRef} /></CabinEnvironment>
                 </Suspense>

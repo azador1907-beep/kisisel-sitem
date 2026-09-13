@@ -1,0 +1,685 @@
+[
+  {
+    "id": "eka-paslanmaz-dokulu_sat_paslanmaz_1",
+    "type": "paslanmaz",
+    "name": "EKA-3D01",
+    "group": "Dokulu Satine Paslanmaz",
+    "url": "/kabin-materyalleri/eka/LzNkL3RleHR1cmVzL0NhbV9ELmpwZw.jpg",
+    "thumbnail": "/kabin-materyalleri/eka/L2Fzc2V0cy9pbWcvZG9rdWx1X3Bhc2xhbm1hei9kbV8wMTNkMDEuanBn.jpg",
+    "color": "#a3a3a3",
+    "source": "https://kabindizayn.emlakkonutasansor.com/3d/textures/Cam_D.jpg",
+    "normalMap": "/kabin-materyalleri/eka/LzNkL3RleHR1cmVzL0RNLTAxM0QwMS5qcGc.jpg",
+    "roughnessMap": "/kabin-materyalleri/eka/LzNkL3RleHR1cmVzL0RNLTAxM0QwMV9yLmpwZw.jpg",
+    "metalness": 0.88,
+    "roughness": 0.18,
+    "normalStrength": 0.65,
+    "normalRepeat": [
+      1,
+      1
+    ],
+    "roughnessRepeat": [
+      1,
+      1
+    ]
+  },
+  {
+    "id": "eka-paslanmaz-dokulu_sat_paslanmaz_2",
+    "type": "paslanmaz",
+    "name": "EKA-3D02",
+    "group": "Dokulu Satine Paslanmaz",
+    "url": "/kabin-materyalleri/eka/LzNkL3RleHR1cmVzL0NhbV9ELmpwZw.jpg",
+    "thumbnail": "/kabin-materyalleri/eka/L2Fzc2V0cy9pbWcvZG9rdWx1X3Bhc2xhbm1hei9kbXBfNXdsLmpwZw.jpg",
+    "color": "#a3a3a3",
+    "source": "https://kabindizayn.emlakkonutasansor.com/3d/textures/Cam_D.jpg",
+    "normalMap": "/kabin-materyalleri/eka/LzNkL3RleHR1cmVzLzVfd2xfbm9ybS5qcGc.jpg",
+    "roughnessMap": "/kabin-materyalleri/eka/LzNkL3RleHR1cmVzLzVfd2xfcm91Zy5qcGc.jpg",
+    "metalness": 0.88,
+    "roughness": 0.95,
+    "normalStrength": 0.65,
+    "normalRepeat": [
+      23,
+      23
+    ],
+    "roughnessRepeat": [
+      23,
+      23
+    ]
+  },
+  {
+    "id": "eka-paslanmaz-dokulu_sat_paslanmaz_3",
+    "type": "paslanmaz",
+    "name": "EKA-3D03",
+    "group": "Dokulu Satine Paslanmaz",
+    "url": "/kabin-materyalleri/eka/LzNkL3RleHR1cmVzL0NhbV9ELmpwZw.jpg",
+    "thumbnail": "/kabin-materyalleri/eka/L2Fzc2V0cy9pbWcvZG9rdWx1X3Bhc2xhbm1hei9kbXBfa2FyZV9zcXVhcmUuanBn.jpg",
+    "color": "#a3a3a3",
+    "source": "https://kabindizayn.emlakkonutasansor.com/3d/textures/Cam_D.jpg",
+    "normalMap": "/kabin-materyalleri/eka/LzNkL3RleHR1cmVzL0VrYV8zRDAzX04uanBn.jpg",
+    "roughnessMap": "/kabin-materyalleri/eka/LzNkL3RleHR1cmVzL0VrYV8zRDAzX1IuanBn.jpg",
+    "metalness": 0.88,
+    "roughness": 0.95,
+    "normalStrength": 0.65,
+    "normalRepeat": [
+      45,
+      45
+    ],
+    "roughnessRepeat": [
+      45,
+      45
+    ]
+  },
+  {
+    "id": "eka-paslanmaz-dokulu_sat_paslanmaz_4",
+    "type": "paslanmaz",
+    "name": "EKA-3D04",
+    "group": "Dokulu Satine Paslanmaz",
+    "url": "/kabin-materyalleri/eka/LzNkL3RleHR1cmVzL0NhbV9ELmpwZw.jpg",
+    "thumbnail": "/kabin-materyalleri/eka/L2Fzc2V0cy9pbWcvZG9rdWx1X3Bhc2xhbm1hei9kbGNfMDFfM2QwNi5qcGc.jpg",
+    "color": "#a3a3a3",
+    "source": "https://kabindizayn.emlakkonutasansor.com/3d/textures/Cam_D.jpg",
+    "normalMap": "/kabin-materyalleri/eka/LzNkL3RleHR1cmVzL2RsY18xMF8zZDA2X25vcm1hbC5qcGc.jpg",
+    "roughnessMap": "/kabin-materyalleri/eka/LzNkL3RleHR1cmVzL2RsY18xMF8zZDA2X3JvdWcuanBn.jpg",
+    "metalness": 0.88,
+    "roughness": 0.95,
+    "normalStrength": 0.65,
+    "normalRepeat": [
+      20,
+      20
+    ],
+    "roughnessRepeat": [
+      20,
+      20
+    ]
+  },
+  {
+    "id": "eka-paslanmaz-desenli_sat_paslanmaz_1",
+    "type": "paslanmaz",
+    "name": "EKA-DSP01",
+    "group": "Desenli Satine Paslanmaz",
+    "url": "/kabin-materyalleri/eka/LzNkL3RleHR1cmVzL0NhbV9ELmpwZw.jpg",
+    "thumbnail": "/kabin-materyalleri/eka/L2Fzc2V0cy9pbWcvZGVzZW5saV9wYXNsYW5tYXoveWhfZ2UyNy5qcGc.jpg",
+    "color": "#a3a3a3",
+    "source": "https://kabindizayn.emlakkonutasansor.com/3d/textures/Cam_D.jpg",
+    "normalMap": "/kabin-materyalleri/eka/LzNkL3RleHR1cmVzL0FZTkFMQVIvTk9STUFMX0FZTkEvTk9STUFMX0FZTkFfTm9ybWFsLmpwZw.jpg",
+    "roughnessMap": "/kabin-materyalleri/eka/LzNkL3RleHR1cmVzL3loX2dlMjdfcm91Zy5qcGc.jpg",
+    "metalness": 0.88,
+    "roughness": 0.95,
+    "normalStrength": 0.65,
+    "normalRepeat": [
+      1,
+      1
+    ],
+    "roughnessRepeat": [
+      20,
+      20
+    ]
+  },
+  {
+    "id": "eka-paslanmaz-desenli_sat_paslanmaz_2",
+    "type": "paslanmaz",
+    "name": "EKA-DSP02",
+    "group": "Desenli Satine Paslanmaz",
+    "url": "/kabin-materyalleri/eka/LzNkL3RleHR1cmVzL0NhbV9ELmpwZw.jpg",
+    "thumbnail": "/kabin-materyalleri/eka/L2Fzc2V0cy9pbWcvZGVzZW5saV9wYXNsYW5tYXovZG1fc2JfMDMuanBn.jpg",
+    "color": "#a3a3a3",
+    "source": "https://kabindizayn.emlakkonutasansor.com/3d/textures/Cam_D.jpg",
+    "normalMap": "/kabin-materyalleri/eka/LzNkL3RleHR1cmVzL0FZTkFMQVIvTk9STUFMX0FZTkEvTk9STUFMX0FZTkFfTm9ybWFsLmpwZw.jpg",
+    "roughnessMap": "/kabin-materyalleri/eka/LzNkL3RleHR1cmVzL2RtX3NiXzAzX3JvdWcuanBn.jpg",
+    "metalness": 0.88,
+    "roughness": 0.95,
+    "normalStrength": 0.65,
+    "normalRepeat": [
+      1,
+      1
+    ],
+    "roughnessRepeat": [
+      10,
+      10
+    ]
+  },
+  {
+    "id": "eka-paslanmaz-desenli_sat_paslanmaz_3",
+    "type": "paslanmaz",
+    "name": "EKA-DSP03",
+    "group": "Desenli Satine Paslanmaz",
+    "url": "/kabin-materyalleri/eka/LzNkL3RleHR1cmVzL0NhbV9ELmpwZw.jpg",
+    "thumbnail": "/kabin-materyalleri/eka/L2Fzc2V0cy9pbWcvZGVzZW5saV9wYXNsYW5tYXovZG1fMTUuanBn.jpg",
+    "color": "#a3a3a3",
+    "source": "https://kabindizayn.emlakkonutasansor.com/3d/textures/Cam_D.jpg",
+    "normalMap": "/kabin-materyalleri/eka/LzNkL3RleHR1cmVzL0FZTkFMQVIvTk9STUFMX0FZTkEvTk9STUFMX0FZTkFfTm9ybWFsLmpwZw.jpg",
+    "roughnessMap": "/kabin-materyalleri/eka/LzNkL3RleHR1cmVzL0RNLTE1X3JvdWcuanBn.jpg",
+    "metalness": 0.88,
+    "roughness": 0.95,
+    "normalStrength": 0.65,
+    "normalRepeat": [
+      1,
+      1
+    ],
+    "roughnessRepeat": [
+      12,
+      12
+    ]
+  },
+  {
+    "id": "eka-paslanmaz-desenli_sat_paslanmaz_4",
+    "type": "paslanmaz",
+    "name": "EKA-DSP04",
+    "group": "Desenli Satine Paslanmaz",
+    "url": "/kabin-materyalleri/eka/LzNkL3RleHR1cmVzL0NhbV9ELmpwZw.jpg",
+    "thumbnail": "/kabin-materyalleri/eka/L2Fzc2V0cy9pbWcvZGVzZW5saV9wYXNsYW5tYXovZGdfMjYuanBn.jpg",
+    "color": "#a3a3a3",
+    "source": "https://kabindizayn.emlakkonutasansor.com/3d/textures/Cam_D.jpg",
+    "normalMap": "/kabin-materyalleri/eka/LzNkL3RleHR1cmVzL0FZTkFMQVIvTk9STUFMX0FZTkEvTk9STUFMX0FZTkFfTm9ybWFsLmpwZw.jpg",
+    "roughnessMap": "/kabin-materyalleri/eka/LzNkL3RleHR1cmVzL2RnXzI2X3JvdWcuanBn.jpg",
+    "metalness": 0.88,
+    "roughness": 0.95,
+    "normalStrength": 0.65,
+    "normalRepeat": [
+      1,
+      1
+    ],
+    "roughnessRepeat": [
+      20,
+      20
+    ]
+  },
+  {
+    "id": "eka-paslanmaz-sat_paslanmaz_1",
+    "type": "paslanmaz",
+    "name": "Satine Paslanmaz",
+    "group": "Satine Paslanmaz",
+    "url": "/kabin-materyalleri/eka/LzNkL3RleHR1cmVzL1NhdGluZV9ELmpwZw.jpg",
+    "thumbnail": "/kabin-materyalleri/eka/L2Fzc2V0cy9pbWcvc2F0aW5lL3NhdGluZS5qcGc.jpg",
+    "color": "#a3a3a3",
+    "source": "https://kabindizayn.emlakkonutasansor.com/3d/textures/Satine_D.jpg",
+    "normalMap": "/kabin-materyalleri/eka/LzNkL3RleHR1cmVzL1NhdGluZV9OLmpwZw.jpg",
+    "roughnessMap": "/kabin-materyalleri/eka/LzNkL3RleHR1cmVzL0F5bmFfU2F0aW5lX0dlY2lzX1IuanBn.jpg",
+    "metalness": 0.88,
+    "roughness": 0.92,
+    "normalStrength": 0.15,
+    "normalRepeat": [
+      2.8,
+      0.8
+    ],
+    "roughnessRepeat": [
+      1,
+      1
+    ]
+  },
+  {
+    "id": "eka-paslanmaz-sat_paslanmaz_2",
+    "type": "paslanmaz",
+    "name": "Ayna Satine Paslanmaz",
+    "group": "Ayna Satine Paslanmaz",
+    "url": "/kabin-materyalleri/eka/LzNkL3RleHR1cmVzL0F5bmFfU2F0aW5lX1IuanBn.jpg",
+    "thumbnail": "/kabin-materyalleri/eka/L2Fzc2V0cy9pbWcvYXluYV9zYXRpbmUvYXluYV9zYXRpbmUuanBn.jpg",
+    "color": "#a3a3a3",
+    "source": "https://kabindizayn.emlakkonutasansor.com/3d/textures/Ayna_Satine_R.jpg",
+    "normalMap": "/kabin-materyalleri/eka/LzNkL3RleHR1cmVzL0F5bmFfU2F0aW5lX04uanBn.jpg",
+    "roughnessMap": "/kabin-materyalleri/eka/LzNkL3RleHR1cmVzL0F5bmFfU2F0aW5lX0dlY2lzX1IuanBn.jpg",
+    "metalness": 0.88,
+    "roughness": 0.4,
+    "normalStrength": 0.1,
+    "normalRepeat": [
+      2.8,
+      0.8
+    ],
+    "roughnessRepeat": [
+      0.1,
+      0.1
+    ]
+  },
+  {
+    "id": "eka-paslanmaz-sat_paslanmaz_3",
+    "type": "paslanmaz",
+    "name": "Süper Ayna Satine Paslanmaz",
+    "group": "Süper Ayna Satine Paslanmaz",
+    "url": "/kabin-materyalleri/eka/LzNkL3RleHR1cmVzL0F5bmFfU2F0aW5lX1IuanBn.jpg",
+    "thumbnail": "/kabin-materyalleri/eka/L2Fzc2V0cy9pbWcvc3VwZXJfYXluYV9zYXRpbmUvc3VwZXJfYXluYS5qcGc.jpg",
+    "color": "#a3a3a3",
+    "source": "https://kabindizayn.emlakkonutasansor.com/3d/textures/Ayna_Satine_R.jpg",
+    "normalMap": "/kabin-materyalleri/eka/LzNkL3RleHR1cmVzL0F5bmFfU2F0aW5lX04uanBn.jpg",
+    "roughnessMap": "/kabin-materyalleri/eka/LzNkL3RleHR1cmVzL1N1cGVyX0F5bmFfUi5wbmc.png",
+    "metalness": 0.88,
+    "roughness": 0.4,
+    "normalStrength": 0.001,
+    "normalRepeat": [
+      1,
+      1
+    ],
+    "roughnessRepeat": [
+      0.0004,
+      0.0004
+    ]
+  },
+  {
+    "id": "eka-paslanmaz-gold_sat_paslanmaz_1",
+    "type": "paslanmaz",
+    "name": "Altın Satine Paslanmaz",
+    "group": "Satine Paslanmaz",
+    "url": "/kabin-materyalleri/eka/LzNkL3RleHR1cmVzL1NhdGluZV9ELmpwZw.jpg",
+    "thumbnail": "/kabin-materyalleri/eka/L2Fzc2V0cy9pbWcvc2F0aW5lL2FsdMSxbl9zYXRpbmUuanBn.jpg",
+    "color": "#c8b273",
+    "source": "https://kabindizayn.emlakkonutasansor.com/3d/textures/Satine_D.jpg",
+    "normalMap": "/kabin-materyalleri/eka/LzNkL3RleHR1cmVzL1NhdGluZV9OLmpwZw.jpg",
+    "roughnessMap": "/kabin-materyalleri/eka/LzNkL3RleHR1cmVzL0F5bmFfU2F0aW5lX0dlY2lzX1IuanBn.jpg",
+    "metalness": 0.88,
+    "roughness": 0.92,
+    "normalStrength": 0.15,
+    "normalRepeat": [
+      2.8,
+      0.8
+    ],
+    "roughnessRepeat": [
+      1.5,
+      0.4
+    ]
+  },
+  {
+    "id": "eka-paslanmaz-gold_sat_paslanmaz_2",
+    "type": "paslanmaz",
+    "name": "Altın Ayna Satine Paslanmaz",
+    "group": "Ayna Satine Paslanmaz",
+    "url": "/kabin-materyalleri/eka/LzNkL3RleHR1cmVzL0F5bmFfU2F0aW5lX1IuanBn.jpg",
+    "thumbnail": "/kabin-materyalleri/eka/L2Fzc2V0cy9pbWcvYXluYV9zYXRpbmUvYWx0xLFuX2F5bmFfc2F0aW5lLmpwZw.jpg",
+    "color": "#c8b273",
+    "source": "https://kabindizayn.emlakkonutasansor.com/3d/textures/Ayna_Satine_R.jpg",
+    "normalMap": "/kabin-materyalleri/eka/LzNkL3RleHR1cmVzL0F5bmFfU2F0aW5lX04uanBn.jpg",
+    "roughnessMap": "/kabin-materyalleri/eka/LzNkL3RleHR1cmVzL0F5bmFfU2F0aW5lX0dlY2lzX1IuanBn.jpg",
+    "metalness": 0.88,
+    "roughness": 0.4,
+    "normalStrength": 0.1,
+    "normalRepeat": [
+      2.8,
+      0.8
+    ],
+    "roughnessRepeat": [
+      0.1,
+      0.1
+    ]
+  },
+  {
+    "id": "eka-paslanmaz-gold_sat_paslanmaz_3",
+    "type": "paslanmaz",
+    "name": "Altın Süper Ayna Satine Paslanmaz",
+    "group": "Süper Ayna Satine Paslanmaz",
+    "url": "/kabin-materyalleri/eka/LzNkL3RleHR1cmVzL0F5bmFfU2F0aW5lX1IuanBn.jpg",
+    "thumbnail": "/kabin-materyalleri/eka/L2Fzc2V0cy9pbWcvc3VwZXJfYXluYV9zYXRpbmUvYWx0xLFuX3N1cGVyX2F5bmEuanBn.jpg",
+    "color": "#c8b273",
+    "source": "https://kabindizayn.emlakkonutasansor.com/3d/textures/Ayna_Satine_R.jpg",
+    "normalMap": "/kabin-materyalleri/eka/LzNkL3RleHR1cmVzL0F5bmFfU2F0aW5lX04uanBn.jpg",
+    "roughnessMap": "/kabin-materyalleri/eka/LzNkL3RleHR1cmVzL1N1cGVyX0F5bmFfUi5wbmc.png",
+    "metalness": 0.88,
+    "roughness": 0.4,
+    "normalStrength": 0.001,
+    "normalRepeat": [
+      1,
+      1
+    ],
+    "roughnessRepeat": [
+      0.0004,
+      0.0004
+    ]
+  },
+  {
+    "id": "eka-paslanmaz-bronze_sat_paslanmaz_1",
+    "type": "paslanmaz",
+    "name": "Bronz Satine Paslanmaz",
+    "group": "Satine Paslanmaz",
+    "url": "/kabin-materyalleri/eka/LzNkL3RleHR1cmVzL1NhdGluZV9ELmpwZw.jpg",
+    "thumbnail": "/kabin-materyalleri/eka/L2Fzc2V0cy9pbWcvc2F0aW5lL2Jyb256X3NhdGluZS5qcGc.jpg",
+    "color": "#9c836f",
+    "source": "https://kabindizayn.emlakkonutasansor.com/3d/textures/Satine_D.jpg",
+    "normalMap": "/kabin-materyalleri/eka/LzNkL3RleHR1cmVzL1NhdGluZV9OLmpwZw.jpg",
+    "roughnessMap": "/kabin-materyalleri/eka/LzNkL3RleHR1cmVzL0F5bmFfU2F0aW5lX0dlY2lzX1IuanBn.jpg",
+    "metalness": 0.88,
+    "roughness": 0.92,
+    "normalStrength": 0.15,
+    "normalRepeat": [
+      2.8,
+      0.8
+    ],
+    "roughnessRepeat": [
+      1.5,
+      0.4
+    ]
+  },
+  {
+    "id": "eka-paslanmaz-bronze_sat_paslanmaz_2",
+    "type": "paslanmaz",
+    "name": "Bronz Ayna Satine Paslanmaz",
+    "group": "Ayna Satine Paslanmaz",
+    "url": "/kabin-materyalleri/eka/LzNkL3RleHR1cmVzL0F5bmFfU2F0aW5lX1IuanBn.jpg",
+    "thumbnail": "/kabin-materyalleri/eka/L2Fzc2V0cy9pbWcvYXluYV9zYXRpbmUvYnJvbnpfYXluYV9zYWl0bmUuanBn.jpg",
+    "color": "#9c836f",
+    "source": "https://kabindizayn.emlakkonutasansor.com/3d/textures/Ayna_Satine_R.jpg",
+    "normalMap": "/kabin-materyalleri/eka/LzNkL3RleHR1cmVzL0F5bmFfU2F0aW5lX04uanBn.jpg",
+    "roughnessMap": "/kabin-materyalleri/eka/LzNkL3RleHR1cmVzL0F5bmFfU2F0aW5lX0dlY2lzX1IuanBn.jpg",
+    "metalness": 0.88,
+    "roughness": 0.4,
+    "normalStrength": 0.1,
+    "normalRepeat": [
+      2.8,
+      0.8
+    ],
+    "roughnessRepeat": [
+      0.1,
+      0.1
+    ]
+  },
+  {
+    "id": "eka-paslanmaz-bronze_sat_paslanmaz_3",
+    "type": "paslanmaz",
+    "name": "Bronz Süper Ayna Satine Paslanmaz",
+    "group": "Süper Ayna Satine Paslanmaz",
+    "url": "/kabin-materyalleri/eka/LzNkL3RleHR1cmVzL0F5bmFfU2F0aW5lX1IuanBn.jpg",
+    "thumbnail": "/kabin-materyalleri/eka/L2Fzc2V0cy9pbWcvc3VwZXJfYXluYV9zYXRpbmUvYnJvbnpfc3VwZXJfYXluYS5qcGc.jpg",
+    "color": "#b78974",
+    "source": "https://kabindizayn.emlakkonutasansor.com/3d/textures/Ayna_Satine_R.jpg",
+    "normalMap": "/kabin-materyalleri/eka/LzNkL3RleHR1cmVzL0F5bmFfU2F0aW5lX04uanBn.jpg",
+    "roughnessMap": "/kabin-materyalleri/eka/LzNkL3RleHR1cmVzL1N1cGVyX0F5bmFfUi5wbmc.png",
+    "metalness": 0.88,
+    "roughness": 0.4,
+    "normalStrength": 0.001,
+    "normalRepeat": [
+      1,
+      1
+    ],
+    "roughnessRepeat": [
+      0.0004,
+      0.0004
+    ]
+  },
+  {
+    "id": "eka-paslanmaz-champ_sat_paslanmaz_1",
+    "type": "paslanmaz",
+    "name": "Şampanya Satine Paslanmaz",
+    "group": "Satine Paslanmaz",
+    "url": "/kabin-materyalleri/eka/LzNkL3RleHR1cmVzL1NhdGluZV9ELmpwZw.jpg",
+    "thumbnail": "/kabin-materyalleri/eka/L2Fzc2V0cy9pbWcvc2F0aW5lL3NhbXBhbnlhX3NhdGluZS5qcGc.jpg",
+    "color": "#bfa891",
+    "source": "https://kabindizayn.emlakkonutasansor.com/3d/textures/Satine_D.jpg",
+    "normalMap": "/kabin-materyalleri/eka/LzNkL3RleHR1cmVzL1NhdGluZV9OLmpwZw.jpg",
+    "roughnessMap": "/kabin-materyalleri/eka/LzNkL3RleHR1cmVzL0F5bmFfU2F0aW5lX0dlY2lzX1IuanBn.jpg",
+    "metalness": 0.88,
+    "roughness": 0.92,
+    "normalStrength": 0.15,
+    "normalRepeat": [
+      2.8,
+      0.8
+    ],
+    "roughnessRepeat": [
+      1.5,
+      0.4
+    ]
+  },
+  {
+    "id": "eka-paslanmaz-champ_sat_paslanmaz_2",
+    "type": "paslanmaz",
+    "name": "Şampanya Ayna Satine Paslanmaz",
+    "group": "Ayna Satine Paslanmaz",
+    "url": "/kabin-materyalleri/eka/LzNkL3RleHR1cmVzL0F5bmFfU2F0aW5lX1IuanBn.jpg",
+    "thumbnail": "/kabin-materyalleri/eka/L2Fzc2V0cy9pbWcvYXluYV9zYXRpbmUvc2FtcGFueWFfYXluYV9zYXRpbmUuanBn.jpg",
+    "color": "#bfa891",
+    "source": "https://kabindizayn.emlakkonutasansor.com/3d/textures/Ayna_Satine_R.jpg",
+    "normalMap": "/kabin-materyalleri/eka/LzNkL3RleHR1cmVzL0F5bmFfU2F0aW5lX04uanBn.jpg",
+    "roughnessMap": "/kabin-materyalleri/eka/LzNkL3RleHR1cmVzL0F5bmFfU2F0aW5lX0dlY2lzX1IuanBn.jpg",
+    "metalness": 0.88,
+    "roughness": 0.4,
+    "normalStrength": 0.1,
+    "normalRepeat": [
+      2.8,
+      0.8
+    ],
+    "roughnessRepeat": [
+      0.1,
+      0.1
+    ]
+  },
+  {
+    "id": "eka-paslanmaz-champ_sat_paslanmaz_3",
+    "type": "paslanmaz",
+    "name": "Şampanya Süper Ayna Satine Paslanmaz",
+    "group": "Süper Ayna Satine Paslanmaz",
+    "url": "/kabin-materyalleri/eka/LzNkL3RleHR1cmVzL0F5bmFfU2F0aW5lX1IuanBn.jpg",
+    "thumbnail": "/kabin-materyalleri/eka/L2Fzc2V0cy9pbWcvc3VwZXJfYXluYV9zYXRpbmUvc2FtcGFueWFfc3VwZXJfYXluYS5qcGc.jpg",
+    "color": "#ebcaa1",
+    "source": "https://kabindizayn.emlakkonutasansor.com/3d/textures/Ayna_Satine_R.jpg",
+    "normalMap": "/kabin-materyalleri/eka/LzNkL3RleHR1cmVzL0F5bmFfU2F0aW5lX04uanBn.jpg",
+    "roughnessMap": "/kabin-materyalleri/eka/LzNkL3RleHR1cmVzL1N1cGVyX0F5bmFfUi5wbmc.png",
+    "metalness": 0.88,
+    "roughness": 0.4,
+    "normalStrength": 0.001,
+    "normalRepeat": [
+      1,
+      1
+    ],
+    "roughnessRepeat": [
+      0.0004,
+      0.0004
+    ]
+  },
+  {
+    "id": "eka-paslanmaz-black_sat_paslanmaz_1",
+    "type": "paslanmaz",
+    "name": "Siyah Satine Paslanmaz",
+    "group": "Satine Paslanmaz",
+    "url": "/kabin-materyalleri/eka/LzNkL3RleHR1cmVzL1NhdGluZV9ELmpwZw.jpg",
+    "thumbnail": "/kabin-materyalleri/eka/L2Fzc2V0cy9pbWcvc2F0aW5lL3NpeWFoX3NhdGluZS5qcGc.jpg",
+    "color": "#5c5c5c",
+    "source": "https://kabindizayn.emlakkonutasansor.com/3d/textures/Satine_D.jpg",
+    "normalMap": "/kabin-materyalleri/eka/LzNkL3RleHR1cmVzL1NhdGluZV9OLmpwZw.jpg",
+    "roughnessMap": "/kabin-materyalleri/eka/LzNkL3RleHR1cmVzL0F5bmFfU2F0aW5lX0dlY2lzX1IuanBn.jpg",
+    "metalness": 0.88,
+    "roughness": 0.92,
+    "normalStrength": 0.15,
+    "normalRepeat": [
+      2.8,
+      0.8
+    ],
+    "roughnessRepeat": [
+      1.5,
+      0.4
+    ]
+  },
+  {
+    "id": "eka-paslanmaz-black_sat_paslanmaz_2",
+    "type": "paslanmaz",
+    "name": "Siyah Ayna Satine Paslanmaz",
+    "group": "Ayna Satine Paslanmaz",
+    "url": "/kabin-materyalleri/eka/LzNkL3RleHR1cmVzL0F5bmFfU2F0aW5lX1IuanBn.jpg",
+    "thumbnail": "/kabin-materyalleri/eka/L2Fzc2V0cy9pbWcvYXluYV9zYXRpbmUvc2l5YWhfYXluYV9zYWl0bmUuanBn.jpg",
+    "color": "#5c5c5c",
+    "source": "https://kabindizayn.emlakkonutasansor.com/3d/textures/Ayna_Satine_R.jpg",
+    "normalMap": "/kabin-materyalleri/eka/LzNkL3RleHR1cmVzL0F5bmFfU2F0aW5lX04uanBn.jpg",
+    "roughnessMap": "/kabin-materyalleri/eka/LzNkL3RleHR1cmVzL0F5bmFfU2F0aW5lX0dlY2lzX1IuanBn.jpg",
+    "metalness": 0.88,
+    "roughness": 0.4,
+    "normalStrength": 0.1,
+    "normalRepeat": [
+      2.8,
+      0.8
+    ],
+    "roughnessRepeat": [
+      0.1,
+      0.1
+    ]
+  },
+  {
+    "id": "eka-paslanmaz-black_sat_paslanmaz_3",
+    "type": "paslanmaz",
+    "name": "Siyah Süper Ayna Satine Paslanmaz",
+    "group": "Süper Ayna Satine Paslanmaz",
+    "url": "/kabin-materyalleri/eka/LzNkL3RleHR1cmVzL0F5bmFfU2F0aW5lX1IuanBn.jpg",
+    "thumbnail": "/kabin-materyalleri/eka/L2Fzc2V0cy9pbWcvc3VwZXJfYXluYV9zYXRpbmUvc2l5YWhfc3VwZXJfYXluYS5qcGc.jpg",
+    "color": "#737373",
+    "source": "https://kabindizayn.emlakkonutasansor.com/3d/textures/Ayna_Satine_R.jpg",
+    "normalMap": "/kabin-materyalleri/eka/LzNkL3RleHR1cmVzL0F5bmFfU2F0aW5lX04uanBn.jpg",
+    "roughnessMap": "/kabin-materyalleri/eka/LzNkL3RleHR1cmVzL1N1cGVyX0F5bmFfUi5wbmc.png",
+    "metalness": 0.88,
+    "roughness": 0.4,
+    "normalStrength": 0.001,
+    "normalRepeat": [
+      1,
+      1
+    ],
+    "roughnessRepeat": [
+      0.0004,
+      0.0004
+    ]
+  },
+  {
+    "id": "eka-laminant-mdf_1",
+    "type": "laminant",
+    "name": "EKA-LMT01",
+    "group": "MDF",
+    "url": "/kabin-materyalleri/eka/LzNkL3RleHR1cmVzL0VrYV9MbXQwMV9ELmpwZw.jpg",
+    "thumbnail": "/kabin-materyalleri/eka/L2Fzc2V0cy9pbWcvbWRmL25vY2VfbW9zYWNhdG8uanBn.jpg",
+    "color": "#ffffff",
+    "source": "https://kabindizayn.emlakkonutasansor.com/3d/textures/Eka_Lmt01_D.jpg"
+  },
+  {
+    "id": "eka-laminant-mdf_2",
+    "type": "laminant",
+    "name": "EKA-LMT02",
+    "group": "MDF",
+    "url": "/kabin-materyalleri/eka/L2Fzc2V0cy9pbWcvbWRmL3NhYmJpYS5qcGc.jpg",
+    "thumbnail": "/kabin-materyalleri/eka/L2Fzc2V0cy9pbWcvbWRmL3NhYmJpYS5qcGc.jpg",
+    "color": "#ffffff",
+    "source": "https://kabindizayn.emlakkonutasansor.com/assets/img/mdf/sabbia.jpg"
+  },
+  {
+    "id": "eka-laminant-mdf_3",
+    "type": "laminant",
+    "name": "EKA-LMT03",
+    "group": "MDF",
+    "url": "/kabin-materyalleri/eka/LzNkL3RleHR1cmVzL3ZhbmlnaWxpYS5qcGc.jpg",
+    "thumbnail": "/kabin-materyalleri/eka/L2Fzc2V0cy9pbWcvbWRmL3ZhbmlnaWxpYS5qcGc.jpg",
+    "color": "#ffffff",
+    "source": "https://kabindizayn.emlakkonutasansor.com/3d/textures/vanigilia.jpg"
+  },
+  {
+    "id": "eka-laminant-mdf_4",
+    "type": "laminant",
+    "name": "EKA-LMT04",
+    "group": "MDF",
+    "url": "/kabin-materyalleri/eka/LzNkL3RleHR1cmVzL0VrYV9MbXQwNF9ELmpwZw.jpg",
+    "thumbnail": "/kabin-materyalleri/eka/L2Fzc2V0cy9pbWcvbWRmL2NvcHBlci5qcGc.jpg",
+    "color": "#ffffff",
+    "source": "https://kabindizayn.emlakkonutasansor.com/3d/textures/Eka_Lmt04_D.jpg"
+  },
+  {
+    "id": "eka-laminant-mdf_5",
+    "type": "laminant",
+    "name": "EKA-LMT05",
+    "group": "MDF",
+    "url": "/kabin-materyalleri/eka/LzNkL3RleHR1cmVzL0VrYV9MbXQwNV9ELmpwZw.jpg",
+    "thumbnail": "/kabin-materyalleri/eka/L2Fzc2V0cy9pbWcvbWRmL2NvbnV0cnlfb2FrLmpwZw.jpg",
+    "color": "#ffffff",
+    "source": "https://kabindizayn.emlakkonutasansor.com/3d/textures/Eka_Lmt05_D.jpg"
+  },
+  {
+    "id": "eka-laminant-mdf_6",
+    "type": "laminant",
+    "name": "EKA-LMT06",
+    "group": "MDF",
+    "url": "/kabin-materyalleri/eka/LzNkL3RleHR1cmVzL0VrYV9MbXQwNl9ELmpwZw.jpg",
+    "thumbnail": "/kabin-materyalleri/eka/L2Fzc2V0cy9pbWcvbWRmL2ZhbnNpYV9uYXR1cmFsLmpwZw.jpg",
+    "color": "#ffffff",
+    "source": "https://kabindizayn.emlakkonutasansor.com/3d/textures/Eka_Lmt06_D.jpg"
+  },
+  {
+    "id": "eka-laminant-mdf_7",
+    "type": "laminant",
+    "name": "EKA-LMT07",
+    "group": "MDF",
+    "url": "/kabin-materyalleri/eka/LzNkL3RleHR1cmVzL0VrYV9MbXQwN19ELmpwZw.jpg",
+    "thumbnail": "/kabin-materyalleri/eka/L2Fzc2V0cy9pbWcvbWRmL8SxbXBlcm8uanBn.jpg",
+    "color": "#ffffff",
+    "source": "https://kabindizayn.emlakkonutasansor.com/3d/textures/Eka_Lmt07_D.jpg"
+  },
+  {
+    "id": "eka-laminant-mdf_8",
+    "type": "laminant",
+    "name": "EKA-LMT08",
+    "group": "MDF",
+    "url": "/kabin-materyalleri/eka/LzNkL3RleHR1cmVzL0VrYV9MbXRfMDhfRC5qcGc.jpg",
+    "thumbnail": "/kabin-materyalleri/eka/L2Fzc2V0cy9pbWcvbWRmL25lcm8uanBn.jpg",
+    "color": "#ffffff",
+    "source": "https://kabindizayn.emlakkonutasansor.com/3d/textures/Eka_Lmt_08_D.jpg"
+  },
+  {
+    "id": "eka-granit-floor_granit_1",
+    "type": "granit",
+    "name": "Star Galaxy",
+    "group": "Granit",
+    "url": "/kabin-materyalleri/eka/LzNkL3RleHR1cmVzL1pFTUlOL0dSQU5JVC9TVEFSX0dBTEFYWV9HUkFOSVQvU1RBUl9HQUxBWFlfR1JBTklUX0RpZmZ1c2UuanBn.jpg",
+    "thumbnail": "/kabin-materyalleri/eka/L2Fzc2V0cy9pbWcvemVtaW4vc3Rhcl9nYWxheHkuanBn.jpg",
+    "color": "#ffffff",
+    "source": "https://kabindizayn.emlakkonutasansor.com/3d/textures/ZEMIN/GRANIT/STAR_GALAXY_GRANIT/STAR_GALAXY_GRANIT_Diffuse.jpg"
+  },
+  {
+    "id": "eka-granit-floor_granit_2",
+    "type": "granit",
+    "name": "Blue Pearl Gt",
+    "group": "Granit",
+    "url": "/kabin-materyalleri/eka/LzNkL3RleHR1cmVzL1pFTUlOL0dSQU5JVC9CTFVFX1BFQVJMX0dUX0dSQU5JVC9CTFVFX1BFQVJMX0dUX0dSQU5JVF9EaWZmdXNlLmpwZw.jpg",
+    "thumbnail": "/kabin-materyalleri/eka/L2Fzc2V0cy9pbWcvemVtaW4vYmx1ZV9wZWFybF9ndC5qcGc.jpg",
+    "color": "#ffffff",
+    "source": "https://kabindizayn.emlakkonutasansor.com/3d/textures/ZEMIN/GRANIT/BLUE_PEARL_GT_GRANIT/BLUE_PEARL_GT_GRANIT_Diffuse.jpg"
+  },
+  {
+    "id": "eka-granit-floor_granit_3",
+    "type": "granit",
+    "name": "Spice Black",
+    "group": "Granit",
+    "url": "/kabin-materyalleri/eka/LzNkL3RleHR1cmVzL1pFTUlOL0dSQU5JVC9TUElDRV9CTEFDS19HUkFOSVQvU1BJQ0VfQkxBQ0tfR1JBTklUX0RpZmZ1c2UucG5n.png",
+    "thumbnail": "/kabin-materyalleri/eka/L2Fzc2V0cy9pbWcvemVtaW4vc3BpY2VfYmxhY2suanBn.jpg",
+    "color": "#ffffff",
+    "source": "https://kabindizayn.emlakkonutasansor.com/3d/textures/ZEMIN/GRANIT/SPICE_BLACK_GRANIT/SPICE_BLACK_GRANIT_Diffuse.png"
+  },
+  {
+    "id": "eka-tavan-ct1",
+    "type": "tavan",
+    "name": "EKA Line",
+    "group": "EKA Tavan",
+    "url": "/kabin-materyalleri/eka/tavan-line.svg",
+    "thumbnail": "/kabin-materyalleri/eka/L2Fzc2V0cy9pbWcvdGF2YW4vbGluZV9rYXJlZ29yc2VsLmpwZw.jpg",
+    "color": "#ffffff",
+    "source": "https://kabindizayn.emlakkonutasansor.com/assets/img/tavan/line_karegorsel.jpg",
+    "adaptation": "Vector ceiling layout adapted to this cabin geometry"
+  },
+  {
+    "id": "eka-tavan-ct2",
+    "type": "tavan",
+    "name": "EKA Hide",
+    "group": "EKA Tavan",
+    "url": "/kabin-materyalleri/eka/tavan-hide.svg",
+    "thumbnail": "/kabin-materyalleri/eka/L2Fzc2V0cy9pbWcvdGF2YW4vaGlkZV9rYXJlZ29yc2VsLmpwZw.jpg",
+    "color": "#ffffff",
+    "source": "https://kabindizayn.emlakkonutasansor.com/assets/img/tavan/hide_karegorsel.jpg",
+    "adaptation": "Vector ceiling layout adapted to this cabin geometry"
+  },
+  {
+    "id": "eka-tavan-ct3",
+    "type": "tavan",
+    "name": "EKA Pool",
+    "group": "EKA Tavan",
+    "url": "/kabin-materyalleri/eka/tavan-pool.svg",
+    "thumbnail": "/kabin-materyalleri/eka/L2Fzc2V0cy9pbWcvdGF2YW4vcG9vbF9rYXJlLmpwZw.jpg",
+    "color": "#ffffff",
+    "source": "https://kabindizayn.emlakkonutasansor.com/assets/img/tavan/pool_kare.jpg",
+    "adaptation": "Vector ceiling layout adapted to this cabin geometry"
+  },
+  {
+    "id": "eka-tavan-ct4",
+    "type": "tavan",
+    "name": "EKA Spark",
+    "group": "EKA Tavan",
+    "url": "/kabin-materyalleri/eka/tavan-spark.svg",
+    "thumbnail": "/kabin-materyalleri/eka/L2Fzc2V0cy9pbWcvdGF2YW4vc3Bhcmtfa2FyZWdvcnNlbC5qcGc.jpg",
+    "color": "#ffffff",
+    "source": "https://kabindizayn.emlakkonutasansor.com/assets/img/tavan/spark_karegorsel.jpg",
+    "adaptation": "Vector ceiling layout adapted to this cabin geometry"
+  }
+]

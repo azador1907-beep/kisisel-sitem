@@ -1,0 +1,89 @@
+function WallPanel({ path, width, x, selected, onSelect }) {
+  const choice = materialSource(path);
+  const source = useTexture(choice.url);
+  const map = useSurfaceTexture(source, width, H, true);
+  const laminate = path.includes('laminant');
+  return (
+    <group position={[x, 0, 0]}>
+      <mesh onClick={event => { event.stopPropagation(); if (event.delta < 5) onSelect(); }}>
+        <planeGeometry args={[width, H]} />
+        <meshStandardMaterial map={map} color={choice.color} metalness={laminate ? 0 : 0.16} roughness={laminate ? 0.72 : 0.48} side={THREE.DoubleSide} />
+      </mesh>
+      <MetalBox position={[width / 2 - 0.003, 0, 0.008]} size={[0.006, H, 0.01]} />
+      {selected && <group>
+        {[-1, 1].map(side => <mesh key={side} position={[side * (width / 2 - 0.009), 0, 0.017]}>
+          <planeGeometry args={[0.009, H - 0.025]} /><meshBasicMaterial color="#ef784d" depthWrite={false} />
+        </mesh>)}
+        {[-1, 1].map(side => <mesh key={side} position={[0, side * (H / 2 - 0.012), 0.017]}>
+          <planeGeometry args={[width - 0.018, 0.009]} /><meshBasicMaterial color="#ef784d" depthWrite={false} />
+        </mesh>)}
+      </group>}
+    </group>
+  );
+}
+
+function PanelWall({ wall, config, length, position, rotation = [0, 0, 0], selection, onSelect, reverse = false, editing }) {
+  let offset = -length / 2;
+  return <group position={position} rotation={rotation}>
+    {config.widths.map((ratio, index) => {
+      const width = length * ratio / 100;
+      const center = offset + width / 2;
+      offset += width;
+      return <WallPanel key={index} path={config.materials[index]} width={width}
+        x={reverse ? -center : center} selected={editing && selection.wall === wall && selection.index === index}
+        onSelect={() => onSelect({ wall, index })} />;
+    })}
+  </group>;
+}
+
+function KendiAsansorumuz({ config, selection, onSelect, editing, onMirrorSelect }) {
+  const roofChoice = materialSource(config.ceiling);
+  const floorChoice = materialSource(config.floor);
+  const [roof, floor] = useTexture([roofChoice.url, floorChoice.url]);
+  const roofMap = useSurfaceTexture(roof, W, D);
+  const floorMap = useSurfaceTexture(floor, W, D);
+  const panelW = W * config.mirrorWidth / 100;
+  const margin = (W - panelW) / 2;
+  const railY = -0.12;
+  const topH = config.topReflection / 100;
+  const bottomH = config.bottomReflection / 100;
+  const panelTop = H / 2 - topH;
+  const panelBottom = -H / 2 + bottomH;
+  return <group>
+    <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, -H / 2, 0]}>
+      <planeGeometry args={[W, D]} />
+      <meshStandardMaterial map={floorMap} color={floorChoice.color} roughness={0.68} metalness={0} side={THREE.DoubleSide} />
+    </mesh>
+    <mesh rotation={[Math.PI / 2, 0, 0]} position={[0, H / 2, 0]}>
+      <planeGeometry args={[W, D]} />
+      <meshStandardMaterial map={roofMap} color="#ffffff" emissive="#ffffff" emissiveMap={roofMap} emissiveIntensity={0.38} roughness={0.66} metalness={0} side={THREE.DoubleSide} />
+    </mesh>
+    {[-1, 1].map(side => {
+      const wall = side === -1 ? 'left' : 'right';
+      const rear = side === -1 ? 'rearLeft' : 'rearRight';
+      return <group key={side}>
+        <PanelWall wall={wall} config={config.walls[wall]} length={D} position={[side * W / 2, 0, 0]}
+          rotation={[0, -side * Math.PI / 2, 0]} reverse={side === 1} selection={selection} onSelect={onSelect} editing={editing} />
+        <PanelWall wall={rear} config={config.walls[rear]} length={margin} position={[side * (panelW / 2 + margin / 2), 0, -D / 2]}
+          selection={selection} onSelect={onSelect} editing={editing} />
+        {[0.28, -0.63].map(y => <MetalBox key={y} position={[side * (W / 2 - 0.008), y, 0]} size={[0.012, 0.018, D]} />)}
+        <MetalBox position={[side * (W / 2 - 0.009), -H / 2 + 0.035, 0]} size={[0.014, 0.07, D]} />
+        <Rail position={[side * (W / 2 - 0.07), railY, -0.12]} length={D * 0.62} rotation={[Math.PI / 2, 0, 0]} />
+        {[-0.55, 0.31].map(z => <Rail key={z} position={[side * (W / 2 - 0.036), railY, z]} length={0.07} rotation={[0, 0, Math.PI / 2]} />)}
+        <MetalBox position={[side * (W / 2 + 0.015), 0, D / 2]} size={[0.03, H + 0.06, 0.035]} />
+      </group>;
+    })}
+    <group onClick={event => { event.stopPropagation(); if (event.delta < 5) onMirrorSelect(); }}>
+      <SurfaceReflection texture={roofMap} ceiling y={H / 2 - topH / 2} height={topH} width={panelW} />
+      <mesh position={[0, (panelTop + panelBottom) / 2, -D / 2 + 0.014]}>
+        <planeGeometry args={[panelW, panelTop - panelBottom]} /><meshStandardMaterial color="#b9cbd1" roughness={0.8} metalness={0} />
+      </mesh>
+      <SurfaceReflection texture={floorMap} tint={floorChoice.color} ceiling={false} y={-H / 2 + bottomH / 2} height={bottomH} width={panelW} />
+    </group>
+    {[-1, 1].map(side => <MetalBox key={side} position={[side * (panelW / 2 + 0.005), 0, -D / 2 + 0.02]} size={[0.009, H, 0.012]} />)}
+    {[panelTop, panelBottom].map(y => <MetalBox key={y} position={[0, y, -D / 2 + 0.021]} size={[panelW, 0.009, 0.012]} />)}
+    <Rail position={[0, railY, -D / 2 + 0.08]} length={W * 0.7} rotation={[0, 0, Math.PI / 2]} />
+    {[-0.49, 0.49].map(x => <Rail key={x} position={[x, railY, -D / 2 + 0.043]} length={0.075} rotation={[Math.PI / 2, 0, 0]} />)}
+    <MetalBox position={[0, -H / 2 + 0.025, -D / 2 + 0.006]} size={[W, 0.05, 0.012]} />
+    <MetalBox position={[0, H / 2 + 0.015, D / 2]} size={[W + 0.06, 0.03, 0.035]} />
+    <MetalBox position={[0, -H / 2 - 0.012, D / 2]} size={[W + 0.06, 0.024, 0.08]} />

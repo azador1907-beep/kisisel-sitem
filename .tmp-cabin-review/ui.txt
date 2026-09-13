@@ -1,0 +1,210 @@
+function CameraView({ view }) {
+  const controls = useRef();
+  const { camera } = useThree();
+  useEffect(() => {
+    const positions = { front: [0, 0.02, 5.25], left: [1.45, 0.03, 5.1], right: [-1.45, 0.03, 5.1] };
+    camera.position.set(...positions[view.name]);
+    controls.current?.target.set(0, -0.03, 0);
+    controls.current?.update();
+  }, [camera, view]);
+  return <OrbitControls ref={controls} enablePan={false} enableDamping dampingFactor={0.08}
+    minDistance={4.9} maxDistance={6.2} minAzimuthAngle={-0.34} maxAzimuthAngle={0.34}
+    minPolarAngle={Math.PI / 2 - 0.07} maxPolarAngle={Math.PI / 2 + 0.07} target={[0, -0.03, 0]} />;
+}
+
+const swatchStyle = path => {
+  const source = materialSource(path);
+  return { backgroundImage: `url('${source.url}')`, backgroundColor: source.color,
+    backgroundBlendMode: 'multiply', backgroundSize: 'cover', backgroundPosition: 'center' };
+};
+const materialName = path => materialSource(path).name || path.split('/').pop().replace('.png', '').replace('laminant-', 'Laminant ').replace('granit-', 'Granit ').replace('tavan-', 'Tavan ');
+const categories = [
+  { id: 'walls', name: 'Duvarlar', icon: Layers3 }, { id: 'mirror', name: 'Ayna', icon: ScanLine },
+  { id: 'ceiling', name: 'Tavan', icon: LampCeiling }, { id: 'floor', name: 'Zemin', icon: Grid2X2 },
+];
+
+function RangeControl({ label, value, min, max, suffix = '%', onChange, onFinish }) {
+  return <label className="block">
+    <span className="flex justify-between text-sm mb-3"><span className="text-slate-600">{label}</span><strong className="font-semibold text-slate-900 tabular-nums">{value}{suffix}</strong></span>
+    <input className="w-full h-1.5 accent-[#e66b43] cursor-pointer" type="range" aria-label={label}
+      min={min} max={max} step={1} value={value} onChange={event => onChange(Number(event.target.value))}
+      onPointerUp={onFinish} onPointerCancel={onFinish} onKeyUp={onFinish} onBlur={onFinish} />
+    <span className="flex justify-between text-[10px] mt-2 text-slate-400"><span>{min}{suffix}</span><span>{max}{suffix}</span></span>
+  </label>;
+}
+
+function MaterialGrid({ type, count, selected, onSelect }) {
+  return <div className="grid grid-cols-6 sm:grid-cols-7 lg:grid-cols-6 gap-2">
+    {Array.from({ length: count }, (_, i) => {
+      const path = materialPath(type, i + 1);
+      return <button key={path} type="button" title={materialName(path)} aria-label={`${type}-${i + 1}`}
+        aria-pressed={selected === path} onClick={() => onSelect(path)}
+        className={`relative aspect-square rounded-md border transition hover:-translate-y-0.5 focus-visible:outline-2 focus-visible:outline-orange-500 ${selected === path ? 'border-[#e66b43] ring-2 ring-orange-200' : 'border-slate-200'}`}
+        style={swatchStyle(path)}>
+        <span className="absolute bottom-1 left-1 text-[9px] bg-black/40 text-white rounded px-1 leading-4">{String(i + 1).padStart(2, '0')}</span>
+        {selected === path && <span className="absolute top-1 right-1 bg-[#e66b43] text-white p-0.5 rounded-full"><Check size={10} /></span>}
+      </button>;
+    })}
+  </div>;
+}
+
+export default function KabinTasarim() {
+  const [history, setHistory] = useState(() => ({ past: [], present: createCabinConfig(), future: [] }));
+  const config = history.present;
+  const [section, setSection] = useState('walls');
+  const [selection, setSelection] = useState({ wall: 'left', index: 1 });
+  const [family, setFamily] = useState('paslanmaz');
+  const [linked, setLinked] = useState(false);
+  const [view, setView] = useState({ name: 'front', version: 0 });
+  const [pending, startTransition] = useTransition();
+  const gesture = useRef(null);
+  const change = (update, group = null) => {
+    const coalesce = group !== null && gesture.current === group;
+    gesture.current = group;
+    setHistory(old => ({ past: coalesce ? old.past : [...old.past, old.present].slice(-40),
+      present: typeof update === 'function' ? update(old.present) : update, future: [] }));
+  };
+  const finishGesture = () => { gesture.current = null; };
+  const undo = () => {
+    finishGesture();
+    setHistory(old => old.past.length ? { past: old.past.slice(0, -1), present: old.past.at(-1), future: [old.present, ...old.future] } : old);
+  };
+  const redo = () => {
+    finishGesture();
+    setHistory(old => old.future.length ? { past: [...old.past, old.present], present: old.future[0], future: old.future.slice(1) } : old);
+  };
+  const choosePanel = next => {
+    setSelection(next);
+    setSection('walls');
+    setFamily(config.walls[next.wall].materials[next.index].includes('laminant') ? 'laminant' : 'paslanmaz');
+  };
+  const setMaterial = path => startTransition(() => change(old => changeWall(old, selection.wall,
+    wall => ({ ...wall, materials: wall.materials.map((value, index) => index === selection.index ? path : value) }), linked)));
+  const selectedWall = config.walls[selection.wall];
+  const selectedPath = selectedWall.materials[selection.index];
+  const selectedLength = selection.wall.startsWith('rear') ? W * (1 - config.mirrorWidth / 100) / 2 : D;
+  const mm = Math.round(selectedLength * selectedWall.widths[selection.index] * 10);
+  const changedPanels = Object.values(config.walls).reduce((sum, wall) => sum + wall.materials.filter(path => path !== DEFAULT_MATERIAL).length, 0);
+
+  return <div className="bg-[#f5f6f7] min-h-[calc(100vh-80px)] text-slate-800 font-sans px-4 sm:px-7 lg:px-10 pt-7 pb-10">
+    <div className="max-w-[1480px] mx-auto">
+      <header className="flex flex-wrap justify-between items-end gap-4 mb-7">
+        <div><p className="text-[10px] uppercase tracking-[0.28em] text-[#bc674b] font-semibold mb-2">HAS DOOR / TASARIM STÜDYOSU</p>
+          <h1 className="text-2xl sm:text-3xl font-bold tracking-tight">Kendi kabinini oluştur<span className="text-[#e66b43]">.</span></h1>
+          <p className="text-sm text-slate-500 mt-2">Malzemeleri bir araya getir. Her panelde kendi çizgini yansıt.</p>
+        </div>
+        <div className="flex items-center gap-2">
+          <button type="button" onClick={undo} disabled={!history.past.length} aria-label="Geri al" title="Geri al" className="p-2.5 bg-white rounded-lg border border-slate-200 disabled:opacity-30"><Undo2 size={17} /></button>
+          <button type="button" onClick={redo} disabled={!history.future.length} aria-label="Yinele" title="Yinele" className="p-2.5 bg-white rounded-lg border border-slate-200 disabled:opacity-30"><Redo2 size={17} /></button>
+          <button type="button" onClick={() => { change(createCabinConfig()); setView({ name: 'front', version: view.version + 1 }); }} className="flex items-center gap-2 px-3 py-2.5 text-xs bg-white rounded-lg border border-slate-200"><RotateCcw size={15} /> Baştan başla</button>
+        </div>
+      </header>
+      <div className="grid grid-cols-1 lg:grid-cols-[370px_minmax(0,1fr)] xl:grid-cols-[410px_minmax(0,1fr)] gap-5 lg:gap-7 items-start">
+        <aside className="bg-white border border-slate-200 rounded-2xl shadow-sm overflow-hidden order-2 lg:order-1">
+          <nav aria-label="Tasarım kategorileri" className="grid grid-cols-4 border-b border-slate-100 bg-[#fafafa] p-2 gap-1">
+            {categories.map(({ id, name, icon: Icon }) => <button key={id} type="button" onClick={() => setSection(id)} aria-pressed={section === id}
+              className={`flex flex-col items-center gap-2 py-3 text-xs rounded-xl transition ${section === id ? 'bg-white text-[#d7623c] shadow-sm font-semibold' : 'text-slate-500 hover:bg-white'}`}><Icon size={19} strokeWidth={1.6} />{name}</button>)}
+          </nav>
+          <div className="p-5 sm:p-6">
+            {section === 'walls' && <>
+              <div className="flex justify-between items-center mb-4"><h2 className="font-semibold text-base">Duvar & panel seçimi</h2><span className="text-[10px] text-slate-400">01 / 04</span></div>
+              <div className="grid grid-cols-2 gap-2 mb-5">{Object.entries(WALLS).map(([key, name]) => <button type="button" key={key}
+                onClick={() => choosePanel({ wall: key, index: selection.index })} aria-pressed={selection.wall === key}
+                className={`rounded-lg border py-2.5 text-xs transition ${selection.wall === key ? 'border-[#e4a68e] bg-[#fcf1ec] text-[#ac4d2d] font-semibold' : 'border-slate-200 text-slate-500 hover:border-slate-400'}`}>{name}</button>)}</div>
+              <div className="flex justify-between items-center mb-2"><span className="text-xs text-slate-500">{selection.wall.startsWith('rear') ? 'Soldan sağa üç dikey panel' : 'Girişten arkaya üç dikey panel'}</span><span className="text-[10px] uppercase tracking-wider text-slate-400">PANEL SEÇ</span></div>
+              <div className="flex gap-1.5 h-24 mb-3">{selectedWall.materials.map((path, index) => <button type="button" key={index}
+                style={{ ...swatchStyle(path), flex: selectedWall.widths[index] }} onClick={() => choosePanel({ ...selection, index })}
+                aria-label={`Panel ${index + 1}`} aria-pressed={selection.index === index}
+                className={`relative rounded-md border-2 overflow-hidden min-w-0 ${selection.index === index ? 'border-[#e66b43]' : 'border-transparent'}`}>
+                <span className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
+                <span className="absolute bottom-2 inset-x-0 text-white text-[11px] font-medium">{index + 1} · %{selectedWall.widths[index]}</span>
+                {selection.index === index && <Check size={13} className="absolute right-1 top-1 text-white bg-[#e66b43] rounded-full p-0.5" />}
+              </button>)}</div>
+              <p className="text-[11px] text-slate-400 mb-5 flex items-center gap-1.5"><MousePointer2 size={12} /> Kabin üzerinden bir panele de tıklayabilirsin.</p>
+              <RangeControl label="Seçili panel genişliği" min={15} max={70} value={selectedWall.widths[selection.index]}
+                onChange={value => change(old => changeWall(old, selection.wall, wall => ({ ...wall, widths: resizePanels(wall.widths, selection.index, value) }), linked), 'panel-width')}
+                onFinish={finishGesture} />
+              <p className="text-[11px] text-slate-400 mt-2 mb-4">Yaklaşık {mm} mm · Diğer iki panel otomatik dengelenir.</p>
+              <button type="button" onClick={() => setLinked(!linked)} aria-pressed={linked} className={`w-full flex items-center justify-between p-3 rounded-lg border text-xs ${linked ? 'bg-[#fcf1ec] border-orange-200 text-[#ac4d2d]' : 'bg-slate-50 border-slate-100 text-slate-500'}`}>
+                <span className="flex gap-2 items-center">{linked ? <Link2 size={14} /> : <Unlink2 size={14} />} {selection.wall.startsWith('rear') ? 'Aynanın iki yanına aynı uygula' : 'İki yan duvara aynı uygula'}</span>
+                <span className={`w-7 h-4 rounded-full relative ${linked ? 'bg-[#e66b43]' : 'bg-slate-300'}`}><span className={`absolute top-0.5 bg-white w-3 h-3 rounded-full ${linked ? 'right-0.5' : 'left-0.5'}`} /></span>
+              </button>
+              <div className="border-t border-slate-100 mt-5 pt-5">
+                <div className="flex justify-between items-center mb-3"><h3 className="text-sm font-semibold">Panel malzemesi</h3><span className="text-[10px] text-[#c56b4a]">PANEL {selection.index + 1}</span></div>
+                <div className="flex p-1 bg-slate-100 rounded-lg mb-4">{[['paslanmaz', 'Paslanmazlar'], ['laminant', 'Laminantlar']].map(([id, name]) => <button key={id} type="button" onClick={() => setFamily(id)} aria-pressed={family === id} className={`flex-1 py-2 rounded-md text-xs ${family === id ? 'bg-white shadow-sm font-semibold' : 'text-slate-500'}`}>{name}</button>)}</div>
+                <MaterialGrid type={family} count={27} selected={selectedPath} onSelect={setMaterial} />
+                <p className="text-xs text-slate-500 mt-3 min-h-4">Seçili: <span className="text-slate-800 font-medium">{materialName(selectedPath)}</span></p>
+                <button type="button" onClick={() => startTransition(() => change(old => changeWall(old, selection.wall, wall => ({ ...wall, materials: Array(3).fill(selectedPath) }), linked)))}
+                  className="mt-4 flex items-center justify-between w-full text-xs text-slate-600 bg-slate-50 rounded-lg py-3 px-3 hover:bg-slate-100">Bu malzemeyi duvarın üç paneline uygula <ArrowRight size={14} /></button>
+              </div>
+            </>}
+            {section === 'mirror' && <>
+              <div className="flex justify-between mb-2"><h2 className="font-semibold">Ayna & yansıma</h2><span className="text-[10px] text-slate-400">02 / 04</span></div>
+              <p className="text-xs leading-5 text-slate-500 mb-6">Merkezdeki mat paneli ve tavan ile zeminin yansıdığı alanları kabinine göre oranla.</p>
+              <div className="flex h-40 gap-2 mx-auto max-w-56 mb-7 px-4">
+                <div className="flex-1 bg-slate-100 rounded border border-slate-200" />
+                <div style={{ width: `${config.mirrorWidth}%` }} className="flex flex-col border border-slate-300 rounded overflow-hidden">
+                  <div style={{ flex: config.topReflection, ...swatchStyle(config.ceiling) }} />
+                  <div className="bg-[#c9d7da] flex items-center justify-center text-[9px] tracking-widest text-slate-500" style={{ flex: 238 - config.topReflection - config.bottomReflection }}>MAT PANEL</div>
+                  <div style={{ flex: config.bottomReflection, ...swatchStyle(config.floor) }} />
+                </div><div className="flex-1 bg-slate-100 rounded border border-slate-200" />
+              </div>
+              <div className="space-y-6">
+                <RangeControl label="Ayna genişliği" value={config.mirrorWidth} min={32} max={64} onChange={value => change(old => ({ ...old, mirrorWidth: value }), 'mirror-width')} onFinish={finishGesture} />
+                <RangeControl label="Üst yansıma yüksekliği" value={config.topReflection} min={25} max={62} suffix=" cm" onChange={value => change(old => ({ ...old, topReflection: value }), 'mirror-top')} onFinish={finishGesture} />
+                <RangeControl label="Alt yansıma yüksekliği" value={config.bottomReflection} min={25} max={62} suffix=" cm" onChange={value => change(old => ({ ...old, bottomReflection: value }), 'mirror-bottom')} onFinish={finishGesture} />
+              </div>
+              <p className="text-xs leading-5 text-slate-400 mt-6 bg-slate-50 rounded-lg p-3">Ayna genişledikçe iki yanındaki paneller otomatik daralır. Seçtiğin malzemeler korunur.</p>
+            </>}
+            {(section === 'ceiling' || section === 'floor') && <>
+              <div className="flex justify-between mb-2"><h2 className="font-semibold">{section === 'ceiling' ? 'Tavanlar' : 'Taban Granitleri'}</h2><span className="text-[10px] text-slate-400">{section === 'ceiling' ? '03' : '04'} / 04</span></div>
+              <p className="text-xs leading-5 text-slate-500 mb-5">{section === 'ceiling' ? 'Kabinine ışık ve karakter katan dekoratif tavanlar.' : 'Doğal taşlar ve tek parça dekoratif zeminler.'}</p>
+              <MaterialGrid type={section === 'ceiling' ? 'tavan' : 'granit'} count={section === 'ceiling' ? 23 : 27} selected={config[section]}
+                onSelect={path => startTransition(() => change(old => ({ ...old, [section]: path })))} />
+              <div className="mt-5 rounded-xl border border-slate-200 overflow-hidden">
+                <div className="aspect-[2/1]" style={{ ...swatchStyle(config[section]), backgroundSize: 'contain', backgroundRepeat: 'no-repeat' }} />
+                <p className="text-xs px-3 py-3 border-t border-slate-100">{materialName(config[section])}</p>
+              </div>
+            </>}
+          </div>
+        </aside>
+
+        <section aria-label="3D kabin önizlemesi" className="order-1 lg:order-2 lg:sticky lg:top-24">
+          <div className="relative rounded-2xl border border-slate-200 overflow-hidden bg-[#e9edef] shadow-sm">
+            <div className="absolute top-4 left-4 right-4 flex justify-between items-start z-10 pointer-events-none">
+              <div><p className="text-[10px] tracking-[0.22em] uppercase text-slate-400">TASARIMINIZ</p><p className="text-sm font-medium mt-1">{section === 'walls' ? `${WALLS[selection.wall]} · Panel ${selection.index + 1}` : 'Kabin görünümü'}</p></div>
+              <span role="status" className="text-[10px] bg-white/80 border border-white px-2.5 py-1.5 rounded-full flex items-center gap-1.5 text-slate-500"><span className={`w-1.5 h-1.5 rounded-full ${pending ? 'bg-orange-400' : 'bg-emerald-500'}`} />{pending ? 'Malzeme yükleniyor' : 'Canlı önizleme'}</span>
+            </div>
+            <div className="h-[470px] sm:h-[560px] lg:h-[min(740px,calc(100svh-230px))] lg:min-h-[440px]">
+              <Canvas camera={{ position: [0, 0.02, 5.25], fov: 34 }} dpr={[1.5, 2]} gl={{ antialias: true }}
+                onCreated={({ gl }) => { gl.toneMapping = THREE.ACESFilmicToneMapping; gl.toneMappingExposure = 1; gl.outputColorSpace = THREE.SRGBColorSpace; }}>
+                <color attach="background" args={['#e9edef']} />
+                <hemisphereLight args={['#ffffff', '#d6dde2', 2.2]} />
+                <directionalLight position={[2.5, 3, 4]} intensity={1.5} /><directionalLight position={[-3, 0.5, 3]} intensity={0.85} />
+                <Suspense fallback={<Html center><span className="text-xs whitespace-nowrap bg-white p-3 rounded-lg shadow-sm">Kabin hazırlanıyor…</span></Html>}>
+                  <KendiAsansorumuz config={config} selection={selection} onSelect={choosePanel} editing={section === 'walls'} onMirrorSelect={() => setSection('mirror')} />
+                </Suspense>
+                <CameraView view={view} />
+              </Canvas>
+            </div>
+            <div className="absolute bottom-4 inset-x-0 flex justify-center pointer-events-none"><p className="text-[10px] sm:text-xs text-slate-500 bg-white/80 border border-white rounded-full px-3 py-2">Sürükleyerek döndür · Bir panele dokunarak seç</p></div>
+          </div>
+          <div className="flex flex-wrap justify-between items-center gap-3 mt-3">
+            <div className="inline-flex bg-white p-1 rounded-xl border border-slate-200">{[['front', 'Karşıdan'], ['left', 'Sol duvar'], ['right', 'Sağ duvar']].map(([name, label]) => <button key={name} type="button" onClick={() => setView({ name, version: view.version + 1 })} aria-label={`${label} görünümü`}
+              className={`px-3 py-2 text-[11px] rounded-lg ${view.name === name ? 'bg-slate-800 text-white' : 'text-slate-500'}`}>{label}</button>)}</div>
+            <button type="button" onClick={() => setView({ name: 'front', version: view.version + 1 })} className="flex gap-1.5 items-center text-xs text-slate-500"><Expand size={14} /> Görünümü sıfırla</button>
+          </div>
+          <div className="mt-5 grid grid-cols-3 gap-3 border-t border-slate-200 pt-4">
+            <div><p className="text-[9px] uppercase tracking-widest text-slate-400">KABİN ÖLÇÜSÜ</p><p className="text-xs mt-1.5 font-medium">172 × 178 × 238 cm</p></div>
+            <div><p className="text-[9px] uppercase tracking-widest text-slate-400">DİKEY PANELLER</p><p className="text-xs mt-1.5 font-medium">12 bağımsız bölüm</p></div>
+            <div><p className="text-[9px] uppercase tracking-widest text-slate-400">AYNA GENİŞLİĞİ</p><p className="text-xs mt-1.5 font-medium">{Math.round(W * config.mirrorWidth)} cm</p></div>
+          </div>
+          <details className="mt-5 bg-white rounded-xl border border-slate-200 text-xs">
+            <summary className="px-4 py-3 cursor-pointer flex items-center justify-between text-slate-600">Tasarım özeti <span className="flex items-center gap-2 text-slate-400">{changedPanels} panel özelleştirildi <ChevronDown size={14} /></span></summary>
+            <div className="px-4 pb-4 space-y-3 border-t border-slate-100 pt-3">{Object.entries(WALLS).map(([wall, name]) => <div key={wall}><p className="font-semibold mb-1">{name}</p><p className="text-slate-500 leading-5">{config.walls[wall].materials.map((path, i) => `${i + 1}. ${materialName(path)} (%${config.walls[wall].widths[i]})`).join(' · ')}</p></div>)}</div>
+          </details>
+        </section>
+      </div>
+    </div>
+  </div>;
+}

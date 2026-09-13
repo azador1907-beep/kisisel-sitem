@@ -1,0 +1,2026 @@
+[
+  {
+    "_id": "ct1",
+    "title": "Line",
+    "image": "/assets/img/tavan/line_karegorsel.jpg",
+    "targetModelList": [
+      "LINE_TAVAN"
+    ],
+    "pdfGroup": "ceil",
+    "base": {
+      "onePiece": {
+        "models": [
+          {
+            "path": "/3d/asansor-parcalanmis/K_gltf/LINE_TAVAN.gltf",
+            "name": "LINE_TAVAN",
+            "group": "tavan",
+            "hideGroup": null,
+            "isReflective": false,
+            "removalGroup": null,
+            "defaultMaterial": "metallicDefaultMat",
+            "customMaterialDefinition": {
+              "lightMap": "/3d/textures/TAVAN/LINE_TAVAN_VRayRawLightingMap.jpg",
+              "aoMap": "/3d/textures/TAVAN/LINE_TAVAN_VRayAOMap.jpg",
+              "aoMapIntensity": 0.3,
+              "lightMapIntesity": 2
+            }
+          },
+          {
+            "path": "/3d/asansor-parcalanmis/K_gltf/LINE_TAVAN_LED.gltf",
+            "name": "LINE_TAVAN_LED",
+            "group": "tavan",
+            "hideGroup": null,
+            "isReflective": false,
+            "removalGroup": null,
+            "defaultMaterial": "whiteDefaultMat",
+            "customMaterialDefinition": {
+              "lightMap": "/3d/textures/TAVAN/LINE_TAVAN_VRayRawLightingMap.jpg",
+              "aoMap": "/3d/textures/TAVAN/LINE_TAVAN_LED_VRayAOMap.jpg",
+              "aoMapIntensity": 0.3,
+              "lightMapIntesity": 2
+            }
+          }
+        ],
+        "lights": [
+          {
+            "type": "rectLight",
+            "intensity": 30,
+            "positionX": -0.23,
+            "positionY": 2.23,
+            "positionZ": 0.02,
+            "removalGroup": "light",
+            "width": 0.04,
+            "height": 1.08,
+            "hasTarget": true,
+            "addHelper": false,
+            "targetPositionX": 0,
+            "targetPositionY": -10,
+            "targetPositionZ": 0
+          },
+          {
+            "type": "rectLight",
+            "intensity": 30,
+            "positionX": 0.23,
+            "positionY": 2.23,
+            "positionZ": 0.02,
+            "removalGroup": "light",
+            "width": 0.04,
+            "height": 1.08,
+            "hasTarget": true,
+            "addHelper": false,
+            "targetPositionX": 0,
+            "targetPositionY": -10,
+            "targetPositionZ": 0
+          }
+        ]
+      }
+    },
+    "deep": {
+      "onePiece": {
+        "models": [
+          {
+            "path": "/3d/asansor-parcalanmis/D_gltf/D_LINE_TAVAN_TEK_PARCA.gltf",
+            "name": "LINE_TAVAN",
+            "group": "tavan",
+            "hideGroup": null,
+            "isReflective": false,
+            "removalGroup": null,
+            "defaultMaterial": "metallicDefaultMat",
+            "customMaterialDefinition": {
+              "lightMap": "/3d/textures/TAVAN/D_LINE_TAVAN_TEK_PARCA_VRayRawLightingMap.jpg",
+              "aoMap": "/3d/textures/TAVAN/D_LINE_TAVAN_TEK_PARCA_VRayAOMap.jpg",
+              "aoMapIntensity": 0.3,
+              "lightMapIntesity": 2
+            }
+          },
+          {
+            "path": "/3d/asansor-parcalanmis/D_gltf/D_LINE_TAVAN_TEK_PARCA_LED.gltf",
+            "name": "LINE_TAVAN_LED",
+            "group": "tavan",
+            "hideGroup": null,
+            "isReflective": false,
+            "removalGroup": null,
+            "defaultMaterial": "whiteDefaultMat",
+            "customMaterialDefinition": {
+              "lightMap": "/3d/textures/TAVAN/D_LINE_TAVAN_TEK_PARCA_LED_VRayRawLightingMap.jpg",
+              "aoMap": "/3d/textures/TAVAN/D_LINE_TAVAN_TEK_PARCA_LED_VRayAOMap.jpg",
+              "aoMapIntensity": 0.3,
+              "lightMapIntesity": 2
+            }
+          }
+        ],
+        "lights": [
+          {
+            "type": "rectLight",
+            "intensity": 30,
+            "positionX": -0.23,
+            "positionY": 2.23,
+            "positionZ": 0.02,
+            "removalGroup": "light",
+            "width": 0.03,
+            "height": 1.72,
+            "hasTarget": true,
+            "addHelper": false,
+            "targetPositionX": 0,
+            "targetPositionY": -10,
+            "targetPositionZ": 0
+          },
+          {
+            "type": "rectLight",
+            "intensity": 30,
+            "positionX": 0.23,
+            "positionY": 2.23,
+            "positionZ": 0.02,
+            "removalGroup": "light",
+            "width": 0.03,
+            "height": 1.72,
+            "hasTarget": true,
+            "addHelper": false,
+            "targetPositionX": 0,
+            "targetPositionY": -10,
+            "targetPositionZ": 0
+          }
+        ]
+      },
+      "twoPiece": {
+        "models": [
+          {
+            "path": "/3d/asansor-parcalanmis/D_gltf/D_LINE_TAVAN_IKI_PARCA.gltf",
+            "name": "LINE_TAVAN",
+            "group": "tavan",
+            "hideGroup": null,
+            "isReflective": false,
+            "removalGroup": null,
+            "defaultMaterial": "metallicDefaultMat",
+            "customMaterialDefinition": {
+              "lightMap": "/3d/textures/TAVAN/D_LINE_TAVAN_IKI_PARCA_VRayRawLightingMap.jpg",
+              "aoMap": "/3d/textures/TAVAN/D_LINE_TAVAN_IKI_PARCA_VRayAOMap.jpg",
+              "aoMapIntensity": 0.3,
+              "lightMapIntesity": 2
+            }
+          },
+          {
+            "path": "/3d/asansor-parcalanmis/D_gltf/D_LINE_TAVAN_IKI_PARCA_LED.gltf",
+            "name": "LINE_TAVAN_LED",
+            "group": "tavan",
+            "hideGroup": null,
+            "isReflective": false,
+            "removalGroup": null,
+            "defaultMaterial": "whiteDefaultMat",
+            "customMaterialDefinition": {
+              "lightMap": "/3d/textures/TAVAN/D_LINE_TAVAN_IKI_PARCA_LED_VRayRawLightingMap.jpg",
+              "aoMap": "/3d/textures/TAVAN/D_LINE_TAVAN_IKI_PARCA_LED_VRayAOMap.jpg",
+              "aoMapIntensity": 0.3,
+              "lightMapIntesity": 2
+            }
+          }
+        ],
+        "lights": [
+          {
+            "type": "rectLight",
+            "intensity": 3,
+            "positionX": -0.23,
+            "positionY": 2.23,
+            "positionZ": 0.53,
+            "removalGroup": "light",
+            "width": 0.04,
+            "height": 0.71,
+            "hasTarget": true,
+            "addHelper": false,
+            "targetPositionX": 0,
+            "targetPositionY": -10,
+            "targetPositionZ": 0
+          },
+          {
+            "type": "rectLight",
+            "intensity": 30,
+            "positionX": 0.23,
+            "positionY": 2.23,
+            "positionZ": 0.53,
+            "removalGroup": "light",
+            "width": 0.04,
+            "height": 0.71,
+            "hasTarget": true,
+            "addHelper": false,
+            "targetPositionX": 0,
+            "targetPositionY": -10,
+            "targetPositionZ": 0
+          },
+          {
+            "type": "rectLight",
+            "intensity": 30,
+            "positionX": -0.23,
+            "positionY": 2.23,
+            "positionZ": -0.49,
+            "removalGroup": "light",
+            "width": 0.04,
+            "height": 0.71,
+            "hasTarget": true,
+            "addHelper": false,
+            "targetPositionX": 0,
+            "targetPositionY": -10,
+            "targetPositionZ": 0
+          },
+          {
+            "type": "rectLight",
+            "intensity": 30,
+            "positionX": 0.23,
+            "positionY": 2.23,
+            "positionZ": -0.49,
+            "removalGroup": "light",
+            "width": 0.04,
+            "height": 0.71,
+            "hasTarget": true,
+            "addHelper": false,
+            "targetPositionX": 0,
+            "targetPositionY": -10,
+            "targetPositionZ": 0
+          }
+        ]
+      }
+    },
+    "wide": {
+      "onePiece": {
+        "models": [
+          {
+            "path": "/3d/asansor-parcalanmis/G_gltf/G_LINE_TAVAN_TEK_PARCA.gltf",
+            "name": "LINE_TAVAN",
+            "group": "tavan",
+            "hideGroup": null,
+            "isReflective": false,
+            "removalGroup": null,
+            "defaultMaterial": "metallicDefaultMat",
+            "customMaterialDefinition": {
+              "lightMap": "/3d/textures/TAVAN/G_LINE_TAVAN_TEK_PARCA_VRayRawLightingMap.jpg",
+              "aoMap": "/3d/textures/TAVAN/G_LINE_TAVAN_TEK_PARCA_VRayAOMap.jpg",
+              "aoMapIntensity": 0.3,
+              "lightMapIntesity": 2
+            }
+          },
+          {
+            "path": "/3d/asansor-parcalanmis/G_gltf/G_LINE_TAVAN_TEK_PARCA_LED.gltf",
+            "name": "LINE_TAVAN_LED",
+            "group": "tavan",
+            "hideGroup": null,
+            "isReflective": false,
+            "removalGroup": null,
+            "defaultMaterial": "whiteDefaultMat",
+            "customMaterialDefinition": {
+              "lightMap": "/3d/textures/TAVAN/G_LINE_TAVAN_TEK_PARCA_LED_VRayRawLightingMap.jpg",
+              "aoMap": "/3d/textures/TAVAN/G_LINE_TAVAN_TEK_PARCA_LED_VRayAOMap.jpg",
+              "aoMapIntensity": 0.3,
+              "lightMapIntesity": 2
+            }
+          }
+        ],
+        "lights": [
+          {
+            "type": "rectLight",
+            "intensity": 30,
+            "positionX": -0.51,
+            "positionY": 2.23,
+            "positionZ": 0.02,
+            "removalGroup": "light",
+            "width": 0.04,
+            "height": 1.08,
+            "hasTarget": true,
+            "addHelper": false,
+            "targetPositionX": 0,
+            "targetPositionY": -10,
+            "targetPositionZ": 0
+          },
+          {
+            "type": "rectLight",
+            "intensity": 30,
+            "positionX": 0.51,
+            "positionY": 2.23,
+            "positionZ": 0.02,
+            "removalGroup": "light",
+            "width": 0.04,
+            "height": 1.08,
+            "hasTarget": true,
+            "addHelper": false,
+            "targetPositionX": 0,
+            "targetPositionY": -10,
+            "targetPositionZ": 0
+          }
+        ]
+      },
+      "twoPiece": {
+        "models": [
+          {
+            "path": "/3d/asansor-parcalanmis/G_gltf/G_LINE_TAVAN_IKI_PARCA.gltf",
+            "name": "LINE_TAVAN",
+            "group": "tavan",
+            "hideGroup": null,
+            "isReflective": false,
+            "removalGroup": null,
+            "defaultMaterial": "metallicDefaultMat",
+            "customMaterialDefinition": {
+              "lightMap": "/3d/textures/TAVAN/G_LINE_TAVAN_IKI_PARCA_VRayRawLightingMap.jpg",
+              "aoMap": "/3d/textures/TAVAN/G_LINE_TAVAN_IKI_PARCA_VRayAOMap.jpg",
+              "aoMapIntensity": 0.3,
+              "lightMapIntesity": 2
+            }
+          },
+          {
+            "path": "/3d/asansor-parcalanmis/G_gltf/G_LINE_TAVAN_IKI_PARCA_LED.gltf",
+            "name": "LINE_TAVAN_LED",
+            "group": "tavan",
+            "hideGroup": null,
+            "isReflective": false,
+            "removalGroup": null,
+            "defaultMaterial": "whiteDefaultMat",
+            "customMaterialDefinition": {
+              "lightMap": "/3d/textures/TAVAN/G_LINE_TAVAN_IKI_PARCA_LED_VRayRawLightingMap.jpg",
+              "aoMap": "/3d/textures/TAVAN/G_LINE_TAVAN_IKI_PARCA_LED_VRayAOMap.jpg",
+              "aoMapIntensity": 0.3,
+              "lightMapIntesity": 2
+            }
+          }
+        ],
+        "lights": [
+          {
+            "type": "rectLight",
+            "intensity": 30,
+            "positionX": -0.73,
+            "positionY": 2.23,
+            "positionZ": 0.02,
+            "removalGroup": "light",
+            "width": 0.04,
+            "height": 1.08,
+            "hasTarget": true,
+            "addHelper": false,
+            "targetPositionX": 0,
+            "targetPositionY": -10,
+            "targetPositionZ": 0
+          },
+          {
+            "type": "rectLight",
+            "intensity": 30,
+            "positionX": -0.27,
+            "positionY": 2.23,
+            "positionZ": 0.02,
+            "removalGroup": "light",
+            "width": 0.04,
+            "height": 1.08,
+            "hasTarget": true,
+            "addHelper": false,
+            "targetPositionX": 0,
+            "targetPositionY": -10,
+            "targetPositionZ": 0
+          },
+          {
+            "type": "rectLight",
+            "intensity": 30,
+            "positionX": 0.24,
+            "positionY": 2.23,
+            "positionZ": 0.02,
+            "removalGroup": "light",
+            "width": 0.04,
+            "height": 1.08,
+            "hasTarget": true,
+            "addHelper": false,
+            "targetPositionX": 0,
+            "targetPositionY": -10,
+            "targetPositionZ": 0
+          },
+          {
+            "type": "rectLight",
+            "intensity": 30,
+            "positionX": 0.71,
+            "positionY": 2.23,
+            "positionZ": 0.02,
+            "removalGroup": "light",
+            "width": 0.04,
+            "height": 1.08,
+            "hasTarget": true,
+            "addHelper": false,
+            "targetPositionX": 0,
+            "targetPositionY": -10,
+            "targetPositionZ": 0
+          }
+        ]
+      }
+    }
+  },
+  {
+    "_id": "ct2",
+    "title": "Hide",
+    "image": "/assets/img/tavan/hide_karegorsel.jpg",
+    "targetModelList": [
+      "HIDE_TAVAN"
+    ],
+    "pdfGroup": "ceil",
+    "base": {
+      "onePiece": {
+        "models": [
+          {
+            "path": "/3d/asansor-parcalanmis/K_gltf/HIDE_TAVAN.gltf",
+            "name": "HIDE_TAVAN",
+            "group": "tavan",
+            "hideGroup": null,
+            "isReflective": false,
+            "removalGroup": null,
+            "defaultMaterial": "metallicDefaultMat",
+            "customMaterialDefinition": {
+              "lightMap": "/3d/textures/TAVAN/HIDE_TAVAN_VRayRawLightingMap.jpg",
+              "aoMap": "/3d/textures/TAVAN/HIDE_TAVAN_VRayAOMap.jpg",
+              "aoMapIntensity": 0.3,
+              "lightMapIntesity": 2
+            }
+          },
+          {
+            "path": "/3d/asansor-parcalanmis/K_gltf/HIDE_TAVAN_LED.gltf",
+            "name": "HIDE_TAVAN_LED",
+            "group": "tavan",
+            "hideGroup": null,
+            "isReflective": false,
+            "removalGroup": null,
+            "defaultMaterial": "whiteDefaultMat",
+            "customMaterialDefinition": {
+              "lightMap": "/3d/textures/TAVAN/HIDE_TAVAN_VRayRawLightingMap.jpg",
+              "aoMap": "/3d/textures/TAVAN/HIDE_TAVAN_LED_VRayAOMap.jpg",
+              "aoMapIntensity": 0.3,
+              "lightMapIntesity": 2
+            }
+          }
+        ],
+        "lights": [
+          {
+            "type": "rectLight",
+            "intensity": 30,
+            "positionX": -0.24,
+            "positionY": 2.23,
+            "positionZ": 0.25,
+            "removalGroup": "light",
+            "width": 0.013,
+            "height": 0.47,
+            "hasTarget": true,
+            "addHelper": false,
+            "targetPositionX": 0,
+            "targetPositionY": -1,
+            "targetPositionZ": 0
+          },
+          {
+            "type": "rectLight",
+            "intensity": 30,
+            "positionX": 0.24,
+            "positionY": 2.23,
+            "positionZ": -0.21,
+            "removalGroup": "light",
+            "width": 0.013,
+            "height": 0.47,
+            "hasTarget": true,
+            "addHelper": false,
+            "targetPositionX": 0,
+            "targetPositionY": -1,
+            "targetPositionZ": 0
+          },
+          {
+            "type": "rectLight",
+            "intensity": 30,
+            "positionX": 0.24,
+            "positionY": 2.23,
+            "positionZ": 0.26,
+            "removalGroup": "light",
+            "width": 0.013,
+            "height": 0.47,
+            "hasTarget": true,
+            "addHelper": false,
+            "targetPositionX": -0.0001,
+            "targetPositionY": -1,
+            "targetPositionZ": 0
+          },
+          {
+            "type": "rectLight",
+            "intensity": 30,
+            "positionX": -0.24,
+            "positionY": 2.23,
+            "positionZ": -0.22,
+            "removalGroup": "light",
+            "width": 0.013,
+            "height": 0.47,
+            "hasTarget": true,
+            "addHelper": false,
+            "targetPositionX": -0.0001,
+            "targetPositionY": -1,
+            "targetPositionZ": 0
+          }
+        ]
+      }
+    },
+    "deep": {
+      "onePiece": {
+        "models": [
+          {
+            "path": "/3d/asansor-parcalanmis/D_gltf/D_HIDE_TAVAN_TEK_PARCA.gltf",
+            "name": "HIDE_TAVAN",
+            "group": "tavan",
+            "hideGroup": null,
+            "isReflective": false,
+            "removalGroup": null,
+            "defaultMaterial": "metallicDefaultMat",
+            "customMaterialDefinition": {
+              "lightMap": "/3d/textures/TAVAN/D_HIDE_TAVAN_TEK_PARCA_VRayRawLightingMap.jpg",
+              "aoMap": "/3d/textures/TAVAN/D_HIDE_TAVAN_TEK_PARCA_VRayAOMap.jpg",
+              "aoMapIntensity": 0.3,
+              "lightMapIntesity": 2
+            }
+          },
+          {
+            "path": "/3d/asansor-parcalanmis/D_gltf/D_HIDE_TAVAN_TEK_PARCA_LED.gltf",
+            "name": "HIDE_TAVAN_LED",
+            "group": "tavan",
+            "hideGroup": null,
+            "isReflective": false,
+            "removalGroup": null,
+            "defaultMaterial": "whiteDefaultMat",
+            "customMaterialDefinition": {
+              "lightMap": "/3d/textures/TAVAN/D_HIDE_TAVAN_TEK_PARCA_LED_VRayRawLightingMap.jpg",
+              "aoMap": "/3d/textures/TAVAN/D_HIDE_TAVAN_TEK_PARCA_LED_VRayAOMap.jpg",
+              "aoMapIntensity": 0.3,
+              "lightMapIntesity": 2
+            }
+          }
+        ],
+        "lights": [
+          {
+            "type": "rectLight",
+            "intensity": 30,
+            "positionX": -0.24,
+            "positionY": 2.23,
+            "positionZ": 0.42,
+            "removalGroup": "light",
+            "width": 0.013,
+            "height": 0.8,
+            "hasTarget": true,
+            "addHelper": false,
+            "targetPositionX": 0,
+            "targetPositionY": -1,
+            "targetPositionZ": 0
+          },
+          {
+            "type": "rectLight",
+            "intensity": 30,
+            "positionX": 0.24,
+            "positionY": 2.23,
+            "positionZ": -0.38,
+            "removalGroup": "light",
+            "width": 0.013,
+            "height": 0.8,
+            "hasTarget": true,
+            "addHelper": false,
+            "targetPositionX": 0,
+            "targetPositionY": -1,
+            "targetPositionZ": 0
+          },
+          {
+            "type": "rectLight",
+            "intensity": 30,
+            "positionX": 0.24,
+            "positionY": 2.23,
+            "positionZ": 0.26,
+            "removalGroup": "light",
+            "width": 0.013,
+            "height": 0.47,
+            "hasTarget": true,
+            "addHelper": false,
+            "targetPositionX": -0.0001,
+            "targetPositionY": -1,
+            "targetPositionZ": 0
+          },
+          {
+            "type": "rectLight",
+            "intensity": 30,
+            "positionX": -0.24,
+            "positionY": 2.23,
+            "positionZ": -0.22,
+            "removalGroup": "light",
+            "width": 0.013,
+            "height": 0.47,
+            "hasTarget": true,
+            "addHelper": false,
+            "targetPositionX": -0.0001,
+            "targetPositionY": -1,
+            "targetPositionZ": 0
+          }
+        ]
+      },
+      "twoPiece": {
+        "models": [
+          {
+            "path": "/3d/asansor-parcalanmis/D_gltf/D_HIDE_TAVAN_IKI_PARCA.gltf",
+            "name": "HIDE_TAVAN",
+            "group": "tavan",
+            "hideGroup": null,
+            "isReflective": false,
+            "removalGroup": null,
+            "defaultMaterial": "metallicDefaultMat",
+            "customMaterialDefinition": {
+              "lightMap": "/3d/textures/TAVAN/D_HIDE_TAVAN_IKI_PARCA_VRayRawLightingMap.jpg",
+              "aoMap": "/3d/textures/TAVAN/D_HIDE_TAVAN_IKI_PARCA_VRayAOMap.jpg",
+              "aoMapIntensity": 0.3,
+              "lightMapIntesity": 2
+            }
+          },
+          {
+            "path": "/3d/asansor-parcalanmis/D_gltf/D_HIDE_TAVAN_IKI_PARCA_LED.gltf",
+            "name": "HIDE_TAVAN_LED",
+            "group": "tavan",
+            "hideGroup": null,
+            "isReflective": false,
+            "removalGroup": null,
+            "defaultMaterial": "whiteDefaultMat",
+            "customMaterialDefinition": {
+              "lightMap": "/3d/textures/TAVAN/D_HIDE_TAVAN_IKI_PARCA_LED_VRayRawLightingMap.jpg",
+              "aoMap": "/3d/textures/TAVAN/D_HIDE_TAVAN_IKI_PARCA_LED_VRayAOMap.jpg",
+              "aoMapIntensity": 0.3,
+              "lightMapIntesity": 2
+            }
+          }
+        ],
+        "lights": [
+          {
+            "type": "rectLight",
+            "intensity": 30,
+            "positionX": 0.245,
+            "positionY": 2.23,
+            "positionZ": 0.28,
+            "removalGroup": "light",
+            "width": 0.013,
+            "height": 0.28,
+            "hasTarget": true,
+            "addHelper": false,
+            "targetPositionX": 0,
+            "targetPositionY": -1,
+            "targetPositionZ": 0
+          },
+          {
+            "type": "rectLight",
+            "intensity": 30,
+            "positionX": 0.245,
+            "positionY": 2.23,
+            "positionZ": -0.74,
+            "removalGroup": "light",
+            "width": 0.013,
+            "height": 0.28,
+            "hasTarget": true,
+            "addHelper": false,
+            "targetPositionX": 0,
+            "targetPositionY": -1,
+            "targetPositionZ": 0
+          },
+          {
+            "type": "rectLight",
+            "intensity": 30,
+            "positionX": -0.24,
+            "positionY": 2.23,
+            "positionZ": -0.28,
+            "removalGroup": "light",
+            "width": 0.013,
+            "height": 0.3,
+            "hasTarget": true,
+            "addHelper": false,
+            "targetPositionX": 0,
+            "targetPositionY": -1,
+            "targetPositionZ": 0
+          },
+          {
+            "type": "rectLight",
+            "intensity": 30,
+            "positionX": -0.24,
+            "positionY": 2.23,
+            "positionZ": 0.74,
+            "removalGroup": "light",
+            "width": 0.013,
+            "height": 0.3,
+            "hasTarget": true,
+            "addHelper": false,
+            "targetPositionX": 0,
+            "targetPositionY": -1,
+            "targetPositionZ": 0
+          },
+          {
+            "type": "rectLight",
+            "intensity": 30,
+            "positionX": -0.23,
+            "positionY": 2.23,
+            "positionZ": 0.28,
+            "removalGroup": "light",
+            "width": 0.013,
+            "height": 0.36,
+            "hasTarget": true,
+            "addHelper": false,
+            "targetPositionX": -0.0001,
+            "targetPositionY": -1,
+            "targetPositionZ": 0
+          },
+          {
+            "type": "rectLight",
+            "intensity": 30,
+            "positionX": -0.23,
+            "positionY": 2.23,
+            "positionZ": -0.75,
+            "removalGroup": "light",
+            "width": 0.013,
+            "height": 0.36,
+            "hasTarget": true,
+            "addHelper": false,
+            "targetPositionX": -0.0001,
+            "targetPositionY": -1,
+            "targetPositionZ": 0
+          },
+          {
+            "type": "rectLight",
+            "intensity": 30,
+            "positionX": 0.26,
+            "positionY": 2.23,
+            "positionZ": -0.27,
+            "removalGroup": "light",
+            "width": 0.013,
+            "height": 0.36,
+            "hasTarget": true,
+            "addHelper": false,
+            "targetPositionX": -0.0001,
+            "targetPositionY": -1,
+            "targetPositionZ": 0
+          },
+          {
+            "type": "rectLight",
+            "intensity": 30,
+            "positionX": 0.26,
+            "positionY": 2.23,
+            "positionZ": 0.76,
+            "removalGroup": "light",
+            "width": 0.013,
+            "height": 0.36,
+            "hasTarget": true,
+            "addHelper": false,
+            "targetPositionX": -0.0001,
+            "targetPositionY": -1,
+            "targetPositionZ": 0
+          }
+        ]
+      }
+    },
+    "wide": {
+      "onePiece": {
+        "models": [
+          {
+            "path": "/3d/asansor-parcalanmis/G_gltf/G_HIDE_TAVAN_TEK_PARCA.gltf",
+            "name": "HIDE_TAVAN",
+            "group": "tavan",
+            "hideGroup": null,
+            "isReflective": false,
+            "removalGroup": null,
+            "defaultMaterial": "metallicDefaultMat",
+            "customMaterialDefinition": {
+              "lightMap": "/3d/textures/G_HIDE_TAVAN_TEK_PARCA_VRayRawLightingMap.jpg",
+              "aoMap": "/3d/textures/G_HIDE_TAVAN_TEK_PARCA_VRayAOMap.jpg",
+              "aoMapIntensity": 0.3,
+              "lightMapIntesity": 2
+            }
+          },
+          {
+            "path": "/3d/asansor-parcalanmis/G_gltf/G_HIDE_TAVAN_TEK_PARCA_LED.gltf",
+            "name": "HIDE_TAVAN_LED",
+            "group": "tavan",
+            "hideGroup": null,
+            "isReflective": false,
+            "removalGroup": null,
+            "defaultMaterial": "whiteDefaultMat",
+            "customMaterialDefinition": {
+              "lightMap": "/3d/textures/G_HIDE_TAVAN_TEK_PARCA_LED_VRayRawLightingMap.jpg",
+              "aoMap": "/3d/textures/G_HIDE_TAVAN_TEK_PARCA_LED_VRayAOMap.jpg",
+              "aoMapIntensity": 0.3,
+              "lightMapIntesity": 2
+            }
+          }
+        ],
+        "lights": [
+          {
+            "type": "rectLight",
+            "intensity": 30,
+            "positionX": -0.24,
+            "positionY": 2.23,
+            "positionZ": 0.25,
+            "removalGroup": "light",
+            "width": 0.013,
+            "height": 0.47,
+            "hasTarget": true,
+            "addHelper": false,
+            "targetPositionX": 0,
+            "targetPositionY": -1,
+            "targetPositionZ": 0
+          },
+          {
+            "type": "rectLight",
+            "intensity": 30,
+            "positionX": 0.24,
+            "positionY": 2.23,
+            "positionZ": -0.21,
+            "removalGroup": "light",
+            "width": 0.013,
+            "height": 0.47,
+            "hasTarget": true,
+            "addHelper": false,
+            "targetPositionX": 0,
+            "targetPositionY": -1,
+            "targetPositionZ": 0
+          },
+          {
+            "type": "rectLight",
+            "intensity": 30,
+            "positionX": 0.24,
+            "positionY": 2.23,
+            "positionZ": 0.26,
+            "removalGroup": "light",
+            "width": 0.013,
+            "height": 0.47,
+            "hasTarget": true,
+            "addHelper": false,
+            "targetPositionX": -0.0001,
+            "targetPositionY": -1,
+            "targetPositionZ": 0
+          },
+          {
+            "type": "rectLight",
+            "intensity": 30,
+            "positionX": -0.24,
+            "positionY": 2.23,
+            "positionZ": -0.22,
+            "removalGroup": "light",
+            "width": 0.013,
+            "height": 0.47,
+            "hasTarget": true,
+            "addHelper": false,
+            "targetPositionX": -0.0001,
+            "targetPositionY": -1,
+            "targetPositionZ": 0
+          }
+        ]
+      },
+      "twoPiece": {
+        "models": [
+          {
+            "path": "/3d/asansor-parcalanmis/G_gltf/G_HIDE_TAVAN_IKI_PARCA.gltf",
+            "name": "HIDE_TAVAN",
+            "group": "tavan",
+            "hideGroup": null,
+            "isReflective": false,
+            "removalGroup": null,
+            "defaultMaterial": "metallicDefaultMat",
+            "customMaterialDefinition": {
+              "lightMap": "/3d/textures/G_HIDE_TAVAN_IKI_PARCA_VRayRawLightingMap.jpg",
+              "aoMap": "/3d/textures/G_HIDE_TAVAN_IKI_PARCA_VRayAOMap.jpg",
+              "aoMapIntensity": 0.3,
+              "lightMapIntesity": 2
+            }
+          },
+          {
+            "path": "/3d/asansor-parcalanmis/G_gltf/G_HIDE_TAVAN_IKI_PARCA_LED.gltf",
+            "name": "HIDE_TAVAN_LED",
+            "group": "tavan",
+            "hideGroup": null,
+            "isReflective": false,
+            "removalGroup": null,
+            "defaultMaterial": "whiteDefaultMat",
+            "customMaterialDefinition": {
+              "lightMap": "/3d/textures/G_HIDE_TAVAN_IKI_PARCA_LED_VRayRawLightingMap.jpg",
+              "aoMap": "/3d/textures/G_HIDE_TAVAN_IKI_PARCA_LED_VRayAOMap.jpg",
+              "aoMapIntensity": 0.3,
+              "lightMapIntesity": 2
+            }
+          }
+        ],
+        "lights": [
+          {
+            "type": "rectLight",
+            "intensity": 30,
+            "positionX": -0.64,
+            "positionY": 2.23,
+            "positionZ": 0.26,
+            "removalGroup": "light",
+            "width": 0.013,
+            "height": 0.47,
+            "hasTarget": true,
+            "addHelper": false,
+            "targetPositionX": 0,
+            "targetPositionY": -1,
+            "targetPositionZ": 0
+          },
+          {
+            "type": "rectLight",
+            "intensity": 30,
+            "positionX": -0.305,
+            "positionY": 2.23,
+            "positionZ": -0.21,
+            "removalGroup": "light",
+            "width": 0.013,
+            "height": 0.47,
+            "hasTarget": true,
+            "addHelper": false,
+            "targetPositionX": 0,
+            "targetPositionY": -1,
+            "targetPositionZ": 0
+          },
+          {
+            "type": "rectLight",
+            "intensity": 30,
+            "positionX": -0.315,
+            "positionY": 2.23,
+            "positionZ": 0.26,
+            "removalGroup": "light",
+            "width": 0.013,
+            "height": 0.4,
+            "hasTarget": true,
+            "addHelper": false,
+            "targetPositionX": -0.0001,
+            "targetPositionY": -1,
+            "targetPositionZ": 0
+          },
+          {
+            "type": "rectLight",
+            "intensity": 30,
+            "positionX": -0.62,
+            "positionY": 2.23,
+            "positionZ": -0.22,
+            "removalGroup": "light",
+            "width": 0.013,
+            "height": 0.39,
+            "hasTarget": true,
+            "addHelper": false,
+            "targetPositionX": -0.0001,
+            "targetPositionY": -1,
+            "targetPositionZ": 0
+          },
+          {
+            "type": "rectLight",
+            "intensity": 30,
+            "positionX": 0.665,
+            "positionY": 2.23,
+            "positionZ": -0.22,
+            "removalGroup": "light",
+            "width": 0.013,
+            "height": 0.47,
+            "hasTarget": true,
+            "addHelper": false,
+            "targetPositionX": 0,
+            "targetPositionY": -1,
+            "targetPositionZ": 0
+          },
+          {
+            "type": "rectLight",
+            "intensity": 30,
+            "positionX": 0.33,
+            "positionY": 2.23,
+            "positionZ": 0.26,
+            "removalGroup": "light",
+            "width": 0.013,
+            "height": 0.47,
+            "hasTarget": true,
+            "addHelper": false,
+            "targetPositionX": 0,
+            "targetPositionY": -1,
+            "targetPositionZ": 0
+          },
+          {
+            "type": "rectLight",
+            "intensity": 30,
+            "positionX": 0.34,
+            "positionY": 2.23,
+            "positionZ": -0.22,
+            "removalGroup": "light",
+            "width": 0.013,
+            "height": 0.4,
+            "hasTarget": true,
+            "addHelper": false,
+            "targetPositionX": -0.0001,
+            "targetPositionY": -1,
+            "targetPositionZ": 0
+          },
+          {
+            "type": "rectLight",
+            "intensity": 30,
+            "positionX": 0.66,
+            "positionY": 2.23,
+            "positionZ": 0.255,
+            "removalGroup": "light",
+            "width": 0.013,
+            "height": 0.39,
+            "hasTarget": true,
+            "addHelper": false,
+            "targetPositionX": -0.0001,
+            "targetPositionY": -1,
+            "targetPositionZ": 0
+          }
+        ]
+      }
+    }
+  },
+  {
+    "_id": "ct3",
+    "title": "Pool",
+    "image": "/assets/img/tavan/pool_kare.jpg",
+    "targetModelList": [
+      "POOL_TAVAN"
+    ],
+    "pdfGroup": "ceil",
+    "base": {
+      "onePiece": {
+        "models": [
+          {
+            "path": "/3d/asansor-parcalanmis/K_gltf/POOL_TAVAN.gltf",
+            "name": "POOL_TAVAN",
+            "group": "tavan",
+            "hideGroup": null,
+            "isReflective": false,
+            "removalGroup": null,
+            "defaultMaterial": "metallicDefaultMat",
+            "customMaterialDefinition": {
+              "lightMap": "/3d/textures/TAVAN/POOL_TAVAN_VRayRawLightingMap.jpg",
+              "aoMap": "/3d/textures/TAVAN/POOL_TAVAN_VRayAOMap.jpg",
+              "aoMapIntensity": 0.4,
+              "lightMapIntesity": 2
+            }
+          },
+          {
+            "path": "/3d/asansor-parcalanmis/K_gltf/POOL_TAVAN_SPOTLAR.gltf",
+            "name": "POOL_TAVAN_SPOTLAR",
+            "group": "tavan",
+            "hideGroup": null,
+            "isReflective": false,
+            "removalGroup": null,
+            "defaultMaterial": "whiteDefaultMat",
+            "customMaterialDefinition": {
+              "lightMap": "/3d/textures/TAVAN/POOL_TAVAN_VRayRawLightingMap.jpg",
+              "aoMap": "/3d/textures/TAVAN/POOL_TAVAN_SPOTLAR_VRayAOMap.jpg",
+              "aoMapIntensity": 0.4,
+              "lightMapIntesity": 2
+            }
+          },
+          {
+            "path": "/3d/asansor-parcalanmis/K_gltf/SPOT_LED.gltf",
+            "name": "SPOT_LED",
+            "group": "tavan",
+            "hideGroup": null,
+            "isReflective": false,
+            "removalGroup": null,
+            "defaultMaterial": "whiteDefaultMat",
+            "customMaterialDefinition": {
+              "lightMap": "/3d/textures/TAVAN/POOL_TAVAN_VRayRawLightingMap.jpg",
+              "aoMap": "/3d/textures/TAVAN/POOL_TAVAN_SPOTLAR_VRayAOMap.jpg",
+              "aoMapIntensity": 0.4,
+              "lightMapIntesity": 2
+            }
+          }
+        ],
+        "lights": [
+          {
+            "type": "spotLight",
+            "intensity": 1.4,
+            "positionX": -0.5,
+            "positionY": 2.23,
+            "positionZ": 0.4,
+            "removalGroup": "light",
+            "angle": 2.5,
+            "distance": 1.8,
+            "hasTarget": true,
+            "addHelper": false,
+            "targetPositionX": -0.46,
+            "targetPositionY": 0,
+            "targetPositionZ": 0.34,
+            "castShadow": true
+          },
+          {
+            "type": "spotLight",
+            "intensity": 1.4,
+            "positionX": 0.54,
+            "positionY": 2.23,
+            "positionZ": -0.38,
+            "removalGroup": "light",
+            "angle": 2.5,
+            "distance": 1.8,
+            "hasTarget": true,
+            "targetPositionX": 0.46,
+            "targetPositionY": 0,
+            "targetPositionZ": -0.32,
+            "castShadow": true,
+            "addHelper": false
+          },
+          {
+            "type": "spotLight",
+            "intensity": 1.4,
+            "positionX": 0.54,
+            "positionY": 2.23,
+            "positionZ": 0.41,
+            "removalGroup": "light",
+            "angle": 2.5,
+            "distance": 1.8,
+            "hasTarget": true,
+            "targetPositionX": 0.46,
+            "targetPositionY": 0,
+            "targetPositionZ": 0.34,
+            "castShadow": true,
+            "addHelper": false
+          },
+          {
+            "type": "spotLight",
+            "intensity": 1.4,
+            "positionX": -0.5,
+            "positionY": 2.23,
+            "positionZ": -0.38,
+            "removalGroup": "light",
+            "angle": 2.5,
+            "distance": 1.8,
+            "hasTarget": true,
+            "addHelper": false,
+            "targetPositionX": -0.46,
+            "targetPositionY": 0,
+            "targetPositionZ": -0.32,
+            "castShadow": true
+          }
+        ]
+      }
+    },
+    "deep": {
+      "onePiece": {
+        "models": [
+          {
+            "path": "/3d/asansor-parcalanmis/D_gltf/D_POOL_TAVAN_TEK_PARCA.gltf",
+            "name": "POOL_TAVAN",
+            "group": "tavan",
+            "hideGroup": null,
+            "isReflective": false,
+            "removalGroup": null,
+            "defaultMaterial": "metallicDefaultMat",
+            "customMaterialDefinition": {
+              "lightMap": "/3d/textures/TAVAN/D_POOL_TAVAN_TEK_PARCA_VRayRawLightingMap.jpg",
+              "aoMap": "/3d/textures/TAVAN/D_POOL_TAVAN_TEK_PARCA_VRayAOMap.jpg",
+              "aoMapIntensity": 0.4,
+              "lightMapIntesity": 2
+            }
+          },
+          {
+            "path": "/3d/asansor-parcalanmis/D_gltf/D_POOL_TAVAN_TEK_PARCA_LED.gltf",
+            "name": "POOL_TAVAN_LED",
+            "group": "tavan",
+            "hideGroup": null,
+            "isReflective": false,
+            "removalGroup": null,
+            "defaultMaterial": "whiteDefaultMat",
+            "customMaterialDefinition": {
+              "lightMap": "/3d/textures/TAVAN/D_POOL_TAVAN_TEK_PARCA_LED_VRayRawLightingMap.jpg",
+              "aoMap": "/3d/textures/TAVAN/D_POOL_TAVAN_TEK_PARCA_LED_VRayAOMap.jpg"
+            }
+          },
+          {
+            "path": "/3d/asansor-parcalanmis/D_gltf/D_POOL_TAVAN_TEK_PARCA_SPOTLAR.gltf",
+            "name": "POOL_TAVAN_SPOTLAR",
+            "group": "tavan",
+            "hideGroup": null,
+            "isReflective": false,
+            "removalGroup": null,
+            "defaultMaterial": "whiteDefaultMat",
+            "customMaterialDefinition": {
+              "lightMap": "/3d/textures/TAVAN/D_POOL_TAVAN_TEK_PARCA_SPOTLAR_VRayRawLightingMap.jpg",
+              "aoMap": "/3d/textures/TAVAN/D_POOL_TAVAN_TEK_PARCA_SPOTLAR_VRayAOMap.jpg",
+              "aoMapIntensity": 0.4,
+              "lightMapIntesity": 2
+            }
+          }
+        ],
+        "lights": [
+          {
+            "type": "spotLight",
+            "intensity": 1.4,
+            "positionX": -0.395,
+            "positionY": 2.23,
+            "positionZ": 0.75,
+            "removalGroup": "light",
+            "angle": 2.5,
+            "distance": 1.8,
+            "addHelper": false,
+            "castShadow": true,
+            "hasTarget": true,
+            "targetPositionX": -0.46,
+            "targetPositionY": 0,
+            "targetPositionZ": 0.34
+          },
+          {
+            "type": "spotLight",
+            "intensity": 1.4,
+            "positionX": 0.41,
+            "positionY": 2.23,
+            "positionZ": -0.72,
+            "removalGroup": "light",
+            "angle": 2.5,
+            "distance": 1.8,
+            "addHelper": false,
+            "castShadow": true,
+            "hasTarget": true,
+            "targetPositionX": 0.46,
+            "targetPositionY": 0,
+            "targetPositionZ": -0.32
+          },
+          {
+            "type": "spotLight",
+            "intensity": 1.4,
+            "positionX": 0.4,
+            "positionY": 2.23,
+            "positionZ": 0.75,
+            "removalGroup": "light",
+            "angle": 2.5,
+            "distance": 1.8,
+            "addHelper": false,
+            "castShadow": true,
+            "hasTarget": true,
+            "targetPositionX": 0.46,
+            "targetPositionY": 0,
+            "targetPositionZ": 0.34
+          },
+          {
+            "type": "spotLight",
+            "intensity": 1.4,
+            "positionX": -0.4,
+            "positionY": 2.23,
+            "positionZ": -0.72,
+            "removalGroup": "light",
+            "angle": 2.5,
+            "distance": 1.8,
+            "addHelper": false,
+            "castShadow": true,
+            "hasTarget": true,
+            "targetPositionX": -0.46,
+            "targetPositionY": 0,
+            "targetPositionZ": -0.32
+          }
+        ]
+      },
+      "twoPiece": {
+        "models": [
+          {
+            "path": "/3d/asansor-parcalanmis/D_gltf/D_POOL_TAVAN_IKI_PARCA.gltf",
+            "name": "POOL_TAVAN",
+            "group": "tavan",
+            "hideGroup": null,
+            "isReflective": false,
+            "removalGroup": null,
+            "defaultMaterial": "metallicDefaultMat",
+            "customMaterialDefinition": {
+              "lightMap": "/3d/textures/TAVAN/D_POOL_TAVAN_IKI_PARCA_VRayRawLightingMap.jpg",
+              "aoMap": "/3d/textures/TAVAN/D_POOL_TAVAN_IKI_PARCA_VRayAOMap.jpg",
+              "aoMapIntensity": 0.4,
+              "lightMapIntesity": 2
+            }
+          },
+          {
+            "path": "/3d/asansor-parcalanmis/D_gltf/D_POOL_TAVAN_IKI_PARCA_LED.gltf",
+            "name": "POOL_TAVAN_LED",
+            "group": "tavan",
+            "hideGroup": null,
+            "isReflective": false,
+            "removalGroup": null,
+            "defaultMaterial": "whiteDefaultMat",
+            "customMaterialDefinition": {
+              "lightMap": "/3d/textures/TAVAN/D_POOL_TAVAN_IKI_PARCA_LED_VRayRawLightingMap.jpg",
+              "aoMap": "/3d/textures/TAVAN/D_POOL_TAVAN_IKI_PARCA_LED_VRayAOMap.jpg"
+            }
+          },
+          {
+            "path": "/3d/asansor-parcalanmis/D_gltf/D_POOL_TAVAN_IKI_PARCA_SPOTLAR.gltf",
+            "name": "POOL_TAVAN_SPOTLAR",
+            "group": "tavan",
+            "hideGroup": null,
+            "isReflective": false,
+            "removalGroup": null,
+            "defaultMaterial": "whiteDefaultMat",
+            "customMaterialDefinition": {
+              "lightMap": "/3d/textures/TAVAN/D_POOL_TAVAN_IKI_PARCA_SPOTLAR_VRayRawLightingMap.jpg",
+              "aoMap": "/3d/textures/TAVAN/D_POOL_TAVAN_IKI_PARCA_SPOTLAR_VRayAOMap.jpg",
+              "aoMapIntensity": 0.4,
+              "lightMapIntesity": 2
+            }
+          }
+        ],
+        "lights": [
+          {
+            "type": "spotLight",
+            "intensity": 1.4,
+            "positionX": -0.4,
+            "positionY": 2.23,
+            "positionZ": 0.76,
+            "removalGroup": "light",
+            "angle": 2.5,
+            "distance": 1.8,
+            "addHelper": false,
+            "castShadow": true,
+            "hasTarget": true,
+            "targetPositionX": -0.46,
+            "targetPositionY": 0,
+            "targetPositionZ": 0.34
+          },
+          {
+            "type": "spotLight",
+            "intensity": 1.4,
+            "positionX": -0.4,
+            "positionY": 2.23,
+            "positionZ": 0.31,
+            "removalGroup": "light",
+            "angle": 2.5,
+            "distance": 1.8,
+            "addHelper": false,
+            "castShadow": true,
+            "hasTarget": true,
+            "targetPositionX": -0.46,
+            "targetPositionY": 0,
+            "targetPositionZ": 0.34
+          },
+          {
+            "type": "spotLight",
+            "intensity": 1.4,
+            "positionX": -0.4,
+            "positionY": 2.23,
+            "positionZ": -0.29,
+            "removalGroup": "light",
+            "angle": 2.5,
+            "distance": 1.8,
+            "addHelper": false,
+            "castShadow": true,
+            "hasTarget": true,
+            "targetPositionX": -0.46,
+            "targetPositionY": 0,
+            "targetPositionZ": 0.34
+          },
+          {
+            "type": "spotLight",
+            "intensity": 1.4,
+            "positionX": -0.4,
+            "positionY": 2.23,
+            "positionZ": -0.72,
+            "removalGroup": "light",
+            "angle": 2.5,
+            "distance": 1.8,
+            "addHelper": false,
+            "castShadow": true,
+            "hasTarget": true,
+            "targetPositionX": -0.46,
+            "targetPositionY": 0,
+            "targetPositionZ": 0.34
+          },
+          {
+            "type": "spotLight",
+            "intensity": 1.4,
+            "positionX": 0.4,
+            "positionY": 2.23,
+            "positionZ": 0.76,
+            "removalGroup": "light",
+            "angle": 2.5,
+            "distance": 1.8,
+            "addHelper": false,
+            "castShadow": true,
+            "hasTarget": true,
+            "targetPositionX": 0.46,
+            "targetPositionY": 0,
+            "targetPositionZ": -0.32
+          },
+          {
+            "type": "spotLight",
+            "intensity": 1.4,
+            "positionX": 0.4,
+            "positionY": 2.23,
+            "positionZ": 0.31,
+            "removalGroup": "light",
+            "angle": 2.5,
+            "distance": 1.8,
+            "addHelper": false,
+            "castShadow": true,
+            "hasTarget": true,
+            "targetPositionX": 0.46,
+            "targetPositionY": 0,
+            "targetPositionZ": -0.32
+          },
+          {
+            "type": "spotLight",
+            "intensity": 1.4,
+            "positionX": 0.4,
+            "positionY": 2.23,
+            "positionZ": -0.29,
+            "removalGroup": "light",
+            "angle": 2.5,
+            "distance": 1.8,
+            "addHelper": false,
+            "castShadow": true,
+            "hasTarget": true,
+            "targetPositionX": 0.46,
+            "targetPositionY": 0,
+            "targetPositionZ": -0.32
+          },
+          {
+            "type": "spotLight",
+            "intensity": 1.4,
+            "positionX": 0.4,
+            "positionY": 2.23,
+            "positionZ": -0.72,
+            "removalGroup": "light",
+            "angle": 2.5,
+            "distance": 1.8,
+            "addHelper": false,
+            "castShadow": true,
+            "hasTarget": true,
+            "targetPositionX": 0.46,
+            "targetPositionY": 0,
+            "targetPositionZ": -0.32
+          }
+        ]
+      }
+    },
+    "wide": {
+      "onePiece": {
+        "models": [
+          {
+            "path": "/3d/asansor-parcalanmis/G_gltf/G_POOL_TAVAN_TEK_PARCA.gltf",
+            "name": "POOL_TAVAN",
+            "group": "tavan",
+            "hideGroup": null,
+            "isReflective": false,
+            "removalGroup": null,
+            "defaultMaterial": "metallicDefaultMat"
+          },
+          {
+            "path": "/3d/asansor-parcalanmis/G_gltf/G_POOL_TAVAN_TEK_PARCA_LED.gltf",
+            "name": "POOL_TAVAN_LED",
+            "group": "tavan",
+            "hideGroup": null,
+            "isReflective": false,
+            "removalGroup": null,
+            "defaultMaterial": "whiteDefaultMat",
+            "customMaterialDefinition": {
+              "lightMap": "/3d/textures/TAVAN/G_POOL_TAVAN_TEK_PARCA_LED_VRayRaw\"LightingMap.jpg",
+              "aoMap": "/3d/textures/TAVAN/G_POOL_TAVAN_TEK_PARCA_LED_VRayAOMap.jpg"
+            }
+          },
+          {
+            "path": "/3d/asansor-parcalanmis/G_gltf/G_POOL_TAVAN_TEK_PARCA_SPOTLAR.gltf",
+            "name": "POOL_TAVAN_SPOTLAR",
+            "group": "tavan",
+            "hideGroup": null,
+            "isReflective": false,
+            "removalGroup": null,
+            "defaultMaterial": "whiteDefaultMat",
+            "customMaterialDefinition": {
+              "lightMap": "/3d/textures/TAVAN/G_POOL_TAVAN_TEK_PARCA_SPOTLAR_VRayRawLightingMap.jpg",
+              "aoMap": "/3d/textures/TAVAN/G_POOL_TAVAN_TEK_PARCA_SPOTLAR_VRayAOMap.jpg",
+              "aoMapIntensity": 0.4,
+              "lightMapIntesity": 2
+            }
+          }
+        ],
+        "lights": [
+          {
+            "type": "spotLight",
+            "intensity": 1.4,
+            "positionX": -0.78,
+            "positionY": 2.23,
+            "positionZ": 0.41,
+            "removalGroup": "light",
+            "angle": 2.5,
+            "distance": 1.8,
+            "addHelper": false,
+            "castShadow": true,
+            "hasTarget": true,
+            "targetPositionX": -0.46,
+            "targetPositionY": 0,
+            "targetPositionZ": 0.34
+          },
+          {
+            "type": "spotLight",
+            "intensity": 1.4,
+            "positionX": 0.8,
+            "positionY": 2.23,
+            "positionZ": 0.41,
+            "removalGroup": "light",
+            "angle": 2.5,
+            "distance": 1.8,
+            "addHelper": false,
+            "castShadow": true,
+            "hasTarget": true,
+            "targetPositionX": -0.46,
+            "targetPositionY": 0,
+            "targetPositionZ": 0.34
+          },
+          {
+            "type": "spotLight",
+            "intensity": 1.4,
+            "positionX": -0.78,
+            "positionY": 2.23,
+            "positionZ": -0.38,
+            "removalGroup": "light",
+            "angle": 2.5,
+            "distance": 1.8,
+            "addHelper": false,
+            "castShadow": true,
+            "hasTarget": true,
+            "targetPositionX": 0.46,
+            "targetPositionY": 0,
+            "targetPositionZ": -0.32
+          },
+          {
+            "type": "spotLight",
+            "intensity": 1.4,
+            "positionX": 0.8,
+            "positionY": 2.23,
+            "positionZ": -0.38,
+            "removalGroup": "light",
+            "angle": 2.5,
+            "distance": 1.8,
+            "addHelper": false,
+            "castShadow": true,
+            "hasTarget": true,
+            "targetPositionX": 0.46,
+            "targetPositionY": 0,
+            "targetPositionZ": -0.32
+          }
+        ]
+      },
+      "twoPiece": {
+        "models": [
+          {
+            "path": "/3d/asansor-parcalanmis/G_gltf/G_POOL_TAVAN_IKI_PARCA.gltf",
+            "name": "POOL_TAVAN",
+            "group": "tavan",
+            "hideGroup": null,
+            "isReflective": false,
+            "removalGroup": null,
+            "defaultMaterial": "metallicDefaultMat",
+            "customMaterialDefinition": {
+              "lightMap": "/3d/textures/TAVAN/G_POOL_TAVAN_IKI_PARCA_VRayRawLightingMap.jpg",
+              "aoMap": "/3d/textures/TAVAN/G_POOL_TAVAN_IKI_PARCA_VRayAOMap.jpg",
+              "aoMapIntensity": 0.4,
+              "lightMapIntesity": 2
+            }
+          },
+          {
+            "path": "/3d/asansor-parcalanmis/G_gltf/G_POOL_TAVAN_IKI_PARCA_LED.gltf",
+            "name": "POOL_TAVAN_LED",
+            "group": "tavan",
+            "hideGroup": null,
+            "isReflective": false,
+            "removalGroup": null,
+            "defaultMaterial": "whiteDefaultMat",
+            "customMaterialDefinition": {
+              "lightMap": "/3d/textures/TAVAN/G_POOL_TAVAN_IKI_PARCA_LED_VRayRawLightingMap.jpg",
+              "aoMap": "/3d/textures/TAVAN/G_POOL_TAVAN_IKI_PARCA_LED_VRayAOMap.jpg"
+            }
+          },
+          {
+            "path": "/3d/asansor-parcalanmis/G_gltf/G_POOL_TAVAN_IKI_PARCA_SPOTLAR.gltf",
+            "name": "POOL_TAVAN_SPOTLAR",
+            "group": "tavan",
+            "hideGroup": null,
+            "isReflective": false,
+            "removalGroup": null,
+            "defaultMaterial": "whiteDefaultMat",
+            "customMaterialDefinition": {
+              "lightMap": "/3d/textures/TAVAN/G_POOL_TAVAN_IKI_PARCA_SPOTLAR_VRayRawLightingMap.jpg",
+              "aoMap": "/3d/textures/TAVAN/G_POOL_TAVAN_IKI_PARCA_SPOTLAR_VRayAOMap.jpg",
+              "aoMapIntensity": 0.4,
+              "lightMapIntesity": 2
+            }
+          }
+        ],
+        "lights": [
+          {
+            "type": "spotLight",
+            "intensity": 1.4,
+            "positionX": -0.78,
+            "positionY": 2.23,
+            "positionZ": 0.41,
+            "removalGroup": "light",
+            "angle": 2.5,
+            "distance": 1.8,
+            "addHelper": false,
+            "castShadow": true,
+            "hasTarget": true,
+            "targetPositionX": -0.46,
+            "targetPositionY": 0,
+            "targetPositionZ": 0.34
+          },
+          {
+            "type": "spotLight",
+            "intensity": 1.4,
+            "positionX": -0.17,
+            "positionY": 2.23,
+            "positionZ": 0.41,
+            "removalGroup": "light",
+            "angle": 2.5,
+            "distance": 1.8,
+            "addHelper": false,
+            "castShadow": true,
+            "hasTarget": true,
+            "targetPositionX": -0.46,
+            "targetPositionY": 0,
+            "targetPositionZ": 0.34
+          },
+          {
+            "type": "spotLight",
+            "intensity": 1.4,
+            "positionX": 0.8,
+            "positionY": 2.23,
+            "positionZ": 0.41,
+            "removalGroup": "light",
+            "angle": 2.5,
+            "distance": 1.8,
+            "addHelper": false,
+            "castShadow": true,
+            "hasTarget": true,
+            "targetPositionX": -0.46,
+            "targetPositionY": 0,
+            "targetPositionZ": 0.34
+          },
+          {
+            "type": "spotLight",
+            "intensity": 1.4,
+            "positionX": 0.19,
+            "positionY": 2.23,
+            "positionZ": 0.41,
+            "removalGroup": "light",
+            "angle": 2.5,
+            "distance": 1.8,
+            "addHelper": false,
+            "castShadow": true,
+            "hasTarget": true,
+            "targetPositionX": -0.46,
+            "targetPositionY": 0,
+            "targetPositionZ": 0.34
+          },
+          {
+            "type": "spotLight",
+            "intensity": 1.4,
+            "positionX": -0.78,
+            "positionY": 2.23,
+            "positionZ": -0.39,
+            "removalGroup": "light",
+            "angle": 2.5,
+            "distance": 1.8,
+            "addHelper": false,
+            "castShadow": true,
+            "hasTarget": true,
+            "targetPositionX": 0.46,
+            "targetPositionY": 0,
+            "targetPositionZ": -0.32
+          },
+          {
+            "type": "spotLight",
+            "intensity": 1.4,
+            "positionX": -0.17,
+            "positionY": 2.23,
+            "positionZ": -0.39,
+            "removalGroup": "light",
+            "angle": 2.5,
+            "distance": 1.8,
+            "addHelper": false,
+            "castShadow": true,
+            "hasTarget": true,
+            "targetPositionX": 0.46,
+            "targetPositionY": 0,
+            "targetPositionZ": -0.32
+          },
+          {
+            "type": "spotLight",
+            "intensity": 1.4,
+            "positionX": 0.8,
+            "positionY": 2.23,
+            "positionZ": -0.39,
+            "removalGroup": "light",
+            "angle": 2.5,
+            "distance": 1.8,
+            "addHelper": false,
+            "castShadow": true,
+            "hasTarget": true,
+            "targetPositionX": 0.46,
+            "targetPositionY": 0,
+            "targetPositionZ": -0.32
+          },
+          {
+            "type": "spotLight",
+            "intensity": 1.4,
+            "positionX": 0.19,
+            "positionY": 2.23,
+            "positionZ": -0.39,
+            "removalGroup": "light",
+            "angle": 2.5,
+            "distance": 1.8,
+            "addHelper": false,
+            "castShadow": true,
+            "hasTarget": true,
+            "targetPositionX": 0.46,
+            "targetPositionY": 0,
+            "targetPositionZ": -0.32
+          }
+        ]
+      }
+    }
+  },
+  {
+    "_id": "ct4",
+    "title": "Spark",
+    "image": "/assets/img/tavan/spark_karegorsel.jpg",
+    "targetModelList": [
+      "SPARK_TAVAN"
+    ],
+    "pdfGroup": "ceil",
+    "base": {
+      "onePiece": {
+        "models": [
+          {
+            "path": "/3d/asansor-parcalanmis/K_gltf/SPARK_TAVAN.gltf",
+            "name": "SPARK_TAVAN",
+            "group": "tavan",
+            "hideGroup": null,
+            "isReflective": false,
+            "removalGroup": null,
+            "defaultMaterial": "metallicDefaultMat",
+            "customMaterialDefinition": {
+              "lightMap": "/3d/textures/TAVAN/SPARK_TAVAN_VRayRawLightingMap.jpg",
+              "aoMap": "/3d/textures/TAVAN/SPARK_TAVAN_VRayAOMap.jpg",
+              "aoMapIntensity": 0.3,
+              "lightMapIntesity": 2
+            }
+          },
+          {
+            "path": "/3d/asansor-parcalanmis/K_gltf/SPARK_TAVAN_LED.gltf",
+            "name": "SPARK_TAVAN_LED",
+            "group": "tavan",
+            "hideGroup": null,
+            "isReflective": false,
+            "removalGroup": null,
+            "defaultMaterial": "whiteDefaultMat",
+            "customMaterialDefinition": {
+              "lightMap": "/3d/textures/TAVAN/SPARK_TAVAN_VRayRawLightingMap.jpg",
+              "aoMap": "/3d/textures/TAVAN/SPARK_TAVAN_LED_VRayAOMap.jpg",
+              "aoMapIntensity": 0.3,
+              "lightMapIntesity": 2
+            }
+          }
+        ],
+        "lights": [
+          {
+            "type": "rectLight",
+            "intensity": 10,
+            "positionX": 0,
+            "positionY": 2.23,
+            "positionZ": 0,
+            "removalGroup": "light",
+            "width": 0.45,
+            "height": 0.4,
+            "hasTarget": true,
+            "addHelper": false,
+            "targetPositionX": 0,
+            "targetPositionY": -1,
+            "targetPositionZ": 0
+          }
+        ]
+      }
+    },
+    "deep": {
+      "onePiece": {
+        "models": [
+          {
+            "path": "/3d/asansor-parcalanmis/D_gltf/D_SPARK_TAVAN_TEK_PARCA.gltf",
+            "name": "SPARK_TAVAN",
+            "group": "tavan",
+            "hideGroup": null,
+            "isReflective": false,
+            "removalGroup": null,
+            "defaultMaterial": "metallicDefaultMat",
+            "customMaterialDefinition": {
+              "lightMap": "/3d/textures/TAVAN/D_SPARK_TAVAN_TEK_PARCA_VRayRawLightingMap.jpg",
+              "aoMap": "/3d/textures/TAVAN/D_SPARK_TAVAN_TEK_PARCA_VRayAOMap.jpg",
+              "aoMapIntensity": 0.3,
+              "lightMapIntesity": 2
+            }
+          },
+          {
+            "path": "/3d/asansor-parcalanmis/D_gltf/D_SPARK_TAVAN_TEK_PARCA_LED.gltf",
+            "name": "SPARK_TAVAN_LED",
+            "group": "tavan",
+            "hideGroup": null,
+            "isReflective": false,
+            "removalGroup": null,
+            "defaultMaterial": "whiteDefaultMat",
+            "customMaterialDefinition": {
+              "lightMap": "/3d/textures/TAVAN/D_SPARK_TAVAN_TEK_PARCA_LED_VRayRawLightingMap.jpg",
+              "aoMap": "/3d/textures/TAVAN/D_SPARK_TAVAN_TEK_PARCA_LED_VRayAOMap.jpg",
+              "aoMapIntensity": 0.3,
+              "lightMapIntesity": 2
+            }
+          }
+        ],
+        "lights": [
+          {
+            "type": "rectLight",
+            "intensity": 10,
+            "positionX": 0,
+            "positionY": 2.23,
+            "positionZ": 0,
+            "removalGroup": "light",
+            "width": 0.48,
+            "height": 0.48,
+            "hasTarget": true,
+            "addHelper": false,
+            "targetPositionX": 0,
+            "targetPositionY": -1,
+            "targetPositionZ": 0
+          }
+        ]
+      },
+      "twoPiece": {
+        "models": [
+          {
+            "path": "/3d/asansor-parcalanmis/D_gltf/D_SPARK_TAVAN_IKI_PARCA.gltf",
+            "name": "SPARK_TAVAN",
+            "group": "tavan",
+            "hideGroup": null,
+            "isReflective": false,
+            "removalGroup": null,
+            "defaultMaterial": "metallicDefaultMat",
+            "customMaterialDefinition": {
+              "lightMap": "/3d/textures/TAVAN/D_SPARK_TAVAN_IKI_PARCA_VRayRawLightingMap.jpg",
+              "aoMap": "/3d/textures/TAVAN/D_SPARK_TAVAN_IKI_PARCA_VRayAOMap.jpg",
+              "aoMapIntensity": 0.3,
+              "lightMapIntesity": 2
+            }
+          },
+          {
+            "path": "/3d/asansor-parcalanmis/D_gltf/D_SPARK_TAVAN_IKI_PARCA_LED.gltf",
+            "name": "SPARK_TAVAN_LED",
+            "group": "tavan",
+            "hideGroup": null,
+            "isReflective": false,
+            "removalGroup": null,
+            "defaultMaterial": "whiteDefaultMat",
+            "customMaterialDefinition": {
+              "lightMap": "/3d/textures/TAVAN/D_SPARK_TAVAN_IKI_PARCA_LED_VRayRawLightingMap.jpg",
+              "aoMap": "/3d/textures/TAVAN/D_SPARK_TAVAN_IKI_PARCA_LED_VRayAOMap.jpg",
+              "aoMapIntensity": 0.3,
+              "lightMapIntesity": 2
+            }
+          }
+        ],
+        "lights": [
+          {
+            "type": "rectLight",
+            "intensity": 10,
+            "positionX": 0,
+            "positionY": 2.23,
+            "positionZ": 0.55,
+            "removalGroup": "light",
+            "width": 0.48,
+            "height": 0.48,
+            "hasTarget": true,
+            "addHelper": false,
+            "targetPositionX": 0,
+            "targetPositionY": -1,
+            "targetPositionZ": 0
+          },
+          {
+            "type": "rectLight",
+            "intensity": 10,
+            "positionX": 0,
+            "positionY": 2.23,
+            "positionZ": -0.47,
+            "removalGroup": "light",
+            "width": 0.48,
+            "height": 0.48,
+            "hasTarget": true,
+            "addHelper": false,
+            "targetPositionX": 0,
+            "targetPositionY": -1,
+            "targetPositionZ": 0
+          }
+        ]
+      }
+    },
+    "wide": {
+      "onePiece": {
+        "models": [
+          {
+            "path": "/3d/asansor-parcalanmis/G_gltf/G_SPARK_TAVAN_TEK_PARCA.gltf",
+            "name": "SPARK_TAVAN",
+            "group": "tavan",
+            "hideGroup": null,
+            "isReflective": false,
+            "removalGroup": null,
+            "defaultMaterial": "metallicDefaultMat",
+            "customMaterialDefinition": {
+              "lightMap": "/3d/textures/TAVAN/G_SPARK_TAVAN_TEK_PARCA_VRayRawLightingMap.jpg",
+              "aoMap": "/3d/textures/TAVAN/G_SPARK_TAVAN_TEK_PARCA_VRayAOMap.jpg",
+              "aoMapIntensity": 0.3,
+              "lightMapIntesity": 2
+            }
+          },
+          {
+            "path": "/3d/asansor-parcalanmis/G_gltf/G_SPARK_TAVAN_TEK_PARCA_LED.gltf",
+            "name": "SPARK_TAVAN_LED",
+            "group": "tavan",
+            "hideGroup": null,
+            "isReflective": false,
+            "removalGroup": null,
+            "defaultMaterial": "whiteDefaultMat",
+            "customMaterialDefinition": {
+              "lightMap": "/3d/textures/TAVAN/G_SPARK_TAVAN_TEK_PARCA_LED_VRayRawLightingMap.jpg",
+              "aoMap": "/3d/textures/TAVAN/G_SPARK_TAVAN_TEK_PARCA_LED_VRayAOMap.jpg",
+              "aoMapIntensity": 0.3,
+              "lightMapIntesity": 2
+            }
+          }
+        ],
+        "lights": [
+          {
+            "type": "rectLight",
+            "intensity": 10,
+            "positionX": 0,
+            "positionY": 2.23,
+            "positionZ": 0.03,
+            "removalGroup": "light",
+            "width": 0.48,
+            "height": 0.48,
+            "hasTarget": true,
+            "addHelper": false,
+            "targetPositionX": 0,
+            "targetPositionY": -1,
+            "targetPositionZ": 0
+          }
+        ]
+      },
+      "twoPiece": {
+        "models": [
+          {
+            "path": "/3d/asansor-parcalanmis/G_gltf/G_SPARK_TAVAN_IKI_PARCA.gltf",
+            "name": "SPARK_TAVAN",
+            "group": "tavan",
+            "hideGroup": null,
+            "isReflective": false,
+            "removalGroup": null,
+            "defaultMaterial": "metallicDefaultMat",
+            "customMaterialDefinition": {
+              "lightMap": "/3d/textures/TAVAN/G_SPARK_TAVAN_IKI_PARCA_VRayRawLightingMap.jpg",
+              "aoMap": "/3d/textures/TAVAN/G_SPARK_TAVAN_IKI_PARCA_VRayAOMap.jpg",
+              "aoMapIntensity": 0.3,
+              "lightMapIntesity": 2
+            }
+          },
+          {
+            "path": "/3d/asansor-parcalanmis/G_gltf/G_SPARK_TAVAN_IKI_PARCA_LED.gltf",
+            "name": "SPARK_TAVAN_LED",
+            "group": "tavan",
+            "hideGroup": null,
+            "isReflective": false,
+            "removalGroup": null,
+            "defaultMaterial": "whiteDefaultMat",
+            "customMaterialDefinition": {
+              "lightMap": "/3d/textures/TAVAN/G_SPARK_TAVAN_IKI_PARCA_LED_VRayRawLightingMap.jpg",
+              "aoMap": "/3d/textures/TAVAN/G_SPARK_TAVAN_IKI_PARCA_LED_VRayAOMap.jpg",
+              "aoMapIntensity": 0.3,
+              "lightMapIntesity": 2
+            }
+          }
+        ],
+        "lights": [
+          {
+            "type": "rectLight",
+            "intensity": 10,
+            "positionX": 0.49,
+            "positionY": 2.23,
+            "positionZ": 0.02,
+            "removalGroup": "light",
+            "width": 0.48,
+            "height": 0.48,
+            "hasTarget": true,
+            "addHelper": false,
+            "targetPositionX": 0,
+            "targetPositionY": -1,
+            "targetPositionZ": 0
+          },
+          {
+            "type": "rectLight",
+            "intensity": 10,
+            "positionX": -0.49,
+            "positionY": 2.23,
+            "positionZ": 0.02,
+            "removalGroup": "light",
+            "width": 0.48,
+            "height": 0.48,
+            "hasTarget": true,
+            "addHelper": false,
+            "targetPositionX": 0,
+            "targetPositionY": -1,
+            "targetPositionZ": 0
+          }
+        ]
+      }
+    }
+  }
+]

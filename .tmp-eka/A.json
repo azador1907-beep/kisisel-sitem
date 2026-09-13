@@ -1,0 +1,2972 @@
+[
+  {
+    "id": "whiteDefaultMat",
+    "_id": "whiteDefaultMat",
+    "envMap": "ENV_CAR",
+    "color": "0xEEEEEE",
+    "map": "/3d/textures/AYNALAR/NORMAL_AYNA/NORMAL_AYNA_Diffuse.jpg",
+    "normalMap": "/3d/textures/AYNALAR/NORMAL_AYNA/NORMAL_AYNA_Normal.jpg",
+    "normalScale": [
+      1,
+      1
+    ],
+    "metalness": 0.3
+  },
+  {
+    "id": "metallicDefaultMat",
+    "_id": "metallicDefaultMat",
+    "envMap": "ENV_CAR",
+    "color": "0xA3A3A3",
+    "map": "/3d/textures/Cam_D.jpg",
+    "normalMap": "/3d/textures/Ayna_Satine_N.jpg",
+    "roughnessMap": "/3d/textures/Super_Ayna_R.png",
+    "roughness": 0.85,
+    "metalness": 0.99,
+    "diffuseMapWrap": true,
+    "normalMapWrap": true,
+    "roughnessMapWrap": true,
+    "toneMapping": 3,
+    "normalScale": [
+      0.001,
+      0.001
+    ],
+    "diffuseMapWrapScale": [
+      32,
+      2
+    ],
+    "roughnessMapWrapScale": [
+      0.0004,
+      0.0004
+    ],
+    "aoMapIntensity": 0.5
+  },
+  {
+    "id": "dokulu_sat_paslanmaz_1",
+    "_id": "dokulu_sat_paslanmaz_1",
+    "type": "dokulu",
+    "translations": {
+      "tr": {
+        "title": "EKA-3D01",
+        "group": "Dokulu Satine Paslanmaz"
+      },
+      "en": {
+        "title": "EKA-3D01",
+        "group": "Textured Satin Stainless Steel"
+      }
+    },
+    "groupId": "dokuluSatine",
+    "group": "Dokulu Satine Paslanmaz",
+    "image": "/assets/img/dokulu_paslanmaz/dm_013d01.jpg",
+    "envMap": "ENV_CAR",
+    "color": "0xa3a3a3",
+    "map": "/3d/textures/Cam_D.jpg",
+    "normalMap": "/3d/textures/DM-013D01.jpg",
+    "roughnessMap": "/3d/textures/DM-013D01_r.jpg",
+    "roughness": 0.1,
+    "metalness": 0.97,
+    "normalScale": [
+      1.05,
+      1.05
+    ],
+    "diffuseMapWrap": true,
+    "normalMapWrap": false,
+    "diffuseMapWrapScale": [
+      1.4,
+      1.4
+    ],
+    "normalMapWrapScale": [
+      1.5,
+      1.5
+    ],
+    "roughnessMapWrap": false,
+    "roughnessMapWrapScale": [
+      1.5,
+      1.5
+    ],
+    "anisotropy": 1,
+    "aoMapIntensity": 1,
+    "envMapIntensity": 2.5
+  },
+  {
+    "id": "dokulu_sat_paslanmaz_2",
+    "_id": "dokulu_sat_paslanmaz_2",
+    "type": "dokulu",
+    "translations": {
+      "tr": {
+        "title": "EKA-3D02",
+        "group": "Dokulu Satine Paslanmaz"
+      },
+      "en": {
+        "title": "EKA-3D02",
+        "group": "Textured Satin Stainless Steel"
+      }
+    },
+    "groupId": "dokuluSatine",
+    "group": "Dokulu Satine Paslanmaz",
+    "image": "/assets/img/dokulu_paslanmaz/dmp_5wl.jpg",
+    "envMap": "ENV_CAR",
+    "color": "0xa3a3a3",
+    "map": "/3d/textures/Cam_D.jpg",
+    "normalMap": "/3d/textures/5_wl_norm.jpg",
+    "roughnessMap": "/3d/textures/5_wl_roug.jpg",
+    "roughness": 0.95,
+    "metalness": 0.98,
+    "normalScale": [
+      2.15,
+      2.15
+    ],
+    "diffuseMapWrap": false,
+    "normalMapWrap": true,
+    "roughnessMapWrap": true,
+    "diffuseMapWrapScale": [
+      1.4,
+      1.4
+    ],
+    "roughnessMapWrapScale": [
+      23,
+      23
+    ],
+    "normalMapWrapScale": [
+      23,
+      23
+    ],
+    "anisotropy": 1,
+    "aoMapIntensity": 1,
+    "envMapIntensity": 2
+  },
+  {
+    "id": "dokulu_sat_paslanmaz_3",
+    "_id": "dokulu_sat_paslanmaz_3",
+    "type": "dokulu",
+    "translations": {
+      "tr": {
+        "title": "EKA-3D03",
+        "group": "Dokulu Satine Paslanmaz"
+      },
+      "en": {
+        "title": "EKA-3D03",
+        "group": "Textured Satin Stainless Steel"
+      }
+    },
+    "groupId": "dokuluSatine",
+    "group": "Dokulu Satine Paslanmaz",
+    "image": "/assets/img/dokulu_paslanmaz/dmp_kare_square.jpg",
+    "envMap": "ENV_CAR",
+    "color": "0xa3a3a3",
+    "map": "/3d/textures/Cam_D.jpg",
+    "normalMap": "/3d/textures/Eka_3D03_N.jpg",
+    "roughnessMap": "/3d/textures/Eka_3D03_R.jpg",
+    "roughness": 0.95,
+    "metalness": 0.98,
+    "normalScale": [
+      2.15,
+      2.15
+    ],
+    "diffuseMapWrap": false,
+    "normalMapWrap": true,
+    "roughnessMapWrap": true,
+    "diffuseMapWrapScale": [
+      1.4,
+      1.4
+    ],
+    "roughnessMapWrapScale": [
+      45,
+      45
+    ],
+    "normalMapWrapScale": [
+      45,
+      45
+    ],
+    "toneMapping": 3,
+    "anisotropy": 1,
+    "aoMapIntensity": 1,
+    "envMapIntensity": 2
+  },
+  {
+    "id": "dokulu_sat_paslanmaz_4",
+    "_id": "dokulu_sat_paslanmaz_4",
+    "type": "dokulu",
+    "translations": {
+      "tr": {
+        "title": "EKA-3D04",
+        "group": "Dokulu Satine Paslanmaz"
+      },
+      "en": {
+        "title": "EKA-3D04",
+        "group": "Textured Satin Stainless Steel"
+      }
+    },
+    "groupId": "dokuluSatine",
+    "group": "Dokulu Satine Paslanmaz",
+    "image": "/assets/img/dokulu_paslanmaz/dlc_01_3d06.jpg",
+    "envMap": "ENV_CAR",
+    "color": "0xa3a3a3",
+    "map": "/3d/textures/Cam_D.jpg",
+    "normalMap": "/3d/textures/dlc_10_3d06_normal.jpg",
+    "roughnessMap": "/3d/textures/dlc_10_3d06_roug.jpg",
+    "roughness": 0.95,
+    "metalness": 0.98,
+    "normalScale": [
+      1.15,
+      1.15
+    ],
+    "diffuseMapWrap": false,
+    "normalMapWrap": true,
+    "roughnessMapWrap": true,
+    "diffuseMapWrapScale": [
+      1.4,
+      1.4
+    ],
+    "roughnessMapWrapScale": [
+      20,
+      20
+    ],
+    "normalMapWrapScale": [
+      20,
+      20
+    ],
+    "toneMapping": 3,
+    "anisotropy": 1,
+    "aoMapIntensity": 1,
+    "envMapIntensity": 2
+  },
+  {
+    "id": "desenli_sat_paslanmaz_1",
+    "_id": "desenli_sat_paslanmaz_1",
+    "type": "desenli",
+    "translations": {
+      "tr": {
+        "title": "EKA-DSP01",
+        "group": "Desenli Satine Paslanmaz"
+      },
+      "en": {
+        "title": "EKA-DSP01",
+        "group": "Patterned Satin Stainless Steel"
+      }
+    },
+    "groupId": "desenliSatine",
+    "group": "Desenli Satine Paslanmaz",
+    "image": "/assets/img/desenli_paslanmaz/yh_ge27.jpg",
+    "envMap": "ENV_CAR",
+    "color": "0xa3a3a3",
+    "map": "/3d/textures/Cam_D.jpg",
+    "normalMap": "/3d/textures/AYNALAR/NORMAL_AYNA/NORMAL_AYNA_Normal.jpg",
+    "roughnessMap": "/3d/textures/yh_ge27_roug.jpg",
+    "roughness": 0.95,
+    "metalness": 0.98,
+    "normalScale": [
+      6,
+      6
+    ],
+    "diffuseMapWrap": false,
+    "normalMapWrap": false,
+    "roughnessMapWrap": true,
+    "diffuseMapWrapScale": [
+      1.4,
+      1.4
+    ],
+    "roughnessMapWrapScale": [
+      20,
+      20
+    ],
+    "toneMapping": 3,
+    "anisotropy": 1,
+    "aoMapIntensity": 1,
+    "envMapIntensity": 2
+  },
+  {
+    "id": "desenli_sat_paslanmaz_2",
+    "_id": "desenli_sat_paslanmaz_2",
+    "type": "desenli",
+    "translations": {
+      "tr": {
+        "title": "EKA-DSP02"
+      },
+      "en": {
+        "title": "EKA-DSP02",
+        "group": "Patterned Satin Stainless Steel"
+      }
+    },
+    "groupId": "desenliSatine",
+    "group": "Desenli Satine Paslanmaz",
+    "image": "/assets/img/desenli_paslanmaz/dm_sb_03.jpg",
+    "envMap": "ENV_CAR",
+    "color": "0xa3a3a3",
+    "map": "/3d/textures/Cam_D.jpg",
+    "normalMap": "/3d/textures/AYNALAR/NORMAL_AYNA/NORMAL_AYNA_Normal.jpg",
+    "roughnessMap": "/3d/textures/dm_sb_03_roug.jpg",
+    "roughness": 0.95,
+    "metalness": 0.98,
+    "normalScale": [
+      6,
+      6
+    ],
+    "diffuseMapWrap": false,
+    "normalMapWrap": false,
+    "roughnessMapWrap": true,
+    "diffuseMapWrapScale": [
+      1.4,
+      1.4
+    ],
+    "roughnessMapWrapScale": [
+      10,
+      10
+    ],
+    "toneMapping": 3,
+    "anisotropy": 1,
+    "aoMapIntensity": 1,
+    "envMapIntensity": 2
+  },
+  {
+    "id": "desenli_sat_paslanmaz_3",
+    "_id": "desenli_sat_paslanmaz_3",
+    "type": "desenli",
+    "translations": {
+      "tr": {
+        "title": "EKA-DSP03"
+      },
+      "en": {
+        "title": "EKA-DSP03",
+        "group": "Patterned Satin Stainless Steel"
+      }
+    },
+    "groupId": "desenliSatine",
+    "group": "Desenli Satine Paslanmaz",
+    "image": "/assets/img/desenli_paslanmaz/dm_15.jpg",
+    "envMap": "ENV_CAR",
+    "color": "0xa3a3a3",
+    "map": "/3d/textures/Cam_D.jpg",
+    "normalMap": "/3d/textures/AYNALAR/NORMAL_AYNA/NORMAL_AYNA_Normal.jpg",
+    "roughnessMap": "/3d/textures/DM-15_roug.jpg",
+    "roughness": 0.95,
+    "metalness": 0.98,
+    "normalScale": [
+      3,
+      3
+    ],
+    "diffuseMapWrap": false,
+    "normalMapWrap": false,
+    "roughnessMapWrap": true,
+    "diffuseMapWrapScale": [
+      1.4,
+      1.4
+    ],
+    "roughnessMapWrapScale": [
+      12,
+      12
+    ],
+    "toneMapping": 3,
+    "anisotropy": 1,
+    "aoMapIntensity": 1,
+    "envMapIntensity": 2
+  },
+  {
+    "id": "desenli_sat_paslanmaz_4",
+    "_id": "desenli_sat_paslanmaz_4",
+    "type": "desenli",
+    "translations": {
+      "tr": {
+        "title": "EKA-DSP04"
+      },
+      "en": {
+        "title": "EKA-DSP04",
+        "group": "Patterned Satin Stainless Steel"
+      }
+    },
+    "groupId": "desenliSatine",
+    "group": "Desenli Satine Paslanmaz",
+    "image": "/assets/img/desenli_paslanmaz/dg_26.jpg",
+    "envMap": "ENV_CAR",
+    "color": "0xa3a3a3",
+    "map": "/3d/textures/Cam_D.jpg",
+    "normalMap": "/3d/textures/AYNALAR/NORMAL_AYNA/NORMAL_AYNA_Normal.jpg",
+    "roughnessMap": "/3d/textures/dg_26_roug.jpg",
+    "roughness": 0.95,
+    "metalness": 0.98,
+    "normalScale": [
+      6,
+      6
+    ],
+    "diffuseMapWrap": false,
+    "normalMapWrap": false,
+    "roughnessMapWrap": true,
+    "diffuseMapWrapScale": [
+      1.4,
+      1.4
+    ],
+    "roughnessMapWrapScale": [
+      20,
+      20
+    ],
+    "toneMapping": 3,
+    "anisotropy": 1,
+    "aoMapIntensity": 1,
+    "envMapIntensity": 2
+  },
+  {
+    "translations": {
+      "tr": {
+        "title": "Satine Paslanmaz",
+        "group": "Satine Paslanmaz"
+      },
+      "en": {
+        "title": "Satin Stainless Steel",
+        "group": "Satin Stainless Steel"
+      }
+    },
+    "id": "sat_paslanmaz_1",
+    "_id": "sat_paslanmaz_1",
+    "type": "normal",
+    "groupId": "satine",
+    "group": "Satine Paslanmaz",
+    "image": "/assets/img/satine/satine.jpg",
+    "envMap": "ENV_CAR",
+    "color": "0xa3a3a3",
+    "map": "/3d/textures/Satine_D.jpg",
+    "normalMap": "/3d/textures/Satine_N.jpg",
+    "roughnessMap": "/3d/textures/Ayna_Satine_Gecis_R.jpg",
+    "roughness": 0.92,
+    "metalness": 0.99,
+    "diffuseMapWrap": true,
+    "normalMapWrap": true,
+    "roughnessMapWrap": false,
+    "toneMapping": 3,
+    "anisotropy": 1,
+    "normalScale": [
+      0.15,
+      0.15
+    ],
+    "diffuseMapWrapScale": [
+      6,
+      3
+    ],
+    "roughnessMapWrapScale": [
+      1.5,
+      0.4
+    ],
+    "normalMapWrapScale": [
+      2.8,
+      0.8
+    ]
+  },
+  {
+    "translations": {
+      "tr": {
+        "title": "Ayna Satine Paslanmaz",
+        "group": "Ayna Satine Paslanmaz"
+      },
+      "en": {
+        "title": "Mirror Satin Stainless Steel",
+        "group": "Mirror Satin Stainless Steel"
+      }
+    },
+    "id": "sat_paslanmaz_2",
+    "_id": "sat_paslanmaz_2",
+    "type": "ayna",
+    "groupId": "aynaSatin",
+    "group": "Ayna Satine Paslanmaz",
+    "image": "/assets/img/ayna_satine/ayna_satine.jpg",
+    "envMap": "ENV_CAR",
+    "color": "0xa3a3a3",
+    "map": "/3d/textures/Ayna_Satine_R.jpg",
+    "normalMap": "/3d/textures/Ayna_Satine_N.jpg",
+    "roughnessMap": "/3d/textures/Ayna_Satine_Gecis_R.jpg",
+    "roughness": 0.4,
+    "metalness": 0.99,
+    "diffuseMapWrap": true,
+    "normalMapWrap": true,
+    "roughnessMapWrap": true,
+    "toneMapping": 3,
+    "anisotropy": 1,
+    "normalScale": [
+      0.1,
+      0.1
+    ],
+    "diffuseMapWrapScale": [
+      7,
+      3.5
+    ],
+    "roughnessMapWrapScale": [
+      0.1,
+      0.1
+    ],
+    "normalMapWrapScale": [
+      2.8,
+      0.8
+    ]
+  },
+  {
+    "translations": {
+      "tr": {
+        "title": "Süper Ayna Satine Paslanmaz",
+        "group": "Süper Ayna Satine Paslanmaz"
+      },
+      "en": {
+        "title": "Super Mirror Hairline Stainless Steel",
+        "group": "Super Mirror Hairline Stainless Steel"
+      }
+    },
+    "id": "sat_paslanmaz_3",
+    "_id": "sat_paslanmaz_3",
+    "type": "superAyna",
+    "groupId": "superAynaSatin",
+    "group": "Süper Ayna Satine Paslanmaz",
+    "image": "/assets/img/super_ayna_satine/super_ayna.jpg",
+    "envMap": "ENV_CAR",
+    "color": "0xa3a3a3",
+    "map": "/3d/textures/Ayna_Satine_R.jpg",
+    "normalMap": "/3d/textures/Ayna_Satine_N.jpg",
+    "roughnessMap": "/3d/textures/Super_Ayna_R.png",
+    "roughness": 0,
+    "metalness": 0.99,
+    "diffuseMapWrap": true,
+    "normalMapWrap": true,
+    "roughnessMapWrap": true,
+    "toneMapping": 5,
+    "normalScale": [
+      0.001,
+      0.001
+    ],
+    "diffuseMapWrapScale": [
+      40,
+      2
+    ],
+    "roughnessMapWrapScale": [
+      0.0004,
+      0.0004
+    ],
+    "aoMapIntensity": 0.1
+  },
+  {
+    "translations": {
+      "tr": {
+        "title": "Altın Satine Paslanmaz"
+      },
+      "en": {
+        "title": "Gold Satin Stainless Steel"
+      }
+    },
+    "id": "gold_sat_paslanmaz_1",
+    "_id": "gold_sat_paslanmaz_1",
+    "type": "normal",
+    "groupId": "satine",
+    "group": "Satine Paslanmaz",
+    "image": "/assets/img/satine/altın_satine.jpg",
+    "envMap": "ENV_CAR",
+    "color": "0xc8b273",
+    "map": "/3d/textures/Satine_D.jpg",
+    "normalMap": "/3d/textures/Satine_N.jpg",
+    "roughnessMap": "/3d/textures/Ayna_Satine_Gecis_R.jpg",
+    "roughness": 0.92,
+    "metalness": 0.99,
+    "diffuseMapWrap": true,
+    "normalMapWrap": true,
+    "roughnessMapWrap": true,
+    "toneMapping": 3,
+    "anisotropy": 1,
+    "normalScale": [
+      0.15,
+      0.15
+    ],
+    "diffuseMapWrapScale": [
+      6,
+      3
+    ],
+    "roughnessMapWrapScale": [
+      1.5,
+      0.4
+    ],
+    "normalMapWrapScale": [
+      2.8,
+      0.8
+    ]
+  },
+  {
+    "translations": {
+      "tr": {
+        "title": "Altın Ayna Satine Paslanmaz"
+      },
+      "en": {
+        "title": "Gold Mirror Hairline Stainless Steel"
+      }
+    },
+    "id": "gold_sat_paslanmaz_2",
+    "_id": "gold_sat_paslanmaz_2",
+    "type": "ayna",
+    "groupId": "aynaSatin",
+    "group": "Ayna Satine Paslanmaz",
+    "image": "/assets/img/ayna_satine/altın_ayna_satine.jpg",
+    "envMap": "ENV_CAR",
+    "color": "0xc8b273",
+    "map": "/3d/textures/Ayna_Satine_R.jpg",
+    "normalMap": "/3d/textures/Ayna_Satine_N.jpg",
+    "roughnessMap": "/3d/textures/Ayna_Satine_Gecis_R.jpg",
+    "roughness": 0.4,
+    "metalness": 0.99,
+    "diffuseMapWrap": true,
+    "normalMapWrap": true,
+    "roughnessMapWrap": true,
+    "toneMapping": 3,
+    "anisotropy": 1,
+    "normalScale": [
+      0.1,
+      0.1
+    ],
+    "diffuseMapWrapScale": [
+      7,
+      3.5
+    ],
+    "roughnessMapWrapScale": [
+      0.1,
+      0.1
+    ],
+    "normalMapWrapScale": [
+      2.8,
+      0.8
+    ],
+    "aoMapIntensity": 0.3
+  },
+  {
+    "translations": {
+      "tr": {
+        "title": "Altın Süper Ayna Satine Paslanmaz"
+      },
+      "en": {
+        "title": "Gold Super Mirror Hairline Stainless Steel"
+      }
+    },
+    "id": "gold_sat_paslanmaz_3",
+    "_id": "gold_sat_paslanmaz_3",
+    "type": "superAyna",
+    "groupId": "superAynaSatin",
+    "group": "Süper Ayna Satine Paslanmaz",
+    "image": "/assets/img/super_ayna_satine/altın_super_ayna.jpg",
+    "envMap": "ENV_CAR",
+    "color": "0xc8b273",
+    "map": "/3d/textures/Ayna_Satine_R.jpg",
+    "normalMap": "/3d/textures/Ayna_Satine_N.jpg",
+    "roughnessMap": "/3d/textures/Super_Ayna_R.png",
+    "roughness": 0,
+    "metalness": 0.99,
+    "diffuseMapWrap": true,
+    "normalMapWrap": true,
+    "roughnessMapWrap": true,
+    "toneMapping": 5,
+    "normalScale": [
+      0.001,
+      0.001
+    ],
+    "diffuseMapWrapScale": [
+      40,
+      2
+    ],
+    "roughnessMapWrapScale": [
+      0.0004,
+      0.0004
+    ],
+    "aoMapIntensity": 0.1
+  },
+  {
+    "translations": {
+      "tr": {
+        "title": "Bronz Satine Paslanmaz"
+      },
+      "en": {
+        "title": "Bronze Satin Stainless Steel"
+      }
+    },
+    "id": "bronze_sat_paslanmaz_1",
+    "_id": "bronze_sat_paslanmaz_1",
+    "type": "normal",
+    "groupId": "satine",
+    "group": "Satine Paslanmaz",
+    "image": "/assets/img/satine/bronz_satine.jpg",
+    "envMap": "ENV_CAR",
+    "color": "0x9c836f",
+    "map": "/3d/textures/Satine_D.jpg",
+    "normalMap": "/3d/textures/Satine_N.jpg",
+    "roughnessMap": "/3d/textures/Ayna_Satine_Gecis_R.jpg",
+    "roughness": 0.92,
+    "metalness": 0.99,
+    "diffuseMapWrap": true,
+    "normalMapWrap": true,
+    "roughnessMapWrap": true,
+    "toneMapping": 3,
+    "anisotropy": 1,
+    "normalScale": [
+      0.15,
+      0.15
+    ],
+    "diffuseMapWrapScale": [
+      6,
+      3
+    ],
+    "roughnessMapWrapScale": [
+      1.5,
+      0.4
+    ],
+    "normalMapWrapScale": [
+      2.8,
+      0.8
+    ]
+  },
+  {
+    "translations": {
+      "tr": {
+        "title": "Bronz Ayna Satine Paslanmaz"
+      },
+      "en": {
+        "title": "Bronze Mirror Satin Stainless Steel"
+      }
+    },
+    "id": "bronze_sat_paslanmaz_2",
+    "_id": "bronze_sat_paslanmaz_2",
+    "type": "ayna",
+    "groupId": "aynaSatin",
+    "group": "Ayna Satine Paslanmaz",
+    "image": "/assets/img/ayna_satine/bronz_ayna_saitne.jpg",
+    "envMap": "ENV_CAR",
+    "color": "0x9c836f",
+    "map": "/3d/textures/Ayna_Satine_R.jpg",
+    "normalMap": "/3d/textures/Ayna_Satine_N.jpg",
+    "roughnessMap": "/3d/textures/Ayna_Satine_Gecis_R.jpg",
+    "roughness": 0.4,
+    "metalness": 0.99,
+    "diffuseMapWrap": true,
+    "normalMapWrap": true,
+    "roughnessMapWrap": true,
+    "toneMapping": 3,
+    "anisotropy": 1,
+    "normalScale": [
+      0.1,
+      0.1
+    ],
+    "diffuseMapWrapScale": [
+      7,
+      3.5
+    ],
+    "roughnessMapWrapScale": [
+      0.1,
+      0.1
+    ],
+    "normalMapWrapScale": [
+      2.8,
+      0.8
+    ],
+    "aoMapIntensity": 0.3
+  },
+  {
+    "translations": {
+      "tr": {
+        "title": "Bronz Süper Ayna Satine Paslanmaz"
+      },
+      "en": {
+        "title": "Bronze Super Mirror Satin Stainless Steel"
+      }
+    },
+    "id": "bronze_sat_paslanmaz_3",
+    "_id": "bronze_sat_paslanmaz_3",
+    "type": "superAyna",
+    "groupId": "superAynaSatin",
+    "group": "Süper Ayna Satine Paslanmaz",
+    "image": "/assets/img/super_ayna_satine/bronz_super_ayna.jpg",
+    "envMap": "ENV_CAR",
+    "color": "0xb78974",
+    "map": "/3d/textures/Ayna_Satine_R.jpg",
+    "normalMap": "/3d/textures/Ayna_Satine_N.jpg",
+    "roughnessMap": "/3d/textures/Super_Ayna_R.png",
+    "roughness": 0,
+    "metalness": 0.99,
+    "diffuseMapWrap": true,
+    "normalMapWrap": true,
+    "roughnessMapWrap": true,
+    "toneMapping": 5,
+    "normalScale": [
+      0.001,
+      0.001
+    ],
+    "diffuseMapWrapScale": [
+      40,
+      2
+    ],
+    "roughnessMapWrapScale": [
+      0.0004,
+      0.0004
+    ],
+    "aoMapIntensity": 0.1
+  },
+  {
+    "translations": {
+      "tr": {
+        "title": "Şampanya Satine Paslanmaz"
+      },
+      "en": {
+        "title": "Champagne Satin Stainless Steel"
+      }
+    },
+    "id": "champ_sat_paslanmaz_1",
+    "_id": "champ_sat_paslanmaz_1",
+    "type": "normal",
+    "groupId": "satine",
+    "group": "Satine Paslanmaz",
+    "image": "/assets/img/satine/sampanya_satine.jpg",
+    "envMap": "ENV_CAR",
+    "color": "0xbfa891",
+    "map": "/3d/textures/Satine_D.jpg",
+    "normalMap": "/3d/textures/Satine_N.jpg",
+    "roughnessMap": "/3d/textures/Ayna_Satine_Gecis_R.jpg",
+    "roughness": 0.92,
+    "metalness": 0.99,
+    "diffuseMapWrap": true,
+    "normalMapWrap": true,
+    "roughnessMapWrap": true,
+    "toneMapping": 3,
+    "anisotropy": 1,
+    "normalScale": [
+      0.15,
+      0.15
+    ],
+    "diffuseMapWrapScale": [
+      6,
+      3
+    ],
+    "roughnessMapWrapScale": [
+      1.5,
+      0.4
+    ],
+    "normalMapWrapScale": [
+      2.8,
+      0.8
+    ]
+  },
+  {
+    "translations": {
+      "tr": {
+        "title": "Şampanya Ayna Satine Paslanmaz"
+      },
+      "en": {
+        "title": "Champagne Mirror Satin Stainless Steel"
+      }
+    },
+    "id": "champ_sat_paslanmaz_2",
+    "_id": "champ_sat_paslanmaz_2",
+    "type": "ayna",
+    "groupId": "aynaSatin",
+    "group": "Ayna Satine Paslanmaz",
+    "image": "/assets/img/ayna_satine/sampanya_ayna_satine.jpg",
+    "envMap": "ENV_CAR",
+    "color": "0xbfa891",
+    "map": "/3d/textures/Ayna_Satine_R.jpg",
+    "normalMap": "/3d/textures/Ayna_Satine_N.jpg",
+    "roughnessMap": "/3d/textures/Ayna_Satine_Gecis_R.jpg",
+    "roughness": 0.4,
+    "metalness": 0.99,
+    "diffuseMapWrap": true,
+    "normalMapWrap": true,
+    "roughnessMapWrap": true,
+    "toneMapping": 3,
+    "anisotropy": 1,
+    "normalScale": [
+      0.1,
+      0.1
+    ],
+    "diffuseMapWrapScale": [
+      7,
+      3.5
+    ],
+    "roughnessMapWrapScale": [
+      0.1,
+      0.1
+    ],
+    "normalMapWrapScale": [
+      2.8,
+      0.8
+    ],
+    "aoMapIntensity": 0.3
+  },
+  {
+    "translations": {
+      "tr": {
+        "title": "Şampanya Süper Ayna Satine Paslanmaz"
+      },
+      "en": {
+        "title": "Champagne Super Mirror Satin Stainless Steel"
+      }
+    },
+    "id": "champ_sat_paslanmaz_3",
+    "_id": "champ_sat_paslanmaz_3",
+    "type": "superAyna",
+    "groupId": "superAynaSatin",
+    "group": "Süper Ayna Satine Paslanmaz",
+    "image": "/assets/img/super_ayna_satine/sampanya_super_ayna.jpg",
+    "envMap": "ENV_CAR",
+    "color": "0xebcaa1",
+    "map": "/3d/textures/Ayna_Satine_R.jpg",
+    "normalMap": "/3d/textures/Ayna_Satine_N.jpg",
+    "roughnessMap": "/3d/textures/Super_Ayna_R.png",
+    "roughness": 0,
+    "metalness": 0.99,
+    "diffuseMapWrap": true,
+    "normalMapWrap": true,
+    "roughnessMapWrap": true,
+    "toneMapping": 5,
+    "normalScale": [
+      0.001,
+      0.001
+    ],
+    "diffuseMapWrapScale": [
+      40,
+      2
+    ],
+    "roughnessMapWrapScale": [
+      0.0004,
+      0.0004
+    ],
+    "aoMapIntensity": 0.1
+  },
+  {
+    "translations": {
+      "tr": {
+        "title": "Siyah Satine Paslanmaz"
+      },
+      "en": {
+        "title": "Black Hairline Stainless Steel"
+      }
+    },
+    "id": "black_sat_paslanmaz_1",
+    "_id": "black_sat_paslanmaz_1",
+    "type": "normal",
+    "groupId": "satine",
+    "group": "Satine Paslanmaz",
+    "image": "/assets/img/satine/siyah_satine.jpg",
+    "envMap": "ENV_CAR",
+    "color": "0x5c5c5c",
+    "map": "/3d/textures/Satine_D.jpg",
+    "normalMap": "/3d/textures/Satine_N.jpg",
+    "roughnessMap": "/3d/textures/Ayna_Satine_Gecis_R.jpg",
+    "roughness": 0.92,
+    "metalness": 0.99,
+    "diffuseMapWrap": true,
+    "normalMapWrap": true,
+    "roughnessMapWrap": true,
+    "toneMapping": 5,
+    "anisotropy": 1,
+    "normalScale": [
+      0.15,
+      0.15
+    ],
+    "diffuseMapWrapScale": [
+      6,
+      3
+    ],
+    "roughnessMapWrapScale": [
+      1.5,
+      0.4
+    ],
+    "normalMapWrapScale": [
+      2.8,
+      0.8
+    ]
+  },
+  {
+    "translations": {
+      "tr": {
+        "title": "Siyah Ayna Satine Paslanmaz"
+      },
+      "en": {
+        "title": "Black Mirror Hairline Stainless Steel"
+      }
+    },
+    "id": "black_sat_paslanmaz_2",
+    "_id": "black_sat_paslanmaz_2",
+    "type": "ayna",
+    "groupId": "aynaSatin",
+    "group": "Ayna Satine Paslanmaz",
+    "image": "/assets/img/ayna_satine/siyah_ayna_saitne.jpg",
+    "envMap": "ENV_CAR",
+    "color": "0x5c5c5c",
+    "map": "/3d/textures/Ayna_Satine_R.jpg",
+    "normalMap": "/3d/textures/Ayna_Satine_N.jpg",
+    "roughnessMap": "/3d/textures/Ayna_Satine_Gecis_R.jpg",
+    "roughness": 0.4,
+    "metalness": 0.99,
+    "diffuseMapWrap": true,
+    "normalMapWrap": true,
+    "roughnessMapWrap": true,
+    "toneMapping": 5,
+    "anisotropy": 1,
+    "normalScale": [
+      0.1,
+      0.1
+    ],
+    "diffuseMapWrapScale": [
+      7,
+      3.5
+    ],
+    "roughnessMapWrapScale": [
+      0.1,
+      0.1
+    ],
+    "normalMapWrapScale": [
+      2.8,
+      0.8
+    ],
+    "aoMapIntensity": 0.3
+  },
+  {
+    "id": "black_sat_paslanmaz_3",
+    "_id": "black_sat_paslanmaz_3",
+    "type": "superAyna",
+    "title": "Siyah Süper Ayna Satine Paslanmaz",
+    "groupId": "superAynaSatin",
+    "group": "Süper Ayna Satine Paslanmaz",
+    "image": "/assets/img/super_ayna_satine/siyah_super_ayna.jpg",
+    "envMap": "ENV_CAR",
+    "color": "0x737373",
+    "map": "/3d/textures/Ayna_Satine_R.jpg",
+    "normalMap": "/3d/textures/Ayna_Satine_N.jpg",
+    "roughnessMap": "/3d/textures/Super_Ayna_R.png",
+    "roughness": 0,
+    "metalness": 0.99,
+    "diffuseMapWrap": true,
+    "normalMapWrap": true,
+    "roughnessMapWrap": true,
+    "toneMapping": 5,
+    "normalScale": [
+      0.001,
+      0.001
+    ],
+    "diffuseMapWrapScale": [
+      40,
+      2
+    ],
+    "roughnessMapWrapScale": [
+      0.0004,
+      0.0004
+    ],
+    "aoMapIntensity": 0.1
+  },
+  {
+    "id": "lg_ms509",
+    "_id": "lg_ms509",
+    "title": "LG-MS09",
+    "groupId": "lgHausys",
+    "group": "LG-HAUSYS",
+    "type": "lgHausys",
+    "image": "/assets/img/kabinduvar/1.jpg",
+    "envMap": "ENV_CAR",
+    "map": "/3d/textures/LG-HAUSYS/LG-MS09/LG-MS09_Diffuse.jpg",
+    "normalMap": "/3d/textures/LG-HAUSYS/LG-MS09/LG-MS09_Normal.jpg",
+    "normalScale": [
+      1,
+      1
+    ],
+    "roughnessMap": "/3d/textures/LG-HAUSYS/LG-MS09/LG-MS09_Roughness.jpg",
+    "roughness": 1,
+    "metalness": 1,
+    "diffuseMapWrap": false,
+    "diffuseMapWrapScale": [
+      1,
+      1
+    ],
+    "normalMapWrap": false,
+    "roughnessMapWrap": false,
+    "roughnessMapWrapScale": [
+      1,
+      1
+    ],
+    "toneMapping": 3,
+    "anisotropy": 1,
+    "normalMapWrapScale": [
+      1,
+      1
+    ]
+  },
+  {
+    "id": "lg_ns002",
+    "_id": "lg_ns002",
+    "title": "LG-NS002",
+    "groupId": "lgHausys",
+    "group": "LG-HAUSYS",
+    "type": "lgHausys",
+    "image": "/assets/img/kabinduvar/1.jpg",
+    "envMap": "ENV_CAR",
+    "map": "/3d/textures/LG-HAUSYS/LG-NS002/LG-NS002_Diffuse.jpg",
+    "normalMap": "/3d/textures/LG-HAUSYS/LG-NS002/LG-NS002_Normal.jpg",
+    "normalScale": [
+      1,
+      1
+    ],
+    "roughnessMap": "/3d/textures/LG-HAUSYS/LG-NS002/LG-NS002_Roughness.jpg",
+    "roughness": 1,
+    "metalness": 1,
+    "diffuseMapWrap": false,
+    "diffuseMapWrapScale": [
+      1,
+      1
+    ],
+    "normalMapWrap": false,
+    "roughnessMapWrap": false,
+    "roughnessMapWrapScale": [
+      1,
+      1
+    ],
+    "toneMapping": 3,
+    "anisotropy": 1,
+    "normalMapWrapScale": [
+      1,
+      1
+    ]
+  },
+  {
+    "id": "lg_ms510",
+    "_id": "lg_ms510",
+    "title": "LG-MS10",
+    "groupId": "lgHausys",
+    "group": "LG-HAUSYS",
+    "type": "lgHausys",
+    "image": "/assets/img/kabinduvar/1.jpg",
+    "envMap": "ENV_CAR",
+    "map": "/3d/textures/LG-HAUSYS/LG-MS09/LG-MS09_Diffuse.jpg",
+    "normalMap": "/3d/textures/LG-HAUSYS/LG-MS09/LG-MS09_Normal.jpg",
+    "normalScale": [
+      1,
+      1
+    ],
+    "roughnessMap": "/3d/textures/LG-HAUSYS/LG-MS09/LG-MS09_Roughness.jpg",
+    "roughness": 1,
+    "metalness": 1,
+    "diffuseMapWrap": false,
+    "diffuseMapWrapScale": [
+      1,
+      1
+    ],
+    "normalMapWrap": false,
+    "roughnessMapWrap": false,
+    "roughnessMapWrapScale": [
+      1,
+      1
+    ],
+    "toneMapping": 3,
+    "anisotropy": 1,
+    "normalMapWrapScale": [
+      1,
+      1
+    ]
+  },
+  {
+    "id": "lg_ns003",
+    "_id": "lg_ns003",
+    "title": "LG-NS003",
+    "groupId": "lgHausys",
+    "group": "LG-HAUSYS",
+    "type": "lgHausys",
+    "image": "/assets/img/kabinduvar/1.jpg",
+    "envMap": "ENV_CAR",
+    "map": "/3d/textures/LG-HAUSYS/LG-NS002/LG-NS002_Diffuse.jpg",
+    "normalMap": "/3d/textures/LG-HAUSYS/LG-NS002/LG-NS002_Normal.jpg",
+    "normalScale": [
+      1,
+      1
+    ],
+    "roughnessMap": "/3d/textures/LG-HAUSYS/LG-NS002/LG-NS002_Roughness.jpg",
+    "roughness": 1,
+    "metalness": 1,
+    "diffuseMapWrap": false,
+    "diffuseMapWrapScale": [
+      1,
+      1
+    ],
+    "normalMapWrap": false,
+    "roughnessMapWrap": false,
+    "roughnessMapWrapScale": [
+      1,
+      1
+    ],
+    "toneMapping": 3,
+    "anisotropy": 1,
+    "normalMapWrapScale": [
+      1,
+      1
+    ]
+  },
+  {
+    "id": "mdf_1",
+    "_id": "mdf_1",
+    "title": "EKA-LMT01",
+    "translations": {
+      "tr": {
+        "title": "EKA-LMT01",
+        "group": "MDF"
+      },
+      "en": {
+        "title": "EKA-LMT01",
+        "group": "MDF"
+      }
+    },
+    "groupId": "mdf",
+    "group": "MDF",
+    "type": "mdf",
+    "image": "/assets/img/mdf/noce_mosacato.jpg",
+    "envMap": "ENV_CAR",
+    "map": "/3d/textures/Eka_Lmt01_D.jpg",
+    "normalMap": "/3d/textures/Eka_Lmt01_N.jpg",
+    "roughnessMap": "/3d/textures/Eka_Lmt01_R.jpg",
+    "roughness": 0.5,
+    "metalness": -0.3,
+    "diffuseMapWrap": true,
+    "diffuseMapWrapScale": [
+      2.1,
+      2.1
+    ],
+    "normalMapWrap": true,
+    "roughnessMapWrap": true,
+    "roughnessMapWrapScale": [
+      4,
+      4
+    ],
+    "toneMapping": 4,
+    "anisotropy": 1,
+    "normalMapWrapScale": [
+      4.4,
+      2.1
+    ],
+    "normalScale": [
+      4,
+      4
+    ],
+    "aoMapIntensity": 0.1,
+    "envMapIntensity": 4,
+    "lightMapIntesity": 10
+  },
+  {
+    "id": "mdf_2",
+    "_id": "mdf_2",
+    "title": "EKA-LMT02",
+    "groupId": "mdf",
+    "group": "MDF",
+    "type": "mdf",
+    "image": "/assets/img/mdf/sabbia.jpg",
+    "envMap": "ENV_CAR",
+    "color": "0xcdc2b1",
+    "normalMap": "/3d/textures/Eka_Lmt02-3_N.jpg",
+    "roughnessMap": "/3d/textures/Eka_Lmt02-3_R.jpg",
+    "roughness": 1,
+    "metalness": 0.1,
+    "diffuseMapWrap": true,
+    "diffuseMapWrapScale": [
+      2.1,
+      2.1
+    ],
+    "normalMapWrap": true,
+    "roughnessMapWrap": true,
+    "roughnessMapWrapScale": [
+      0.05,
+      0.05
+    ],
+    "toneMapping": 1,
+    "anisotropy": 1,
+    "normalMapWrapScale": [
+      0.05,
+      0.05
+    ],
+    "normalScale": [
+      0.05,
+      0.05
+    ],
+    "aoMapIntensity": 1,
+    "envMapIntensity": 1
+  },
+  {
+    "id": "mdf_3",
+    "_id": "mdf_3",
+    "title": "EKA-LMT03",
+    "groupId": "mdf",
+    "group": "MDF",
+    "type": "mdf",
+    "image": "/assets/img/mdf/vanigilia.jpg",
+    "envMap": "ENV_CAR",
+    "color": "0xe9dfd5",
+    "map": "/3d/textures/vanigilia.jpg",
+    "normalMap": "/3d/textures/Eka_Lmt02-3_N.jpg",
+    "roughnessMap": "/3d/textures/Eka_Lmt02-3_R.jpg",
+    "roughness": 1,
+    "metalness": 0.1,
+    "diffuseMapWrap": true,
+    "diffuseMapWrapScale": [
+      2.1,
+      2.1
+    ],
+    "normalMapWrap": true,
+    "roughnessMapWrap": true,
+    "roughnessMapWrapScale": [
+      0.05,
+      0.05
+    ],
+    "toneMapping": 1,
+    "anisotropy": 1,
+    "normalMapWrapScale": [
+      0.05,
+      0.05
+    ],
+    "normalScale": [
+      0.05,
+      0.05
+    ],
+    "aoMapIntensity": 1,
+    "envMapIntensity": 1
+  },
+  {
+    "id": "mdf_4",
+    "_id": "mdf_4",
+    "title": "EKA-LMT04",
+    "groupId": "mdf",
+    "group": "MDF",
+    "type": "mdf",
+    "image": "/assets/img/mdf/copper.jpg",
+    "envMap": "ENV_CAR",
+    "map": "/3d/textures/Eka_Lmt04_D.jpg",
+    "normalMap": "/3d/textures/Eka_Lmt04_N.jpg",
+    "roughnessMap": "/3d/textures/Eka_Lmt04_R.jpg",
+    "metalnessMap": "/3d/textures/Eka_Lmt04_M.jpg",
+    "roughness": 1,
+    "metalness": 0.5,
+    "diffuseMapWrap": true,
+    "diffuseMapWrapScale": [
+      2.1,
+      2.1
+    ],
+    "normalMapWrap": true,
+    "roughnessMapWrap": true,
+    "roughnessMapWrapScale": [
+      1,
+      1
+    ],
+    "toneMapping": 1,
+    "anisotropy": 1,
+    "normalMapWrapScale": [
+      0.4,
+      0.4
+    ],
+    "normalScale": [
+      1,
+      1
+    ],
+    "aoMapIntensity": 1,
+    "envMapIntensity": 1
+  },
+  {
+    "id": "mdf_5",
+    "_id": "mdf_5",
+    "title": "EKA-LMT05",
+    "groupId": "mdf",
+    "group": "MDF",
+    "type": "mdf",
+    "image": "/assets/img/mdf/conutry_oak.jpg",
+    "envMap": "ENV_CAR",
+    "map": "/3d/textures/Eka_Lmt05_D.jpg",
+    "normalMap": "/3d/textures/Eka_Lmt05_N.jpg",
+    "roughnessMap": "/3d/textures/Eka_Lmt05_R.jpg",
+    "metalnessMap": "/3d/textures/Eka_Lmt05_M.jpg",
+    "roughness": 0.5,
+    "metalness": 0.9,
+    "diffuseMapWrap": true,
+    "diffuseMapWrapScale": [
+      1.75,
+      1.75
+    ],
+    "normalMapWrap": true,
+    "roughnessMapWrap": true,
+    "roughnessMapWrapScale": [
+      4,
+      4
+    ],
+    "anisotropy": 1,
+    "normalMapWrapScale": [
+      4,
+      4
+    ],
+    "normalScale": [
+      0.6,
+      0.6
+    ],
+    "aoMapIntensity": 1,
+    "envMapIntensity": 1
+  },
+  {
+    "id": "mdf_6",
+    "_id": "mdf_6",
+    "title": "EKA-LMT06",
+    "groupId": "mdf",
+    "group": "MDF",
+    "type": "mdf",
+    "image": "/assets/img/mdf/fansia_natural.jpg",
+    "envMap": "ENV_CAR",
+    "map": "/3d/textures/Eka_Lmt06_D.jpg",
+    "normalMap": "/3d/textures/Eka_Lmt06_N.jpg",
+    "roughnessMap": "/3d/textures/Eka_Lmt06_R.jpg",
+    "roughness": 0.6,
+    "metalness": 0.85,
+    "diffuseMapWrap": false,
+    "diffuseMapWrapScale": [
+      0.84,
+      0.84
+    ],
+    "normalMapWrap": true,
+    "roughnessMapWrap": true,
+    "roughnessMapWrapScale": [
+      4,
+      4
+    ],
+    "toneMapping": 1,
+    "anisotropy": 1,
+    "normalMapWrapScale": [
+      4,
+      4
+    ],
+    "normalScale": [
+      1.6,
+      1.6
+    ],
+    "aoMapIntensity": 1,
+    "envMapIntensity": 1
+  },
+  {
+    "id": "mdf_7",
+    "_id": "mdf_7",
+    "title": "EKA-LMT07",
+    "groupId": "mdf",
+    "group": "MDF",
+    "type": "mdf",
+    "image": "/assets/img/mdf/ımpero.jpg",
+    "envMap": "ENV_CAR",
+    "map": "/3d/textures/Eka_Lmt07_D.jpg",
+    "normalMap": "/3d/textures/Eka_Lmt07_N.jpg",
+    "roughnessMap": "/3d/textures/Eka_Lmt07_R.jpg",
+    "metalnessMap": "/3d/textures/Eka_Lmt07_M.jpg",
+    "roughness": 1,
+    "metalness": 0.5,
+    "diffuseMapWrap": true,
+    "diffuseMapWrapScale": [
+      0.8,
+      0.8
+    ],
+    "normalMapWrap": true,
+    "roughnessMapWrap": true,
+    "roughnessMapWrapScale": [
+      4,
+      4
+    ],
+    "toneMapping": 1,
+    "anisotropy": 1,
+    "normalMapWrapScale": [
+      4,
+      4
+    ],
+    "normalScale": [
+      3.6,
+      3.6
+    ],
+    "aoMapIntensity": 1,
+    "envMapIntensity": 1
+  },
+  {
+    "id": "mdf_8",
+    "_id": "mdf_8",
+    "title": "EKA-LMT08",
+    "groupId": "mdf",
+    "group": "MDF",
+    "type": "mdf",
+    "image": "/assets/img/mdf/nero.jpg",
+    "envMap": "ENV_CAR",
+    "map": "/3d/textures/Eka_Lmt_08_D.jpg",
+    "normalMap": "/3d/textures/Eka_Lmt08_N.jpg",
+    "roughnessMap": "/3d/textures/Eka_Lmt08_R.jpg",
+    "metalnessMap": "/3d/textures/Eka_Lmt08_M.jpg",
+    "roughness": 1.5,
+    "metalness": 0.5,
+    "diffuseMapWrap": true,
+    "diffuseMapWrapScale": [
+      3.5,
+      3.5
+    ],
+    "normalMapWrap": true,
+    "roughnessMapWrap": true,
+    "roughnessMapWrapScale": [
+      5,
+      5
+    ],
+    "toneMapping": 1,
+    "anisotropy": 1,
+    "normalMapWrapScale": [
+      5,
+      5
+    ],
+    "normalScale": [
+      2.6,
+      2.6
+    ],
+    "aoMapIntensity": 1,
+    "envMapIntensity": 1
+  },
+  {
+    "id": "cam_1",
+    "_id": "cam_1",
+    "type": "cam",
+    "title": "RAL-1012",
+    "translations": {
+      "tr": {
+        "title": "RAL-1012",
+        "group": "Cam"
+      },
+      "en": {
+        "title": "RAL-1012",
+        "group": "Glass"
+      }
+    },
+    "groupId": "Cam",
+    "envMap": "ENV_CAR",
+    "color": "0xddaf27",
+    "image": "/assets/img/cam/ral_1012.jpg",
+    "map": "/3d/textures/Cam_D.jpg",
+    "normalMap": "/3d/textures/Cam_N.jpg",
+    "roughnessMap": "/3d/textures/Cam_R.jpg",
+    "roughness": 0.2,
+    "metalness": 0.4,
+    "diffuseMapWrap": true,
+    "normalMapWrap": true,
+    "roughnessMapWrap": true,
+    "toneMapping": 1,
+    "normalScale": [
+      0.001,
+      0.001
+    ],
+    "diffuseMapWrapScale": [
+      40,
+      40
+    ],
+    "roughnessMapWrapScale": [
+      5,
+      5
+    ],
+    "normalMapWrapScale": [
+      5,
+      5
+    ]
+  },
+  {
+    "id": "cam_2",
+    "_id": "cam_2",
+    "type": "cam",
+    "title": "RAL-1035",
+    "group": "Cam",
+    "translations": {
+      "tr": {
+        "title": "RAL-1035",
+        "group": "Cam"
+      },
+      "en": {
+        "title": "RAL-1035",
+        "group": "Glass"
+      }
+    },
+    "groupId": "Cam",
+    "image": "/assets/img/cam/ral_1035.jpg",
+    "envMap": "ENV_CAR",
+    "color": "0x908370",
+    "map": "/3d/textures/Cam_D.jpg",
+    "normalMap": "/3d/textures/Cam_N.jpg",
+    "roughnessMap": "/3d/textures/Cam_R.jpg",
+    "roughness": 0.2,
+    "metalness": 0.4,
+    "diffuseMapWrap": true,
+    "normalMapWrap": true,
+    "roughnessMapWrap": true,
+    "toneMapping": 1,
+    "normalScale": [
+      0.001,
+      0.001
+    ],
+    "diffuseMapWrapScale": [
+      40,
+      40
+    ],
+    "roughnessMapWrapScale": [
+      5,
+      5
+    ],
+    "normalMapWrapScale": [
+      5,
+      5
+    ]
+  },
+  {
+    "id": "cam_3",
+    "_id": "cam_3",
+    "type": "cam",
+    "title": "RAL-3002",
+    "group": "Cam",
+    "translations": {
+      "tr": {
+        "title": "RAL-3002",
+        "group": "Cam"
+      },
+      "en": {
+        "title": "RAL-3002",
+        "group": "Glass"
+      }
+    },
+    "groupId": "Cam",
+    "image": "/assets/img/cam/ral_3002.jpg",
+    "envMap": "ENV_CAR",
+    "color": "0x9b2321",
+    "map": "/3d/textures/Cam_D.jpg",
+    "normalMap": "/3d/textures/Cam_N.jpg",
+    "roughnessMap": "/3d/textures/Cam_R.jpg",
+    "roughness": 0.2,
+    "metalness": 0.4,
+    "diffuseMapWrap": true,
+    "normalMapWrap": true,
+    "roughnessMapWrap": true,
+    "toneMapping": 1,
+    "normalScale": [
+      0.001,
+      0.001
+    ],
+    "diffuseMapWrapScale": [
+      40,
+      40
+    ],
+    "roughnessMapWrapScale": [
+      5,
+      5
+    ],
+    "normalMapWrapScale": [
+      5,
+      5
+    ]
+  },
+  {
+    "id": "cam_4",
+    "_id": "cam_4",
+    "type": "cam",
+    "title": "RAL-3005",
+    "group": "Cam",
+    "translations": {
+      "tr": {
+        "title": "RAL-3005",
+        "group": "Cam"
+      },
+      "en": {
+        "title": "RAL-3005",
+        "group": "Glass"
+      }
+    },
+    "groupId": "Cam",
+    "image": "/assets/img/cam/ral_3005.jpg",
+    "envMap": "ENV_CAR",
+    "color": "0x59191f",
+    "map": "/3d/textures/Cam_D.jpg",
+    "normalMap": "/3d/textures/Cam_N.jpg",
+    "roughnessMap": "/3d/textures/Cam_R.jpg",
+    "roughness": 0.2,
+    "metalness": 0.4,
+    "diffuseMapWrap": true,
+    "normalMapWrap": true,
+    "roughnessMapWrap": true,
+    "toneMapping": 1,
+    "normalScale": [
+      0.001,
+      0.001
+    ],
+    "diffuseMapWrapScale": [
+      40,
+      40
+    ],
+    "roughnessMapWrapScale": [
+      5,
+      5
+    ],
+    "normalMapWrapScale": [
+      5,
+      5
+    ]
+  },
+  {
+    "id": "cam_5",
+    "_id": "cam_5",
+    "type": "cam",
+    "title": "RAL-3012",
+    "group": "Cam",
+    "translations": {
+      "tr": {
+        "title": "RAL-3012",
+        "group": "Cam"
+      },
+      "en": {
+        "title": "RAL-3012",
+        "group": "Glass"
+      }
+    },
+    "groupId": "Cam",
+    "image": "/assets/img/cam/ral_3012.jpg",
+    "envMap": "ENV_CAR",
+    "color": "0xc6846d",
+    "map": "/3d/textures/Cam_D.jpg",
+    "normalMap": "/3d/textures/Cam_N.jpg",
+    "roughnessMap": "/3d/textures/Cam_R.jpg",
+    "roughness": 0.2,
+    "metalness": 0.4,
+    "diffuseMapWrap": true,
+    "normalMapWrap": true,
+    "roughnessMapWrap": true,
+    "toneMapping": 1,
+    "normalScale": [
+      0.001,
+      0.001
+    ],
+    "diffuseMapWrapScale": [
+      40,
+      40
+    ],
+    "roughnessMapWrapScale": [
+      5,
+      5
+    ],
+    "normalMapWrapScale": [
+      5,
+      5
+    ]
+  },
+  {
+    "id": "cam_6",
+    "_id": "cam_6",
+    "type": "cam",
+    "translations": {
+      "tr": {
+        "title": "RAL-4011",
+        "group": "Cam"
+      },
+      "en": {
+        "title": "RAL-4011",
+        "group": "Glass"
+      }
+    },
+    "groupId": "Cam",
+    "title": "RAL-4011",
+    "group": "Cam",
+    "image": "/assets/img/cam/ral_4011.jpg",
+    "envMap": "ENV_CAR",
+    "color": "0x6e6387",
+    "map": "/3d/textures/Cam_D.jpg",
+    "normalMap": "/3d/textures/Cam_N.jpg",
+    "roughnessMap": "/3d/textures/Cam_R.jpg",
+    "roughness": 0.2,
+    "metalness": 0.4,
+    "diffuseMapWrap": true,
+    "normalMapWrap": true,
+    "roughnessMapWrap": true,
+    "toneMapping": 1,
+    "normalScale": [
+      0.001,
+      0.001
+    ],
+    "diffuseMapWrapScale": [
+      40,
+      40
+    ],
+    "roughnessMapWrapScale": [
+      5,
+      5
+    ],
+    "normalMapWrapScale": [
+      5,
+      5
+    ]
+  },
+  {
+    "id": "cam_7",
+    "_id": "cam_7",
+    "type": "cam",
+    "title": "RAL-5009",
+    "group": "Cam",
+    "translations": {
+      "tr": {
+        "title": "RAL-5009",
+        "group": "Cam"
+      },
+      "en": {
+        "title": "RAL-5009",
+        "group": "Glass"
+      }
+    },
+    "groupId": "Cam",
+    "image": "/assets/img/cam/ral_5009.jpg",
+    "envMap": "ENV_CAR",
+    "color": "0x225f78",
+    "map": "/3d/textures/Cam_D.jpg",
+    "normalMap": "/3d/textures/Cam_N.jpg",
+    "roughnessMap": "/3d/textures/Cam_R.jpg",
+    "roughness": 0.2,
+    "metalness": 0.4,
+    "diffuseMapWrap": true,
+    "normalMapWrap": true,
+    "roughnessMapWrap": true,
+    "toneMapping": 1,
+    "normalScale": [
+      0.001,
+      0.001
+    ],
+    "diffuseMapWrapScale": [
+      40,
+      40
+    ],
+    "roughnessMapWrapScale": [
+      5,
+      5
+    ],
+    "normalMapWrapScale": [
+      5,
+      5
+    ]
+  },
+  {
+    "id": "cam_8",
+    "_id": "cam_8",
+    "type": "cam",
+    "title": "RAL-5021",
+    "group": "Cam",
+    "translations": {
+      "tr": {
+        "title": "RAL-5021",
+        "group": "Cam"
+      },
+      "en": {
+        "title": "RAL-5021",
+        "group": "Glass"
+      }
+    },
+    "groupId": "Cam",
+    "image": "/assets/img/cam/ral_5021.jpg",
+    "envMap": "ENV_CAR",
+    "color": "0x007577",
+    "map": "/3d/textures/Cam_D.jpg",
+    "normalMap": "/3d/textures/Cam_N.jpg",
+    "roughnessMap": "/3d/textures/Cam_R.jpg",
+    "roughness": 0.2,
+    "metalness": 0.4,
+    "diffuseMapWrap": true,
+    "normalMapWrap": true,
+    "roughnessMapWrap": true,
+    "toneMapping": 1,
+    "normalScale": [
+      0.001,
+      0.001
+    ],
+    "diffuseMapWrapScale": [
+      40,
+      40
+    ],
+    "roughnessMapWrapScale": [
+      5,
+      5
+    ],
+    "normalMapWrapScale": [
+      5,
+      5
+    ]
+  },
+  {
+    "id": "cam_9",
+    "_id": "cam_9",
+    "type": "cam",
+    "title": "RAL-9003",
+    "group": "Cam",
+    "translations": {
+      "tr": {
+        "title": "RAL-9003",
+        "group": "Cam"
+      },
+      "en": {
+        "title": "RAL-9003",
+        "group": "Glass"
+      }
+    },
+    "groupId": "Cam",
+    "image": "/assets/img/cam/ral_9003.jpg",
+    "envMap": "ENV_CAR",
+    "color": "0xecece7",
+    "map": "/3d/textures/Cam_D.jpg",
+    "normalMap": "/3d/textures/Cam_N.jpg",
+    "roughnessMap": "/3d/textures/Cam_R.jpg",
+    "roughness": 0.2,
+    "metalness": 0.4,
+    "diffuseMapWrap": true,
+    "normalMapWrap": true,
+    "roughnessMapWrap": true,
+    "toneMapping": 1,
+    "normalScale": [
+      0.001,
+      0.001
+    ],
+    "diffuseMapWrapScale": [
+      40,
+      40
+    ],
+    "roughnessMapWrapScale": [
+      5,
+      5
+    ],
+    "normalMapWrapScale": [
+      5,
+      5
+    ]
+  },
+  {
+    "id": "cam_10",
+    "_id": "cam_10",
+    "type": "cam",
+    "title": "RAL-9005",
+    "group": "Cam",
+    "translations": {
+      "tr": {
+        "title": "RAL-9005",
+        "group": "Cam"
+      },
+      "en": {
+        "title": "RAL-9005",
+        "group": "Glass"
+      }
+    },
+    "groupId": "Cam",
+    "image": "/assets/img/cam/ral_9005.jpg",
+    "envMap": "ENV_CAR",
+    "color": "0x0e0e10",
+    "map": "/3d/textures/Cam_D.jpg",
+    "normalMap": "/3d/textures/Cam_N.jpg",
+    "roughnessMap": "/3d/textures/Cam_R.jpg",
+    "roughness": 0.2,
+    "metalness": 0.4,
+    "diffuseMapWrap": true,
+    "normalMapWrap": true,
+    "roughnessMapWrap": true,
+    "toneMapping": 1,
+    "normalScale": [
+      0.001,
+      0.001
+    ],
+    "diffuseMapWrapScale": [
+      40,
+      40
+    ],
+    "roughnessMapWrapScale": [
+      5,
+      5
+    ],
+    "normalMapWrapScale": [
+      5,
+      5
+    ]
+  },
+  {
+    "id": "cam_11",
+    "_id": "cam_11",
+    "type": "cam",
+    "title": "RAL-9007",
+    "group": "Cam",
+    "translations": {
+      "tr": {
+        "title": "RAL-9007",
+        "group": "Cam"
+      },
+      "en": {
+        "title": "RAL-9007",
+        "group": "Glass"
+      }
+    },
+    "groupId": "Cam",
+    "image": "/assets/img/cam/ral_9007.jpg",
+    "envMap": "ENV_CAR",
+    "color": "0x878581",
+    "map": "/3d/textures/Cam_D.jpg",
+    "normalMap": "/3d/textures/Cam_N.jpg",
+    "roughnessMap": "/3d/textures/Cam_R.jpg",
+    "roughness": 0.2,
+    "metalness": 0.4,
+    "diffuseMapWrap": true,
+    "normalMapWrap": true,
+    "roughnessMapWrap": true,
+    "toneMapping": 1,
+    "normalScale": [
+      0.001,
+      0.001
+    ],
+    "diffuseMapWrapScale": [
+      40,
+      40
+    ],
+    "roughnessMapWrapScale": [
+      5,
+      5
+    ],
+    "normalMapWrapScale": [
+      5,
+      5
+    ]
+  },
+  {
+    "translations": {
+      "tr": {
+        "title": "Metalik Satine",
+        "type": "Satine"
+      },
+      "en": {
+        "title": "Metallic Satin",
+        "type": "Satin"
+      }
+    },
+    "id": "sat_paslanmaz_v2_1",
+    "_id": "sat_paslanmaz_v2_1",
+    "type": "Satine",
+    "group": "Küpeşte",
+    "image": "/assets/img/kupeste/kupeste_satine_metalik.jpg",
+    "envMap": "ENV_CAR",
+    "color": "0xa3a3a3",
+    "map": "/3d/textures/Cam_D.jpg",
+    "normalMap": "/3d/textures/Ayna_Satine_N.jpg",
+    "roughnessMap": "/3d/textures/Super_Ayna_R.png",
+    "roughness": 0.45,
+    "metalness": 0.99,
+    "diffuseMapWrap": true,
+    "normalMapWrap": true,
+    "roughnessMapWrap": true,
+    "toneMapping": 5,
+    "normalScale": [
+      0.001,
+      0.001
+    ],
+    "diffuseMapWrapScale": [
+      32,
+      2
+    ],
+    "roughnessMapWrapScale": [
+      0.0004,
+      0.0004
+    ],
+    "aoMapIntensity": 0.2
+  },
+  {
+    "translations": {
+      "tr": {
+        "title": "Metalik Parlak",
+        "type": "Parlak"
+      },
+      "en": {
+        "title": "Metallic Gloss",
+        "type": "Gloss"
+      }
+    },
+    "id": "sat_paslanmaz_v2_2",
+    "_id": "sat_paslanmaz_v2_2",
+    "type": "Parlak",
+    "group": "Küpeşte",
+    "image": "/assets/img/kupeste/kupeste_parlak_metalik.jpg",
+    "envMap": "ENV_CAR",
+    "color": "0xa3a3a3",
+    "map": "/3d/textures/Cam_D.jpg",
+    "normalMap": "/3d/textures/Ayna_Satine_N.jpg",
+    "roughnessMap": "/3d/textures/Super_Ayna_R.png",
+    "roughness": 0.1,
+    "metalness": 0.99,
+    "diffuseMapWrap": true,
+    "normalMapWrap": true,
+    "roughnessMapWrap": true,
+    "toneMapping": 5,
+    "normalScale": [
+      0.001,
+      0.001
+    ],
+    "diffuseMapWrapScale": [
+      32,
+      2
+    ],
+    "roughnessMapWrapScale": [
+      0.0004,
+      0.0004
+    ],
+    "aoMapIntensity": 0.1
+  },
+  {
+    "translations": {
+      "tr": {
+        "title": "Altın Satine",
+        "type": "Satine"
+      },
+      "en": {
+        "title": "Golden Satine",
+        "type": "Satin"
+      }
+    },
+    "id": "sat_paslanmaz_v2_3",
+    "_id": "sat_paslanmaz_v2_3",
+    "type": "Satine",
+    "group": "Küpeşte",
+    "image": "/assets/img/kupeste/kupeste_satine_altin.jpg",
+    "envMap": "ENV_CAR",
+    "color": "0xc8b273",
+    "map": "/3d/textures/Cam_D.jpg",
+    "normalMap": "/3d/textures/Ayna_Satine_N.jpg",
+    "roughnessMap": "/3d/textures/Super_Ayna_R.png",
+    "roughness": 0.45,
+    "metalness": 0.99,
+    "diffuseMapWrap": true,
+    "normalMapWrap": true,
+    "roughnessMapWrap": true,
+    "toneMapping": 5,
+    "normalScale": [
+      0.001,
+      0.001
+    ],
+    "diffuseMapWrapScale": [
+      32,
+      2
+    ],
+    "roughnessMapWrapScale": [
+      0.0004,
+      0.0004
+    ],
+    "aoMapIntensity": 0.2
+  },
+  {
+    "translations": {
+      "tr": {
+        "title": "Altın Parlak",
+        "type": "Parlak"
+      },
+      "en": {
+        "title": "Golden Gloss",
+        "type": "Gloss"
+      }
+    },
+    "id": "sat_paslanmaz_v2_4",
+    "_id": "sat_paslanmaz_v2_4",
+    "type": "Parlak",
+    "group": "Küpeşte",
+    "image": "/assets/img/kupeste/kupeste_parlak_altin.jpg",
+    "envMap": "ENV_CAR",
+    "color": "0xc8b273",
+    "map": "/3d/textures/Cam_D.jpg",
+    "normalMap": "/3d/textures/Ayna_Satine_N.jpg",
+    "roughnessMap": "/3d/textures/Super_Ayna_R.png",
+    "roughness": 0.1,
+    "metalness": 0.99,
+    "diffuseMapWrap": true,
+    "normalMapWrap": true,
+    "roughnessMapWrap": true,
+    "toneMapping": 5,
+    "normalScale": [
+      0.001,
+      0.001
+    ],
+    "diffuseMapWrapScale": [
+      32,
+      2
+    ],
+    "roughnessMapWrapScale": [
+      0.0004,
+      0.0004
+    ],
+    "aoMapIntensity": 0.1
+  },
+  {
+    "translations": {
+      "tr": {
+        "title": "Bronz Satine",
+        "type": "Satine"
+      },
+      "en": {
+        "title": "Bronze Satin",
+        "type": "Satin"
+      }
+    },
+    "id": "sat_paslanmaz_v2_5",
+    "_id": "sat_paslanmaz_v2_5",
+    "type": "Satine",
+    "group": "Küpeşte",
+    "image": "/assets/img/kupeste/kupeste_satine_bronz.jpg",
+    "envMap": "ENV_CAR",
+    "color": "0x9c836f",
+    "map": "/3d/textures/Cam_D.jpg",
+    "normalMap": "/3d/textures/Ayna_Satine_N.jpg",
+    "roughnessMap": "/3d/textures/Super_Ayna_R.png",
+    "roughness": 0.45,
+    "metalness": 0.99,
+    "diffuseMapWrap": true,
+    "normalMapWrap": true,
+    "roughnessMapWrap": true,
+    "toneMapping": 5,
+    "normalScale": [
+      0.001,
+      0.001
+    ],
+    "diffuseMapWrapScale": [
+      32,
+      2
+    ],
+    "roughnessMapWrapScale": [
+      0.0004,
+      0.0004
+    ],
+    "aoMapIntensity": 0.2
+  },
+  {
+    "translations": {
+      "tr": {
+        "title": "Bronz Parlak",
+        "type": "Parlak"
+      },
+      "en": {
+        "title": "Bronze Gloss",
+        "type": "Gloss"
+      }
+    },
+    "id": "sat_paslanmaz_v2_6",
+    "_id": "sat_paslanmaz_v2_6",
+    "type": "Parlak",
+    "group": "Küpeşte",
+    "image": "/assets/img/kupeste/kupeste_parlak_bronz.jpg",
+    "envMap": "ENV_CAR",
+    "color": "0x9c836f",
+    "map": "/3d/textures/Cam_D.jpg",
+    "normalMap": "/3d/textures/Ayna_Satine_N.jpg",
+    "roughnessMap": "/3d/textures/Super_Ayna_R.png",
+    "roughness": 0.1,
+    "metalness": 0.99,
+    "diffuseMapWrap": true,
+    "normalMapWrap": true,
+    "roughnessMapWrap": true,
+    "toneMapping": 5,
+    "normalScale": [
+      0.001,
+      0.001
+    ],
+    "diffuseMapWrapScale": [
+      32,
+      2
+    ],
+    "roughnessMapWrapScale": [
+      0.0004,
+      0.0004
+    ],
+    "aoMapIntensity": 0.1
+  },
+  {
+    "translations": {
+      "tr": {
+        "title": "Şampanya Satine",
+        "type": "Satine"
+      },
+      "en": {
+        "title": "Champagne Satine",
+        "type": "Satin"
+      }
+    },
+    "id": "sat_paslanmaz_v2_7",
+    "_id": "sat_paslanmaz_v2_7",
+    "type": "Satine",
+    "group": "Küpeşte",
+    "image": "/assets/img/kupeste/kupeste_satine_sampanya.jpg",
+    "envMap": "ENV_CAR",
+    "color": "0xbfa891",
+    "map": "/3d/textures/Cam_D.jpg",
+    "normalMap": "/3d/textures/Ayna_Satine_N.jpg",
+    "roughnessMap": "/3d/textures/Super_Ayna_R.png",
+    "roughness": 0.45,
+    "metalness": 0.99,
+    "diffuseMapWrap": true,
+    "normalMapWrap": true,
+    "roughnessMapWrap": true,
+    "toneMapping": 5,
+    "normalScale": [
+      0.001,
+      0.001
+    ],
+    "diffuseMapWrapScale": [
+      32,
+      2
+    ],
+    "roughnessMapWrapScale": [
+      0.0004,
+      0.0004
+    ],
+    "aoMapIntensity": 0.2
+  },
+  {
+    "translations": {
+      "tr": {
+        "title": "Şampanya Parlak",
+        "type": "Parlak"
+      },
+      "en": {
+        "title": "Champagne Gloss",
+        "type": "Gloss"
+      }
+    },
+    "id": "sat_paslanmaz_v2_8",
+    "_id": "sat_paslanmaz_v2_8",
+    "type": "Parlak",
+    "group": "Küpeşte",
+    "image": "/assets/img/kupeste/kupeste_parlak_sampanya.jpg",
+    "envMap": "ENV_CAR",
+    "color": "0xbfa891",
+    "map": "/3d/textures/Cam_D.jpg",
+    "normalMap": "/3d/textures/Ayna_Satine_N.jpg",
+    "roughnessMap": "/3d/textures/Super_Ayna_R.png",
+    "roughness": 0.1,
+    "metalness": 0.99,
+    "diffuseMapWrap": true,
+    "normalMapWrap": true,
+    "roughnessMapWrap": true,
+    "toneMapping": 5,
+    "normalScale": [
+      0.001,
+      0.001
+    ],
+    "diffuseMapWrapScale": [
+      40,
+      2
+    ],
+    "roughnessMapWrapScale": [
+      0.0004,
+      0.0004
+    ],
+    "aoMapIntensity": 0.1
+  },
+  {
+    "translations": {
+      "tr": {
+        "title": "Siyah Satine",
+        "type": "Satine"
+      },
+      "en": {
+        "title": "Black Satine",
+        "type": "Satin"
+      }
+    },
+    "id": "sat_paslanmaz_v2_9",
+    "_id": "sat_paslanmaz_v2_9",
+    "type": "Satine",
+    "group": "Küpeşte",
+    "image": "/assets/img/kupeste/kupeste_satine_siyah.jpg",
+    "envMap": "ENV_CAR",
+    "color": "0x5c5c5c",
+    "map": "/3d/textures/Cam_D.jpg",
+    "normalMap": "/3d/textures/Ayna_Satine_N.jpg",
+    "roughnessMap": "/3d/textures/Super_Ayna_R.png",
+    "roughness": 0.45,
+    "metalness": 0.99,
+    "diffuseMapWrap": true,
+    "normalMapWrap": true,
+    "roughnessMapWrap": true,
+    "toneMapping": 5,
+    "normalScale": [
+      0.001,
+      0.001
+    ],
+    "diffuseMapWrapScale": [
+      32,
+      2
+    ],
+    "roughnessMapWrapScale": [
+      0.0004,
+      0.0004
+    ],
+    "aoMapIntensity": 0.5
+  },
+  {
+    "translations": {
+      "tr": {
+        "title": "Siyah Parlak",
+        "type": "Parlak"
+      },
+      "en": {
+        "title": "Black Gloss",
+        "type": "Gloss"
+      }
+    },
+    "id": "sat_paslanmaz_v2_10",
+    "_id": "sat_paslanmaz_v2_10",
+    "type": "Parlak",
+    "group": "Küpeşte",
+    "image": "/assets/img/kupeste/kupeste_parlak_siyah.jpg",
+    "envMap": "ENV_CAR",
+    "color": "0x5c5c5c",
+    "map": "/3d/textures/Cam_D.jpg",
+    "normalMap": "/3d/textures/Ayna_Satine_N.jpg",
+    "roughnessMap": "/3d/textures/Super_Ayna_R.png",
+    "roughness": 0.1,
+    "metalness": 0.99,
+    "diffuseMapWrap": true,
+    "normalMapWrap": true,
+    "roughnessMapWrap": true,
+    "toneMapping": 5,
+    "normalScale": [
+      0.001,
+      0.001
+    ],
+    "diffuseMapWrapScale": [
+      40,
+      2
+    ],
+    "roughnessMapWrapScale": [
+      0.0004,
+      0.0004
+    ],
+    "aoMapIntensity": 0.1
+  },
+  {
+    "translations": {
+      "tr": {
+        "title": "Star Galaxy",
+        "group": "Granit"
+      },
+      "en": {
+        "title": "Star Galaxy",
+        "group": "Granite"
+      }
+    },
+    "_id": "floor_granit_1",
+    "id": "floor_granit_1",
+    "group": "Granit",
+    "type": "zemin_kaplama",
+    "image": "/assets/img/zemin/star_galaxy.jpg",
+    "envMap": "ENV_CAR",
+    "map": "/3d/textures/ZEMIN/GRANIT/STAR_GALAXY_GRANIT/STAR_GALAXY_GRANIT_Diffuse.jpg",
+    "normalMap": "/3d/textures/ZEMIN/GRANIT/STAR_GALAXY_GRANIT/STAR_GALAXY_GRANIT_Normal.jpg",
+    "roughnessMap": "/3d/textures/ZEMIN/GRANIT/STAR_GALAXY_GRANIT/STAR_GALAXY_GRANIT_Roughness.jpg",
+    "metalnessMap": "/3d/textures/ZEMIN/GRANIT/STAR_GALAXY_GRANIT/STAR_GALAXY_GRANIT_Metallic.jpg",
+    "aoMap": "/3d/textures/BOS_AO.jpg",
+    "roughness": 0.99,
+    "metalness": 1,
+    "diffuseMapWrap": true,
+    "diffuseMapWrapScale": [
+      2.1,
+      2.1
+    ],
+    "normalMapWrap": false,
+    "roughnessMapWrap": false,
+    "roughnessMapWrapScale": [
+      0.4,
+      0.4
+    ],
+    "toneMapping": 1,
+    "anisotropy": 1,
+    "normalMapWrapScale": [
+      1.4,
+      0.1
+    ],
+    "aoMapIntensity": 1,
+    "envMapIntensity": 2
+  },
+  {
+    "translations": {
+      "tr": {
+        "title": "Blue Pearl Gt",
+        "group": "Granit"
+      },
+      "en": {
+        "title": "Blue Pearl Gt",
+        "group": "Granite"
+      }
+    },
+    "_id": "floor_granit_2",
+    "id": "floor_granit_2",
+    "group": "Granit",
+    "type": "zemin_kaplama",
+    "image": "/assets/img/zemin/blue_pearl_gt.jpg",
+    "envMap": "ENV_CAR",
+    "map": "/3d/textures/ZEMIN/GRANIT/BLUE_PEARL_GT_GRANIT/BLUE_PEARL_GT_GRANIT_Diffuse.jpg",
+    "normalMap": "/3d/textures/ZEMIN/GRANIT/BLUE_PEARL_GT_GRANIT/BLUE_PEARL_GT_GRANIT_Normal.jpg",
+    "roughnessMap": "/3d/textures/ZEMIN/GRANIT/BLUE_PEARL_GT_GRANIT/BLUE_PEARL_GT_GRANIT_Roughness.jpg",
+    "aoMap": "/3d/textures/ZEMIN/GRANIT/BLUE_PEARL_GT_GRANIT/BLUE_PEARL_GT_GRANIT_AO.jpg",
+    "normalScale": [
+      1,
+      1
+    ],
+    "roughness": 0.99,
+    "metalness": 0.7,
+    "diffuseMapWrap": true,
+    "diffuseMapWrapScale": [
+      3.5,
+      3.5
+    ],
+    "normalMapWrap": false,
+    "roughnessMapWrap": false,
+    "roughnessMapWrapScale": [
+      0.4,
+      0.4
+    ],
+    "toneMapping": 1,
+    "anisotropy": 1,
+    "normalMapWrapScale": [
+      1.4,
+      0.1
+    ],
+    "aoMapIntensity": 1,
+    "envMapIntensity": 2
+  },
+  {
+    "translations": {
+      "tr": {
+        "title": "Spice Black",
+        "group": "Granit"
+      },
+      "en": {
+        "title": "Spice Black",
+        "group": "Granite"
+      }
+    },
+    "_id": "floor_granit_3",
+    "id": "floor_granit_3",
+    "group": "Granit",
+    "type": "zemin_kaplama",
+    "image": "/assets/img/zemin/spice_black.jpg",
+    "envMap": "ENV_CAR",
+    "map": "/3d/textures/ZEMIN/GRANIT/SPICE_BLACK_GRANIT/SPICE_BLACK_GRANIT_Diffuse.png",
+    "normalMap": "/3d/textures/ZEMIN/GRANIT/SPICE_BLACK_GRANIT/SPICE_BLACK_GRANIT_Normal.png",
+    "metalnessMap": "/3d/textures/ZEMIN/GRANIT/SPICE_BLACK_GRANIT/SPICE_BLACK_GRANIT_Metallic.png",
+    "roughnessMap": "/3d/textures/ZEMIN/GRANIT/SPICE_BLACK_GRANIT/SPICE_BLACK_GRANIT_Roughness.jpg",
+    "normalScale": [
+      1,
+      1
+    ],
+    "aoMap": "/3d/textures/BOS_AO.jpg",
+    "roughness": 0.99,
+    "metalness": 1,
+    "diffuseMapWrap": true,
+    "diffuseMapWrapScale": [
+      3.5,
+      3.5
+    ],
+    "normalMapWrap": false,
+    "roughnessMapWrap": false,
+    "roughnessMapWrapScale": [
+      0.4,
+      0.4
+    ],
+    "toneMapping": 1,
+    "anisotropy": 1,
+    "normalMapWrapScale": [
+      1.4,
+      0.1
+    ],
+    "aoMapIntensity": 1,
+    "envMapIntensity": 2
+  },
+  {
+    "translations": {
+      "tr": {
+        "title": "Dark Cool Grey",
+        "group": "PVC Vinly"
+      },
+      "en": {
+        "title": "Dark Cool Grey",
+        "group": "PVC Vinly"
+      }
+    },
+    "_id": "floor_pvcvinly_1",
+    "id": "floor_pvcvinly_1",
+    "group": "PVC Vinly",
+    "type": "zemin_kaplama",
+    "image": "/assets/img/zemin/dark_cool_grey.jpg",
+    "envMap": "ENV_CAR",
+    "map": "/3d/textures/ZEMIN/PVC_VINYL/TARKETT_DARK_COOL_GREY_PVC_VINYL/TARKETT_DARK_COOL_GREY_PVC_VINYL_Diffuse.png",
+    "normalMap": "/3d/textures/ZEMIN/PVC_VINYL/TARKETT_DARK_COOL_GREY_PVC_VINYL/TARKETT_DARK_COOL_GREY_PVC_VINYL_Normal.jpg",
+    "normalScale": [
+      1,
+      1
+    ],
+    "metalnessMap": "/3d/textures/ZEMIN/PVC_VINYL/TARKETT_DARK_COOL_GREY_PVC_VINYL/TARKETT_DARK_COOL_GREY_PVC_VINYL_Metallic.jpg",
+    "roughnessMap": "/3d/textures/ZEMIN/PVC_VINYL/TARKETT_DARK_COOL_GREY_PVC_VINYL/TARKETT_DARK_COOL_GREY_PVC_VINYL_Roughness.jpg",
+    "aoMap": "/3d/textures/BOS_AO.jpg",
+    "roughness": 0.99,
+    "metalness": 1,
+    "diffuseMapWrap": true,
+    "diffuseMapWrapScale": [
+      1.4,
+      1.4
+    ],
+    "normalMapWrap": false,
+    "roughnessMapWrap": false,
+    "roughnessMapWrapScale": [
+      0.4,
+      0.4
+    ],
+    "toneMapping": 1,
+    "anisotropy": 1,
+    "normalMapWrapScale": [
+      1.4,
+      0.1
+    ],
+    "aoMapIntensity": 1,
+    "envMapIntensity": 1
+  },
+  {
+    "translations": {
+      "tr": {
+        "title": "Light Pure Grey",
+        "group": "PVC Vinly"
+      },
+      "en": {
+        "title": "Light Pure Grey",
+        "group": "PVC Vinly"
+      }
+    },
+    "_id": "floor_pvcvinly_5",
+    "id": "floor_pvcvinly_5",
+    "group": "PVC Vinly",
+    "type": "zemin_kaplama",
+    "image": "/assets/img/zemin/light_pure_grey.jpg",
+    "envMap": "ENV_CAR",
+    "map": "/3d/textures/ZEMIN/PVC_VINYL/TARKETT_LIGHT_PURE_GREY_PVC_VINYL/TARKETT_LIGHT_PURE_GREY_PVC_VINYL_Diffuse.jpg",
+    "normalMap": "/3d/textures/ZEMIN/PVC_VINYL/TARKETT_LIGHT_PURE_GREY_PVC_VINYL/TARKETT_LIGHT_PURE_GREY_PVC_VINYL_Normal.jpg",
+    "roughnessMap": "/3d/textures/ZEMIN/PVC_VINYL/TARKETT_LIGHT_PURE_GREY_PVC_VINYL/TARKETT_LIGHT_PURE_GREY_PVC_VINYL_Roughness.jpg",
+    "metalnessMap": "/3d/textures/ZEMIN/PVC_VINYL/TARKETT_LIGHT_PURE_GREY_PVC_VINYL/TARKETT_LIGHT_PURE_GREY_PVC_VINYL_Metallic.jpg",
+    "aoMap": "/3d/textures/BOS_AO.jpg",
+    "normalScale": [
+      1,
+      1
+    ],
+    "roughness": 0.99,
+    "metalness": 1,
+    "diffuseMapWrap": true,
+    "diffuseMapWrapScale": [
+      2.4,
+      2.4
+    ],
+    "normalMapWrap": false,
+    "roughnessMapWrap": false,
+    "roughnessMapWrapScale": [
+      0.4,
+      0.4
+    ],
+    "toneMapping": 1,
+    "anisotropy": 1,
+    "normalMapWrapScale": [
+      1.4,
+      0.1
+    ],
+    "aoMapIntensity": 1,
+    "envMapIntensity": 1
+  },
+  {
+    "translations": {
+      "tr": {
+        "title": "Light Green",
+        "group": "PVC Vinly"
+      },
+      "en": {
+        "title": "Light Green",
+        "group": "PVC Vinly"
+      }
+    },
+    "_id": "floor_pvcvinly_6",
+    "id": "floor_pvcvinly_6",
+    "group": "PVC Vinly",
+    "type": "zemin_kaplama",
+    "image": "/assets/img/zemin/light_green.jpg",
+    "envMap": "ENV_CAR",
+    "color": "0xb8bf96",
+    "map": "/3d/textures/ZEMIN/PVC_VINYL/TARKETT_LIGHT_PURE_GREY_PVC_VINYL/TARKETT_LIGHT_PURE_GREY_PVC_VINYL_Diffuse.jpg",
+    "normalMap": "/3d/textures/ZEMIN/PVC_VINYL/TARKETT_LIGHT_PURE_GREY_PVC_VINYL/TARKETT_LIGHT_PURE_GREY_PVC_VINYL_Normal.jpg",
+    "roughnessMap": "/3d/textures/ZEMIN/PVC_VINYL/TARKETT_LIGHT_PURE_GREY_PVC_VINYL/TARKETT_LIGHT_PURE_GREY_PVC_VINYL_Roughness.jpg",
+    "metalnessMap": "/3d/textures/ZEMIN/PVC_VINYL/TARKETT_LIGHT_PURE_GREY_PVC_VINYL/TARKETT_LIGHT_PURE_GREY_PVC_VINYL_Metallic.jpg",
+    "aoMap": "/3d/textures/BOS_AO.jpg",
+    "normalScale": [
+      1,
+      1
+    ],
+    "roughness": 0.99,
+    "metalness": 1,
+    "diffuseMapWrap": true,
+    "diffuseMapWrapScale": [
+      3,
+      3
+    ],
+    "normalMapWrap": false,
+    "roughnessMapWrap": false,
+    "roughnessMapWrapScale": [
+      0.4,
+      0.4
+    ],
+    "toneMapping": 1,
+    "anisotropy": 1,
+    "normalMapWrapScale": [
+      1.4,
+      0.1
+    ],
+    "aoMapIntensity": 1,
+    "envMapIntensity": 1
+  },
+  {
+    "translations": {
+      "tr": {
+        "title": "Müşteri Seçimi",
+        "group": "Müşteri Seçimi",
+        "info": "*Müşteriye 20 mm boşluk bırakılmaktadır."
+      },
+      "en": {
+        "title": "Customer Choice",
+        "group": "Customer Choice",
+        "info": "*20 mm gap is left for the customer."
+      }
+    },
+    "_id": "floor_customer",
+    "id": "floor_customer",
+    "group": "Müşteri Seçimi",
+    "type": "zemin_kaplama",
+    "image": "/assets/img/zemin/1.jpg",
+    "envMap": "ENV_CAR",
+    "map": "/3d/textures/ZEMIN/GRANIT/STAR_GALAXY_GRANIT/STAR_GALAXY_GRANIT_Diffuse.jpg",
+    "normalMap": "/3d/textures/ZEMIN/GRANIT/STAR_GALAXY_GRANIT/STAR_GALAXY_GRANIT_Normal.jpg",
+    "roughnessMap": "/3d/textures/ZEMIN/GRANIT/STAR_GALAXY_GRANIT/STAR_GALAXY_GRANIT_Roughness.jpg",
+    "metalnessMap": "/3d/textures/ZEMIN/GRANIT/STAR_GALAXY_GRANIT/STAR_GALAXY_GRANIT_Metallic.jpg",
+    "aoMap": "/3d/textures/BOS_AO.jpg",
+    "roughness": 0.99,
+    "metalness": 1,
+    "diffuseMapWrap": true,
+    "diffuseMapWrapScale": [
+      2.1,
+      2.1
+    ],
+    "normalMapWrap": false,
+    "roughnessMapWrap": false,
+    "roughnessMapWrapScale": [
+      0.4,
+      0.4
+    ],
+    "toneMapping": 1,
+    "anisotropy": 1,
+    "normalMapWrapScale": [
+      1.4,
+      0.1
+    ],
+    "aoMapIntensity": 1,
+    "envMapIntensity": 2
+  },
+  {
+    "translations": {
+      "tr": {
+        "title": "Normal AYNA"
+      },
+      "en": {
+        "title": "Normal Mirrors"
+      }
+    },
+    "_id": "mirror_normal",
+    "id": "mirror_normal",
+    "type": "mirror",
+    "group": "Ayna Materyali",
+    "image": "/assets/img/ayna/2.jpg",
+    "envMap": "ENV_CAR",
+    "map": "/3d/textures/AYNALAR/NORMAL_AYNA/NORMAL_AYNA_Diffuse.jpg",
+    "normalMap": "/3d/textures/AYNALAR/NORMAL_AYNA/NORMAL_AYNA_Normal.jpg",
+    "normalScale": [
+      1,
+      1
+    ],
+    "roughnessMap": "/3d/textures/AYNALAR/NORMAL_AYNA/NORMAL_AYNA_Roughness.jpg",
+    "lightMap": "/3d/textures/BOS_LM.jpg",
+    "aoMap": "/3d/textures/BOS_AO.jpg",
+    "roughness": 0,
+    "metalness": 1,
+    "diffuseMapWrap": false,
+    "diffuseMapWrapScale": [
+      1.4,
+      1.4
+    ],
+    "normalMapWrap": false,
+    "roughnessMapWrap": false,
+    "roughnessMapWrapScale": [
+      0.4,
+      0.4
+    ],
+    "toneMapping": 0,
+    "anisotropy": 1,
+    "normalMapWrapScale": [
+      1.4,
+      0.1
+    ]
+  },
+  {
+    "translations": {
+      "tr": {
+        "title": "Füme AYNA"
+      },
+      "en": {
+        "title": "Smoked Mirror"
+      }
+    },
+    "_id": "mirror_fume",
+    "id": "mirror_fume",
+    "type": "mirror",
+    "group": "Ayna Materyali",
+    "image": "/assets/img/ayna/1.jpg",
+    "envMap": "ENV_CAR",
+    "map": "/3d/textures/AYNALAR/FUME_AYNA/FUME_AYNA_Diffuse.jpg",
+    "normalMap": "/3d/textures/AYNALAR/FUME_AYNA/FUME_AYNA_Normal.jpg",
+    "normalScale": [
+      1,
+      1
+    ],
+    "roughnessMap": "/3d/textures/AYNALAR/FUME_AYNA/FUME_AYNA_Roughness.jpg",
+    "lightMap": "/3d/textures/BOS_LM.jpg",
+    "aoMap": "/3d/textures/BOS_AO.jpg",
+    "roughness": 0,
+    "metalness": 1,
+    "diffuseMapWrap": false,
+    "diffuseMapWrapScale": [
+      1.4,
+      1.4
+    ],
+    "normalMapWrap": false,
+    "roughnessMapWrap": false,
+    "roughnessMapWrapScale": [
+      0.4,
+      0.4
+    ],
+    "toneMapping": 0,
+    "anisotropy": 1,
+    "normalMapWrapScale": [
+      1.4,
+      0.1
+    ]
+  },
+  {
+    "translations": {
+      "tr": {
+        "title": "Metalik"
+      },
+      "en": {
+        "title": "Metallic"
+      }
+    },
+    "id": "sat_paslanmaz_v2_1_supurgelik",
+    "_id": "sat_paslanmaz_v2_1_supurgelik",
+    "group": "alimSupurgelikMaterial",
+    "type": "alimSupurgelikMaterial",
+    "image": "/assets/img/cop/3.jpg",
+    "envMap": "ENV_CAR",
+    "color": "0xa3a3a3",
+    "map": "/3d/textures/Cam_D.jpg",
+    "normalMap": "/3d/textures/Ayna_Satine_N.jpg",
+    "roughnessMap": "/3d/textures/Super_Ayna_R.png",
+    "roughness": 0.45,
+    "metalness": 0.99,
+    "diffuseMapWrap": true,
+    "normalMapWrap": true,
+    "roughnessMapWrap": true,
+    "toneMapping": 5,
+    "normalScale": [
+      0.001,
+      0.001
+    ],
+    "diffuseMapWrapScale": [
+      32,
+      2
+    ],
+    "roughnessMapWrapScale": [
+      0.0004,
+      0.0004
+    ],
+    "aoMapIntensity": 0.2
+  },
+  {
+    "translations": {
+      "tr": {
+        "title": "Siyah"
+      },
+      "en": {
+        "title": "Black"
+      }
+    },
+    "id": "sat_paslanmaz_v2_9_supurgelik",
+    "_id": "sat_paslanmaz_v2_9_supurgelik",
+    "type": "alimSupurgelikMaterial",
+    "group": "alimSupurgelikMaterial",
+    "image": "/assets/img/cop/2.jpg",
+    "envMap": "ENV_CAR",
+    "color": "0x5c5c5c",
+    "map": "/3d/textures/Cam_D.jpg",
+    "normalMap": "/3d/textures/Ayna_Satine_N.jpg",
+    "roughnessMap": "/3d/textures/Super_Ayna_R.png",
+    "roughness": 0.45,
+    "metalness": 0.99,
+    "diffuseMapWrap": true,
+    "normalMapWrap": true,
+    "roughnessMapWrap": true,
+    "toneMapping": 5,
+    "normalScale": [
+      0.001,
+      0.001
+    ],
+    "diffuseMapWrapScale": [
+      32,
+      2
+    ],
+    "roughnessMapWrapScale": [
+      0.0004,
+      0.0004
+    ],
+    "aoMapIntensity": 0.5
+  },
+  {
+    "id": "custom_material_1",
+    "_id": "custom_material_1",
+    "type": "custom",
+    "translations": {
+      "tr": {
+        "title": "Custom - 1 ",
+        "group": "Custom"
+      },
+      "en": {
+        "title": "Custom - 1 ",
+        "group": "Custom"
+      }
+    },
+    "groupId": "custom",
+    "group": "Custom",
+    "image": "/assets/img/dokulu_paslanmaz/dmp_kare_square.jpg",
+    "envMap": "ENV_CAR",
+    "color": "0x9c836f",
+    "map": "/3d/textures/CUSTOM/custom_DIFFUSE.jpg",
+    "normalMap": "/3d/textures/CUSTOM/custom_NORMAL.jpg",
+    "roughnessMap": "/3d/textures/CUSTOM/custom_ROUGHNESS.jpg",
+    "aoMap": "/3d/textures/CUSTOM/custom_AO.jpg",
+    "roughness": 0.99,
+    "metalness": 0.35,
+    "normalScale": [
+      60,
+      40
+    ],
+    "diffuseMapWrap": true,
+    "normalMapWrap": true,
+    "roughnessMapWrap": true,
+    "diffuseMapWrapScale": [
+      6,
+      4
+    ],
+    "roughnessMapWrapScale": [
+      6,
+      4
+    ],
+    "normalMapWrapScale": [
+      6,
+      4
+    ],
+    "toneMapping": 2,
+    "anisotropy": 1,
+    "aoMapIntensity": 1,
+    "envMapIntensity": 2
+  }
+]

@@ -1,0 +1,7 @@
+.git
+.tmp-*
+docs/qa
+docs/image-sources
+node_modules
+dist
+dist-server

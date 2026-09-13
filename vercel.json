@@ -1,5 +1,116 @@
 {
+  "buildCommand": "npm run build",
+  "outputDirectory": "dist",
   "rewrites": [
-    { "source": "/(.*)", "destination": "/index.html" }
+    {
+      "source": "/urunler",
+      "destination": "/urunler/index.html"
+    },
+    {
+      "source": "/hizmetler",
+      "destination": "/hizmetler/index.html"
+    },
+    {
+      "source": "/projeler",
+      "destination": "/projeler/index.html"
+    },
+    {
+      "source": "/hakkimizda",
+      "destination": "/hakkimizda/index.html"
+    },
+    {
+      "source": "/iletisim",
+      "destination": "/iletisim/index.html"
+    },
+    {
+      "source": "/kabin-tasarla",
+      "destination": "/kabin-tasarla/index.html"
+    },
+    {
+      "source": "/katalog",
+      "destination": "/katalog/index.html"
+    },
+    {
+      "source": "/gizlilik-politikasi",
+      "destination": "/gizlilik-politikasi/index.html"
+    },
+    {
+      "source": "/cerez-politikasi",
+      "destination": "/cerez-politikasi/index.html"
+    },
+    {
+      "source": "/urunler/teleskopik-kat-kapisi",
+      "destination": "/urunler/teleskopik-kat-kapisi/index.html"
+    },
+    {
+      "source": "/urunler/merkezi-kat-kapisi",
+      "destination": "/urunler/merkezi-kat-kapisi/index.html"
+    },
+    {
+      "source": "/urunler/teleskopik-kabin-kapisi",
+      "destination": "/urunler/teleskopik-kabin-kapisi/index.html"
+    },
+    {
+      "source": "/urunler/merkezi-kabin-kapisi",
+      "destination": "/urunler/merkezi-kabin-kapisi/index.html"
+    },
+    {
+      "source": "/urunler/yonsuz-mekanizma",
+      "destination": "/urunler/yonsuz-mekanizma/index.html"
+    },
+    {
+      "source": "/urunler/kanalsiz-alt-esik",
+      "destination": "/urunler/kanalsiz-alt-esik/index.html"
+    }
+  ],
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        {
+          "key": "X-Content-Type-Options",
+          "value": "nosniff"
+        },
+        {
+          "key": "Referrer-Policy",
+          "value": "strict-origin-when-cross-origin"
+        },
+        {
+          "key": "X-Frame-Options",
+          "value": "SAMEORIGIN"
+        },
+        {
+          "key": "Permissions-Policy",
+          "value": "camera=(), microphone=(), geolocation=()"
+        }
+      ]
+    },
+    {
+      "source": "/assets/(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=31536000, immutable"
+        }
+      ]
+    },
+    {
+      "source": "/media/(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=86400"
+        }
+      ]
+    },
+    {
+      "source": "/fonts/(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=604800"
+        }
+      ]
+    }
   ]
 }

@@ -1,12 +1,14 @@
-import { useState, Suspense, useEffect, useMemo, useRef, useTransition, useDeferredValue } from 'react';
+import { useState, Suspense, useEffect, useMemo, useRef, useTransition, useDeferredValue, createContext, useContext } from 'react';
 import * as THREE from 'three';
 import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
 import { Canvas, useThree } from '@react-three/fiber';
 import { OrbitControls, useTexture, Html } from '@react-three/drei';
-import { Layers3, ScanLine, LampCeiling, Grid2X2, RotateCcw, Undo2, Redo2, MousePointer2, Check, ArrowRight, Link2, Unlink2, Expand, ChevronDown } from 'lucide-react';
-import { WALLS, DEFAULT_MATERIAL, materialPath, createCabinConfig, resizePanels, changeWall, mirrorGeometry } from './cabinConfig';
+import { Layers3, ScanLine, LampCeiling, Grid2X2, RotateCcw, Undo2, Redo2, MousePointer2, Check, ArrowRight, Link2, Unlink2, Expand, ChevronDown, ImageDown, FileDown } from 'lucide-react';
+import { WALLS, DEFAULT_MATERIAL, materialPath, createCabinConfig, changeWall, mirrorGeometry } from './cabinConfig';
 import ekaMaterials from '../data/ekaMaterials.json';
+import { CEILING_COLORS, ceilingColor, composeCeiling } from './ceilingDesign';
 const ekaById = Object.fromEntries(ekaMaterials.map(item => [item.id, item]));
+const MetalEnvironment = createContext(null);
 const W = 1.72;
 const H = 2.38;
 const D = 1.78;
@@ -46,7 +48,7 @@ function materialSource(path) {
   if (type === 'paslanmaz')
     return { url: `${root}paslanmaz-${id}.svg?v=3`, color: '#ffffff', name: steelNames[id - 1] };
   if (type === 'tavan')
-    return { url: `${root}${type}-${id}.svg`, color: '#ffffff' };
+    return { url: `${root}${type}-${id}.svg`, color: '#ffffff', name: id >= 24 ? `T-${String([1,2,3,4,5,6,7,8,9,10,11,12,21,22,23,24][id - 24]).padStart(2, '0')}` : `Tavan ${id}` };
   if (type === 'granit') {
     if (id >= 26) return { url: `${root}granit-${id}.png`, color: '#ffffff' };
     return { url: root + ([2, 5, 18, 19, 21, 25].includes(id) ? 'gneiss.png' : 'granite.png'), color: stoneColors[id - 1] };
@@ -143,20 +145,12 @@ function SurfaceReflection({ texture, ceiling, y, height, width, tint = '#ffffff
   );
 }
 
-function MetalBox({ position, size }) {
-  return <mesh position={position}><boxGeometry args={size} /><meshStandardMaterial {...steel} /></mesh>;
+function MetalBox({ position, size, color }) {
+  const environment = useContext(MetalEnvironment);
+  return <mesh position={position}><boxGeometry args={size} /><meshStandardMaterial {...steel} color={color || steel.color} envMap={environment} envMapIntensity={0.25} /></mesh>;
 }
 
-function Rail({ position, length, rotation }) {
-  return (
-    <mesh position={position} rotation={rotation}>
-      <cylinderGeometry args={[0.013, 0.013, length, 24]} />
-      <meshStandardMaterial {...steel} />
-    </mesh>
-  );
-}
-
-function EkaSteelMaterial({ choice, map, width }) {
+function CabinEnvironment({ children }) {
   const gl = useThree(state => state.gl);
   const environment = useMemo(() => {
     const room = new RoomEnvironment();
@@ -166,12 +160,38 @@ function EkaSteelMaterial({ choice, map, width }) {
     return target;
   }, [gl]);
   useEffect(() => () => environment.dispose(), [environment]);
+  return <MetalEnvironment.Provider value={environment.texture}>{children}</MetalEnvironment.Provider>;
+}
+
+function EkaSteelMaterial({ choice, map, width }) {
+  const environment = useContext(MetalEnvironment);
   const [normalSource, roughnessSource] = useTexture([choice.normalMap, choice.roughnessMap || choice.url]);
   const normal = useSurfaceTexture(normalSource, width, H, true, true, ...(choice.normalRepeat || [1, 1]));
   const roughness = useSurfaceTexture(roughnessSource, width, H, true, true, ...(choice.roughnessRepeat || [1, 1]));
   return <meshStandardMaterial map={map} color={choice.color} normalMap={normal}
     normalScale={[choice.normalStrength, choice.normalStrength]} roughnessMap={choice.roughnessMap ? roughness : null}
-    envMap={environment.texture} roughness={Math.max(0.4, choice.roughness)} metalness={Math.min(0.6, choice.metalness)} envMapIntensity={0.3} side={THREE.DoubleSide} />;
+    envMap={environment} roughness={Math.max(0.4, choice.roughness)} metalness={Math.min(0.6, choice.metalness)} envMapIntensity={0.3} side={THREE.DoubleSide} />;
+}
+
+function BrushedSteelMaterial({ path }) {
+  const environment = useContext(MetalEnvironment);
+  const brushing = useMemo(() => {
+    const canvas = document.createElement('canvas'); canvas.width = 512; canvas.height = 512;
+    const context = canvas.getContext('2d');
+    context.fillStyle = '#8080ff'; context.fillRect(0, 0, 512, 512);
+    for (let x = 0; x < 512; x++) {
+      const value = 128 + Math.round(12 * Math.sin(x * 13.37));
+      context.fillStyle = `rgb(${value},128,255)`; context.fillRect(x, 0, 1, 512);
+    }
+    const texture = new THREE.CanvasTexture(canvas);
+    texture.wrapS = texture.wrapT = THREE.RepeatWrapping; texture.repeat.set(3, 1);
+    return texture;
+  }, []);
+  useEffect(() => () => brushing.dispose(), [brushing]);
+  const color = path.includes('paslanmaz-5.') ? '#326780' : path.includes('paslanmaz-6.') ? '#7196ab' : '#a2aaae';
+  return <meshPhysicalMaterial color={color} metalness={0.55} roughness={0.32}
+    envMap={environment} envMapIntensity={0.85} normalMap={brushing} normalScale={[0.16, 0.16]}
+    anisotropy={0.55} anisotropyRotation={Math.PI / 2} side={THREE.DoubleSide} />;
 }
 
 function WallPanel({ path, width, x, selected, onSelect }) {
@@ -183,10 +203,10 @@ function WallPanel({ path, width, x, selected, onSelect }) {
     <group position={[x, 0, 0]}>
       <mesh onClick={event => { event.stopPropagation(); if (event.delta < 5) onSelect(); }}>
         <planeGeometry args={[width, H]} />
-        {choice.normalMap ? <EkaSteelMaterial choice={choice} map={map} width={width} /> : <meshStandardMaterial map={map} color={choice.color} metalness={laminate ? 0 : 0.16} roughness={laminate ? 0.72 : 0.48} envMapIntensity={0} side={THREE.DoubleSide} />}
+        {choice.normalMap ? <EkaSteelMaterial choice={choice} map={map} width={width} /> : !laminate ? <BrushedSteelMaterial path={path} /> : <meshStandardMaterial map={map} color={choice.color} metalness={0} roughness={0.72} envMapIntensity={0} side={THREE.DoubleSide} />}
       </mesh>
       <MetalBox position={[width / 2 - 0.003, 0, 0.008]} size={[0.006, H, 0.01]} />
-      {selected && <group>
+      {selected && <group userData={{ exportHidden: true }}>
         {[-1, 1].map(side => <mesh key={side} position={[side * (width / 2 - 0.009), 0, 0.017]}>
           <planeGeometry args={[0.009, H - 0.025]} /><meshBasicMaterial color="#ef784d" depthWrite={false} />
         </mesh>)}
@@ -198,8 +218,25 @@ function WallPanel({ path, width, x, selected, onSelect }) {
   );
 }
 
+function WallShadow({ length, height = H }) {
+  const map = useMemo(() => {
+    const canvas = document.createElement('canvas'); canvas.width = canvas.height = 256;
+    const context = canvas.getContext('2d');
+    for (const horizontal of [true, false]) {
+      const gradient = context.createLinearGradient(0, 0, horizontal ? 256 : 0, horizontal ? 0 : 256);
+      gradient.addColorStop(0, 'rgba(17,26,34,.40)'); gradient.addColorStop(.13, 'rgba(17,26,34,0)');
+      gradient.addColorStop(.87, 'rgba(17,26,34,0)'); gradient.addColorStop(1, 'rgba(17,26,34,.40)');
+      context.fillStyle = gradient; context.fillRect(0, 0, 256, 256);
+    }
+    const texture = new THREE.CanvasTexture(canvas); texture.colorSpace = THREE.SRGBColorSpace; return texture;
+  }, []);
+  useEffect(() => () => map.dispose(), [map]);
+  return <mesh position={[0, 0, .003]} raycast={() => null}><planeGeometry args={[length,height]} /><meshBasicMaterial map={map} transparent depthWrite={false} /></mesh>;
+}
+
 function PanelWall({ wall, config, length, position, rotation = [0, 0, 0], selection, onSelect, reverse = false, editing }) {
   return <group position={position} rotation={rotation}>
+    <WallShadow length={length} />
     {config.widths.map((ratio, index) => {
       const width = length * ratio / 100;
       const preceding = config.widths.slice(0, index).reduce((sum, value) => sum + value, 0);
@@ -211,14 +248,46 @@ function PanelWall({ wall, config, length, position, rotation = [0, 0, 0], selec
   </group>;
 }
 
-function KendiAsansorumuz({ config: requestedConfig, selection, onSelect, editing, onMirrorSelect }) {
+function SceneCapture({ config, captureRef }) {
+  const { gl, scene, camera } = useThree();
+  useEffect(() => {
+    const entry = { config, capture: () => {
+      const size = gl.getSize(new THREE.Vector2());
+      const ratio = gl.getPixelRatio();
+      const aspect = camera.aspect;
+      const hidden = [];
+      scene.traverse(object => { if (object.userData.exportHidden && object.visible) { hidden.push(object); object.visible = false; } });
+      try {
+        gl.setPixelRatio(1);
+        gl.setSize(1800, 2100, false);
+        camera.aspect = 1800 / 2100; camera.updateProjectionMatrix();
+        gl.render(scene, camera);
+        return gl.domElement.toDataURL('image/png');
+      } finally {
+        hidden.forEach(object => { object.visible = true; });
+        camera.aspect = aspect; camera.updateProjectionMatrix();
+        gl.setPixelRatio(ratio); gl.setSize(size.x, size.y, false); gl.render(scene, camera);
+      }
+    } };
+    captureRef.current = entry;
+    return () => { if (captureRef.current === entry) captureRef.current = null; };
+  }, [gl, scene, camera, config, captureRef]);
+  return null;
+}
+
+function KendiAsansorumuz({ config: requestedConfig, selection, onSelect, editing, onMirrorSelect, captureRef }) {
   const config = useDeferredValue(requestedConfig);
   const roofChoice = materialSource(config.ceiling);
   const floorChoice = materialSource(config.floor);
   const [roof, floor] = useTexture([roofChoice.url, floorChoice.url]);
-  const roofMap = useSurfaceTexture(roof, W, D);
+  const roofMap = useMemo(() => {
+    const texture = new THREE.CanvasTexture(composeCeiling(roof.image, config.ceilingColor, config.ceilingSideColor));
+    texture.colorSpace = THREE.SRGBColorSpace;
+    texture.anisotropy = 8;
+    return texture;
+  }, [roof, config.ceilingColor, config.ceilingSideColor]);
+  useEffect(() => () => roofMap.dispose(), [roofMap]);
   const floorMap = useSurfaceTexture(floor, W, D);
-  const railY = -0.12;
   const mirror = mirrorGeometry(config);
   const panelW = mirror.width;
   const topH = mirror.topReflection;
@@ -226,10 +295,12 @@ function KendiAsansorumuz({ config: requestedConfig, selection, onSelect, editin
   const panelTop = mirror.top - topH;
   const panelBottom = mirror.bottom + bottomH;
   return <group>
+    <SceneCapture config={config} captureRef={captureRef} />
     <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, -H / 2, 0]}>
       <planeGeometry args={[W, D]} />
       <meshStandardMaterial map={floorMap} color={floorChoice.color} roughness={0.68} metalness={0} envMapIntensity={0} side={THREE.DoubleSide} />
     </mesh>
+    <group rotation={[-Math.PI / 2, 0, 0]} position={[0, -H / 2 + .002, 0]}><WallShadow length={W} height={D} /></group>
     <mesh rotation={[Math.PI / 2, 0, 0]} position={[0, H / 2, 0]}>
       <planeGeometry args={[W, D]} />
       <meshStandardMaterial map={roofMap} color="#ffffff" emissive="#ffffff" emissiveMap={roofMap} emissiveIntensity={0.38} roughness={0.66} metalness={0} envMapIntensity={0} side={THREE.DoubleSide} />
@@ -239,10 +310,7 @@ function KendiAsansorumuz({ config: requestedConfig, selection, onSelect, editin
       return <group key={side}>
         <PanelWall wall={wall} config={config.walls[wall]} length={D} position={[side * W / 2, 0, 0]}
           rotation={[0, -side * Math.PI / 2, 0]} reverse={side === 1} selection={selection} onSelect={onSelect} editing={editing} />
-        {[0.28, -0.63].map(y => <MetalBox key={y} position={[side * (W / 2 - 0.008), y, 0]} size={[0.012, 0.018, D]} />)}
-        <MetalBox position={[side * (W / 2 - 0.009), -H / 2 + 0.035, 0]} size={[0.014, 0.07, D]} />
-        <Rail position={[side * (W / 2 - 0.07), railY, -0.12]} length={D * 0.62} rotation={[Math.PI / 2, 0, 0]} />
-        {[-0.55, 0.31].map(z => <Rail key={z} position={[side * (W / 2 - 0.036), railY, z]} length={0.07} rotation={[0, 0, Math.PI / 2]} />)}
+        <MetalBox position={[side * (W / 2 - 0.009), -H / 2 + 0.035, 0]} size={[0.014, 0.07, D]} color={ceilingColor(config.floorTrimColor).color} />
         <MetalBox position={[side * (W / 2 + 0.015), 0, D / 2]} size={[0.03, H + 0.06, 0.035]} />
       </group>;
     })}
@@ -256,11 +324,9 @@ function KendiAsansorumuz({ config: requestedConfig, selection, onSelect, editin
       {[-1, 1].map(side => <MetalBox key={side} position={[side * panelW / 2, (mirror.top + mirror.bottom) / 2, -D / 2 + 0.02]} size={[0.006, mirror.height, 0.012]} />)}
       {[mirror.top, mirror.bottom].map(y => <MetalBox key={y} position={[0, y, -D / 2 + 0.021]} size={[panelW, 0.009, 0.012]} />)}
     </group>}
-    <Rail position={[0, railY, -D / 2 + 0.08]} length={W * 0.7} rotation={[0, 0, Math.PI / 2]} />
-    {[-0.49, 0.49].map(x => <Rail key={x} position={[x, railY, -D / 2 + 0.043]} length={0.075} rotation={[Math.PI / 2, 0, 0]} />)}
-    <MetalBox position={[0, -H / 2 + 0.025, -D / 2 + 0.006]} size={[W, 0.05, 0.012]} />
+    <MetalBox position={[0, -H / 2 + 0.025, -D / 2 + 0.006]} size={[W, 0.05, 0.012]} color={ceilingColor(config.floorTrimColor).color} />
     <MetalBox position={[0, H / 2 + 0.015, D / 2]} size={[W + 0.06, 0.03, 0.035]} />
-    <MetalBox position={[0, -H / 2 - 0.012, D / 2]} size={[W + 0.06, 0.024, 0.08]} />
+    <MetalBox position={[0, -H / 2 - 0.012, D / 2]} size={[W + 0.06, 0.024, 0.08]} color={ceilingColor(config.floorTrimColor).color} />
       {/* Sağ duvara sıfıra yakın, ince fırçalı çelik kumanda paneli. */}
       <group position={[W / 2 - 0.019, 0.08, D * 0.32]} rotation={[0, -Math.PI / 2, 0]}>
         <MetalBox position={[0, 0, 0]} size={[0.18, 1.85, 0.012]} />
@@ -322,8 +388,21 @@ function RangeControl({ label, value, min, max, suffix = '%', onChange, onFinish
   </label>;
 }
 
+function CeilingPreview({ path, color, sideColor }) {
+  const [preview, setPreview] = useState(null);
+  const source = materialSource(path).url;
+  useEffect(() => {
+    let active = true;
+    const image = new Image();
+    image.onload = () => { if (active) setPreview(composeCeiling(image, color, sideColor).toDataURL()); };
+    image.src = source;
+    return () => { active = false; };
+  }, [source, color, sideColor]);
+  return <div className="mt-5 rounded-xl border border-slate-200 bg-slate-50 p-3">{preview && <img src={preview} alt="Üç bölümlü tavan: sabit yanlar, seçili orta desen" className="w-full aspect-square object-contain" />}</div>;
+}
+
 function MaterialGrid({ type, count, selected, onSelect }) {
-  const entries = [...ekaMaterials.filter(item => item.type === type).map(item => item.id), ...Array.from({ length: count }, (_, i) => materialPath(type, i + 1))];
+  const entries = [...ekaMaterials.filter(item => item.type === type).map(item => item.id), ...Array.from({ length: count }, (_, i) => i + 1).filter(id => type === 'paslanmaz' ? [1, 5, 6].includes(id) : type !== 'tavan' || (id <= 8 || id >= 24) && id !== 35).map(id => materialPath(type, id))];
   return <><div className="grid grid-cols-6 sm:grid-cols-7 lg:grid-cols-6 gap-2">
     {entries.map((path, i) => {
       return <button key={path} type="button" title={materialName(path)} aria-label={materialName(path)}
@@ -343,6 +422,11 @@ export default function KabinTasarim() {
   const [section, setSection] = useState('walls');
   const [selection, setSelection] = useState({ wall: 'rearCenter', index: 1 });
   const [family, setFamily] = useState('paslanmaz');
+  const [ceilingTab, setCeilingTab] = useState('patterns');
+  const [floorTab, setFloorTab] = useState('materials');
+  const [exporting, setExporting] = useState(false);
+  const [exportMessage, setExportMessage] = useState('');
+  const captureRef = useRef(null);
   const [linked, setLinked] = useState(false);
   const [view, setView] = useState({ name: 'front', version: 0 });
   const [pending, startTransition] = useTransition();
@@ -369,6 +453,29 @@ export default function KabinTasarim() {
   };
   const setMaterial = path => startTransition(() => change(old => changeWall(old, selection.wall,
     wall => ({ ...wall, materials: wall.materials.map((value, index) => index === selection.index ? path : value) }), linked)));
+  const downloadCabin = async format => {
+    if (!captureRef.current || captureRef.current.config !== config) { setExportMessage('Malzemeler yükleniyor. Birazdan tekrar deneyebilirsin.'); return; }
+    setExporting(true); setExportMessage('');
+    try {
+      const data = captureRef.current.capture();
+      const name = 'has-door-kabin-' + new Date().toISOString().slice(0,10);
+      if (format === 'png') {
+        const link = document.createElement('a'); link.href = data; link.download = name + '.png'; link.click();
+      } else {
+        const { jsPDF } = await import('jspdf');
+        const pdf = new jsPDF({ orientation: 'portrait', unit: 'mm', format: 'a4' });
+        const image = pdf.getImageProperties(data);
+        const width = Math.min(190, 250 * image.width / image.height);
+        const height = width * image.height / image.width;
+        pdf.setFontSize(16); pdf.text('HAS DOOR | KABIN TASARIMI', 105, 17, { align: 'center' });
+        pdf.addImage(data, 'PNG', (210-width)/2, 25, width, height);
+        pdf.setFontSize(9); pdf.text('172 x 178 x 238 cm | ' + new Date().toLocaleDateString('tr-TR'), 105, 287, { align: 'center' });
+        pdf.save(name + '.pdf');
+      }
+      setExportMessage(format === 'png' ? 'PNG indirme başlatıldı.' : 'PDF indirme başlatıldı.');
+    } catch (error) { console.error('Kabin görseli indirilemedi', error); setExportMessage('Görsel hazırlanamadı. Lütfen tekrar dene.'); }
+    finally { setExporting(false); }
+  };
   const selectedWall = config.walls[selection.wall];
   const selectedPath = selectedWall.materials[selection.index];
   const selectedLength = selection.wall === 'rearCenter' ? W : D;
@@ -385,7 +492,7 @@ export default function KabinTasarim() {
         <div className="flex items-center gap-2">
           <button type="button" onClick={undo} disabled={!history.past.length} aria-label="Geri al" title="Geri al" className="p-2.5 bg-white rounded-lg border border-slate-200 disabled:opacity-30"><Undo2 size={17} /></button>
           <button type="button" onClick={redo} disabled={!history.future.length} aria-label="Yinele" title="Yinele" className="p-2.5 bg-white rounded-lg border border-slate-200 disabled:opacity-30"><Redo2 size={17} /></button>
-          <button type="button" onClick={() => { change(createCabinConfig()); setSelection({ wall: 'rearCenter', index: 1 }); setLinked(false); setFamily('paslanmaz'); setSection('walls'); setView({ name: 'front', version: view.version + 1 }); }} className="flex items-center gap-2 px-3 py-2.5 text-xs bg-white rounded-lg border border-slate-200"><RotateCcw size={15} /> Baştan başla</button>
+          <button type="button" onClick={() => { change(createCabinConfig()); setSelection({ wall: 'rearCenter', index: 1 }); setLinked(false); setFamily('paslanmaz'); setCeilingTab('patterns'); setSection('walls'); setView({ name: 'front', version: view.version + 1 }); }} className="flex items-center gap-2 px-3 py-2.5 text-xs bg-white rounded-lg border border-slate-200"><RotateCcw size={15} /> Baştan başla</button>
         </div>
       </header>
       <div className="grid grid-cols-1 lg:grid-cols-[370px_minmax(0,1fr)] xl:grid-cols-[410px_minmax(0,1fr)] gap-5 lg:gap-7 items-start">
@@ -410,10 +517,7 @@ export default function KabinTasarim() {
                 {selection.index === index && <Check size={13} className="absolute right-1 top-1 text-white bg-[#e66b43] rounded-full p-0.5" />}
               </button>)}</div>
               <p className="text-[11px] text-slate-400 mb-5 flex items-center gap-1.5"><MousePointer2 size={12} /> Kabin üzerinden bir panele de tıklayabilirsin.</p>
-              <RangeControl label="Seçili panel genişliği" min={15} max={70} value={selectedWall.widths[selection.index]}
-                onChange={value => change(old => changeWall(old, selection.wall, wall => ({ ...wall, widths: resizePanels(wall.widths, selection.index, value) }), linked), 'panel-width')}
-                onFinish={finishGesture} />
-              <p className="text-[11px] text-slate-400 mt-2 mb-4">Yaklaşık {mm} mm · Diğer iki panel otomatik dengelenir.</p>
+              <p className="text-[11px] text-slate-400 mb-4">Panel genişliği sabit · Yaklaşık {mm} mm</p>
               {selection.wall !== 'rearCenter' && <button type="button" onClick={() => setLinked(!linked)} aria-pressed={linked} className={`w-full flex items-center justify-between p-3 rounded-lg border text-xs ${linked ? 'bg-[#fcf1ec] border-orange-200 text-[#ac4d2d]' : 'bg-slate-50 border-slate-100 text-slate-500'}`}>
                 <span className="flex gap-2 items-center">{linked ? <Link2 size={14} /> : <Unlink2 size={14} />} {selection.wall.startsWith('rear') ? 'Arka iki yana aynı uygula' : 'İki yan duvara aynı uygula'}</span>
                 <span className={`w-7 h-4 rounded-full relative ${linked ? 'bg-[#e66b43]' : 'bg-slate-300'}`}><span className={`absolute top-0.5 bg-white w-3 h-3 rounded-full ${linked ? 'right-0.5' : 'left-0.5'}`} /></span>
@@ -437,7 +541,7 @@ export default function KabinTasarim() {
                 {config.mirrorMode !== 'none' && <div style={{ height: `${mirrorGeometry(config).height / H * 100}%`, left: `${config.walls.rearCenter.widths[0]}%`, width: `${config.walls.rearCenter.widths[1]}%` }} className="absolute top-0 bg-gradient-to-br from-slate-100 via-[#b8cdd4] to-[#e8f3f5] border-b border-slate-400 flex items-center justify-center text-[10px] text-slate-600 tracking-wider">AYNA</div>}
               </div>
               <div className="space-y-6">
-                <RangeControl label="Orta panel / ayna genişliği" value={config.walls.rearCenter.widths[1]} min={15} max={70} onChange={value => change(old => changeWall(old, 'rearCenter', wall => ({ ...wall, widths: resizePanels(wall.widths, 1, value) })), 'mirror-width')} onFinish={finishGesture} />
+                <p className="text-xs text-slate-500">Ayna genişliği orta panelle birlikte sabittir: {Math.round(mirrorGeometry(config).width * 100)} cm.</p>
                 {config.mirrorMode !== 'none' && <>
                   <RangeControl label="Ayna yüksekliği" value={Math.round(mirrorGeometry(config).height * 100)} min={60} max={238} suffix=" cm" onChange={value => change(old => ({ ...old, mirrorMode: 'custom', mirrorHeight: value }), 'mirror-height')} onFinish={finishGesture} />
                   <p className="text-xs text-slate-500">Ayna ölçüsü: {Math.round(mirrorGeometry(config).width * 100)} × {Math.round(mirrorGeometry(config).height * 100)} cm</p>
@@ -450,15 +554,28 @@ export default function KabinTasarim() {
               </div>
               <button type="button" onClick={() => choosePanel({ wall: 'rearCenter', index: 1 })} className="mt-6 w-full rounded-lg bg-slate-50 p-3 text-xs text-slate-600">Orta alanın üç panelini düzenle →</button>
             </>}
-            {(section === 'ceiling' || section === 'floor') && <>
-              <div className="flex justify-between mb-2"><h2 className="font-semibold">{section === 'ceiling' ? 'Tavanlar' : 'Taban Granitleri'}</h2><span className="text-[10px] text-slate-400">{section === 'ceiling' ? '03' : '04'} / 04</span></div>
-              <p className="text-xs leading-5 text-slate-500 mb-5">{section === 'ceiling' ? 'Kabinine ışık ve karakter katan dekoratif tavanlar.' : 'Doğal taşlar ve tek parça dekoratif zeminler.'}</p>
-              <MaterialGrid type={section === 'ceiling' ? 'tavan' : 'granit'} count={section === 'ceiling' ? 23 : 27} selected={config[section]}
-                onSelect={path => startTransition(() => change(old => ({ ...old, [section]: path })))} />
-              <div className="mt-5 rounded-xl border border-slate-200 overflow-hidden">
-                <div className="aspect-[2/1]" style={{ ...swatchStyle(config[section]), backgroundSize: 'contain', backgroundRepeat: 'no-repeat' }} />
-                <p className="text-xs px-3 py-3 border-t border-slate-100">{materialName(config[section])}</p>
+            {section === 'ceiling' && <>
+              <h2 className="font-semibold mb-2">Tavan tasarımı</h2>
+              <p className="text-xs leading-5 text-slate-500 mb-4">Sağ ve sol kenarlar ile dört spot sabit. Seçtiğin desen yalnız orta bölümde değişir.</p>
+              <div className="flex p-1 bg-slate-100 rounded-lg mb-4">
+                <button type="button" aria-pressed={ceilingTab === 'patterns'} onClick={() => setCeilingTab('patterns')} className={ceilingTab === 'patterns' ? 'flex-1 py-2 rounded-md text-xs bg-white shadow-sm font-semibold' : 'flex-1 py-2 rounded-md text-xs text-slate-500'}>Desenler</button>
+                <button type="button" aria-pressed={ceilingTab === 'colors'} onClick={() => setCeilingTab('colors')} className={ceilingTab === 'colors' ? 'flex-1 py-2 rounded-md text-xs bg-white shadow-sm font-semibold' : 'flex-1 py-2 rounded-md text-xs text-slate-500'}>Renkler</button>
               </div>
+              {ceilingTab === 'patterns' ? <MaterialGrid type="tavan" count={39} selected={config.ceiling} onSelect={path => startTransition(() => change(old => ({ ...old, ceiling: path })))} /> : <><div className="grid grid-cols-3 gap-3">
+                {CEILING_COLORS.map(item => <button type="button" key={item.id} aria-label={'Tavan rengi: ' + item.name} aria-pressed={config.ceilingColor === item.id} onClick={() => change(old => ({ ...old, ceilingColor: item.id }))} className={config.ceilingColor === item.id ? 'rounded-lg p-1 border-2 border-orange-400 text-xs' : 'rounded-lg p-1 border-2 border-transparent text-xs'}>
+                  <span className="block h-14 rounded-md mb-2" style={{ background: 'linear-gradient(110deg,#ffffff30,transparent,#00000025),' + item.color }} />{item.name}
+                </button>)}
+              </div></>}
+              <CeilingPreview path={config.ceiling} color={config.ceilingColor} sideColor={config.ceilingSideColor} />
+              <p className="mt-3 text-xs text-slate-500">{materialName(config.ceiling)} · {ceilingColor(config.ceilingColor).name}</p>
+            </>}
+            {section === 'floor' && <>
+              <h2 className="font-semibold mb-2">Taban Granitleri</h2>
+              <p className="text-xs leading-5 text-slate-500 mb-5">Doğal taşlar ve tek parça dekoratif zeminler.</p>
+              <div className="flex gap-2 mb-4"><button type="button" aria-pressed={floorTab === 'materials'} onClick={() => setFloorTab('materials')} className="border rounded-lg px-3 py-2 text-xs">Granitler</button><button type="button" aria-pressed={floorTab === 'colors'} onClick={() => setFloorTab('colors')} className="border rounded-lg px-3 py-2 text-xs">Tarak / eşik renkleri</button></div>
+              {floorTab === 'colors' && <><p className="text-xs text-slate-500 mb-3">Zemin kenarlarındaki metal parçalar ve giriş eşiği</p><div className="grid grid-cols-3 gap-3">{CEILING_COLORS.map(item => <button type="button" key={item.id} aria-label={'Zemin tarak rengi: ' + item.name} aria-pressed={config.floorTrimColor === item.id} onClick={() => change(old => ({ ...old, floorTrimColor: item.id }))} className={config.floorTrimColor === item.id ? 'border-2 border-orange-400 rounded p-1 text-xs' : 'border-2 border-transparent rounded p-1 text-xs'}><span className="block h-12 rounded mb-2" style={{ background: 'linear-gradient(110deg,#ffffff35,transparent,#00000030),' + item.color }} />{item.name}</button>)}</div></>}
+              {floorTab === 'materials' && <MaterialGrid type="granit" count={27} selected={config.floor} onSelect={path => startTransition(() => change(old => ({ ...old, floor: path })))} />}
+              <div className="mt-5 rounded-xl border border-slate-200 overflow-hidden"><div className="aspect-[2/1]" style={{ ...swatchStyle(config.floor), backgroundSize: 'contain', backgroundRepeat: 'no-repeat' }} /><p className="text-xs px-3 py-3 border-t border-slate-100">{materialName(config.floor)}</p></div>
             </>}
           </div>
         </aside>
@@ -470,13 +587,13 @@ export default function KabinTasarim() {
               <span role="status" className="text-[10px] bg-white/80 border border-white px-2.5 py-1.5 rounded-full flex items-center gap-1.5 text-slate-500"><span className={`w-1.5 h-1.5 rounded-full ${pending ? 'bg-orange-400' : 'bg-emerald-500'}`} />{pending ? 'Malzeme yükleniyor' : 'Canlı önizleme'}</span>
             </div>
             <div className="h-[470px] sm:h-[560px] lg:h-[min(740px,calc(100svh-320px))] lg:min-h-[340px]">
-              <Canvas camera={{ position: [0, 0.02, 5.25], fov: 34 }} dpr={[1.5, 2]} gl={{ antialias: true }}
+              <Canvas camera={{ position: [0, 0.02, 5.25], fov: 34 }} dpr={[1.5, 2]} gl={{ antialias: true, preserveDrawingBuffer: true }}
                 onCreated={({ gl }) => { gl.toneMapping = THREE.ACESFilmicToneMapping; gl.toneMappingExposure = 1; gl.outputColorSpace = THREE.SRGBColorSpace; }}>
                 <color attach="background" args={['#e9edef']} />
                 <hemisphereLight args={['#ffffff', '#d6dde2', 2.2]} />
                 <directionalLight position={[2.5, 3, 4]} intensity={1.5} /><directionalLight position={[-3, 0.5, 3]} intensity={0.85} />
                 <Suspense fallback={<Html center><span className="text-xs whitespace-nowrap bg-white p-3 rounded-lg shadow-sm">Kabin hazırlanıyor…</span></Html>}>
-                  <KendiAsansorumuz config={config} selection={selection} onSelect={choosePanel} editing={section === 'walls'} onMirrorSelect={() => setSection('mirror')} />
+                  <CabinEnvironment><KendiAsansorumuz config={config} selection={selection} onSelect={choosePanel} editing={section === 'walls'} onMirrorSelect={() => setSection('mirror')} captureRef={captureRef} /></CabinEnvironment>
                 </Suspense>
                 <CameraView view={view} />
               </Canvas>
@@ -493,6 +610,11 @@ export default function KabinTasarim() {
             <div><p className="text-[9px] uppercase tracking-widest text-slate-400">DİKEY PANELLER</p><p className="text-xs mt-1.5 font-medium">9 bağımsız bölüm</p></div>
             <div><p className="text-[9px] uppercase tracking-widest text-slate-400">AYNA</p><p className="text-xs mt-1.5 font-medium">{config.mirrorMode === 'none' ? 'Ayna yok' : `${Math.round(mirrorGeometry(config).width * 100)} × ${Math.round(mirrorGeometry(config).height * 100)} cm`}</p></div>
           </div>
+          <div className="flex flex-wrap gap-2 mt-4">
+            <button type="button" disabled={exporting || pending} onClick={() => downloadCabin('png')} className="flex items-center gap-2 bg-white border border-slate-200 rounded-lg px-4 py-2 text-xs disabled:opacity-50"><ImageDown size={15} /> Resmi indir (PNG)</button>
+            <button type="button" disabled={exporting || pending} onClick={() => downloadCabin('pdf')} className="flex items-center gap-2 bg-slate-800 text-white rounded-lg px-4 py-2 text-xs disabled:opacity-50"><FileDown size={15} /> PDF indir</button>
+          </div>
+          <p role="status" className="text-xs text-slate-500 mt-2">{exporting ? 'Görsel hazırlanıyor…' : exportMessage}</p>
           <details className="mt-5 bg-white rounded-xl border border-slate-200 text-xs">
             <summary className="px-4 py-3 cursor-pointer flex items-center justify-between text-slate-600">Tasarım özeti <span className="flex items-center gap-2 text-slate-400">{changedPanels} panel özelleştirildi <ChevronDown size={14} /></span></summary>
             <div className="px-4 pb-4 space-y-3 border-t border-slate-100 pt-3">{Object.entries(WALLS).map(([wall, name]) => <div key={wall}><p className="font-semibold mb-1">{name}</p><p className="text-slate-500 leading-5">{config.walls[wall].materials.map((path, i) => `${i + 1}. ${materialName(path)} (%${config.walls[wall].widths[i]})`).join(' · ')}</p></div>)}</div>
@@ -502,3 +624,4 @@ export default function KabinTasarim() {
     </div>
   </div>;
 }
+

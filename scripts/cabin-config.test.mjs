@@ -1,15 +1,13 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { createCabinConfig, resizePanels, changeWall, mirrorGeometry } from '../src/components/cabinConfig.js';
+import { createCabinConfig, changeWall, mirrorGeometry } from '../src/components/cabinConfig.js';
 
-test('every panel resize preserves wall coverage and minimum widths', () => {
-  let widths = [30, 40, 30];
-  for (let round = 0; round < 3; round++) for (let index = 0; index < 3; index++) {
-    for (let value = -10; value <= 110; value++) {
-      widths = resizePanels(widths, index, value);
-      assert.equal(widths.reduce((a, b) => a + b), 100);
-      assert.ok(widths.every(width => width >= 15 && width <= 70));
-    }
+test('wall panel dimensions remain fixed during material and mirror changes', () => {
+  const config=createCabinConfig();
+  for (const wall of Object.keys(config.walls)) {
+    const next=changeWall(config, wall, value=>({...value, widths:[10,80,10], materials:['a','b','c']}));
+    assert.deepEqual(next.walls[wall].widths,[30,40,30]);
+    assert.deepEqual(next.walls[wall].materials,['a','b','c']);
   }
 });
 test('center panels survive mirror presets and have no linked counterpart', () => {
@@ -45,8 +43,8 @@ test('an independent material edit touches only its chosen panel', () => {
 });
 test('linking updates only the matching wall pair', () => {
   const before = createCabinConfig();
-  const after = changeWall(before, 'left', wall => ({ ...wall, widths: resizePanels(wall.widths, 2, 60) }), true);
-  assert.deepEqual(after.walls.left.widths, after.walls.right.widths);
+  const after = changeWall(before, 'left', wall => ({ ...wall, materials: ['linked','linked','linked'] }), true);
+  assert.deepEqual(after.walls.left.materials, after.walls.right.materials);
   assert.deepEqual(after.walls.rearCenter, before.walls.rearCenter);
 });
 test('only full mirror reflects and its bounds follow the middle of exactly three rear panels', () => {

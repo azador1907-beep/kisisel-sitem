@@ -1,33 +1,22 @@
 export const WALLS = { left: 'Sol duvar', right: 'Sağ duvar', rearCenter: 'Arka duvar' };
+export const PANEL_WIDTHS = Object.freeze([30, 40, 30]);
 export const DEFAULT_MATERIAL = '/kabin-materyalleri/paslanmaz-1.png';
 export const materialPath = (type, id) => `/kabin-materyalleri/${type}-${id}.png`;
 export function createCabinConfig() {
   return {
     walls: Object.fromEntries(Object.keys(WALLS).map(key => [key, {
-      widths: [30, 40, 30], materials: [DEFAULT_MATERIAL, DEFAULT_MATERIAL, DEFAULT_MATERIAL],
+      widths: PANEL_WIDTHS, materials: [DEFAULT_MATERIAL, DEFAULT_MATERIAL, DEFAULT_MATERIAL],
     }])),
+    ceilingColor: 'silver', floorTrimColor: 'silver',
     mirrorMode: 'none', mirrorHeight: 160, topReflection: 42, bottomReflection: 40,
-    ceiling: materialPath('tavan', 1), floor: materialPath('granit', 26),
+    ceiling: materialPath('tavan', 36), floor: materialPath('granit', 26),
   };
-}
-// Preserve a closed wall: changing one panel proportionally redistributes the rest.
-export function resizePanels(widths, index, requested) {
-  const next = Math.max(15, Math.min(70, Number(requested)));
-  if (!Number.isFinite(next) || index < 0 || index > 2) return widths;
-  const others = [0, 1, 2].filter(i => i !== index);
-  const remaining = 100 - next;
-  const total = widths[others[0]] + widths[others[1]];
-  const first = Math.max(15, Math.min(remaining - 15, Math.round(remaining * widths[others[0]] / total)));
-  const result = [...widths];
-  result[index] = next;
-  result[others[0]] = first;
-  result[others[1]] = remaining - first;
-  return result;
 }
 export function changeWall(config, wall, update, linked = false) {
   const pair = { left: 'right', right: 'left' };
-  const walls = { ...config.walls, [wall]: update(config.walls[wall]) };
-  if (linked && pair[wall]) walls[pair[wall]] = update(config.walls[pair[wall]]);
+  const apply = key => ({ ...update(config.walls[key]), widths: PANEL_WIDTHS });
+  const walls = { ...config.walls, [wall]: apply(wall) };
+  if (linked && pair[wall]) walls[pair[wall]] = apply(pair[wall]);
   return { ...config, walls };
 }
 export function mirrorGeometry(config) {

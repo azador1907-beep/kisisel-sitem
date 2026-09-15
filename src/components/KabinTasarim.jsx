@@ -1,6 +1,7 @@
 import { useState, Suspense, useEffect, useMemo, useRef, useTransition, useDeferredValue, createContext, useContext } from 'react';
 import * as THREE from 'three';
 import { RectAreaLightUniformsLib } from 'three/addons/lights/RectAreaLightUniformsLib.js';
+import './cabinMobile.css';
 import { Canvas, useThree } from '@react-three/fiber';
 import { OrbitControls, useTexture, Html } from '@react-three/drei';
 import { Layers3, ScanLine, LampCeiling, Grid2X2, RotateCcw, Undo2, Redo2, MousePointer2, Check, ArrowRight, Link2, Unlink2, Expand, ChevronDown, ImageDown, FileDown } from 'lucide-react';
@@ -292,7 +293,7 @@ function SceneCapture({ config, captureRef }) {
   return null;
 }
 
-function KendiAsansorumuz({ config: requestedConfig, selection, onSelect, editing, onMirrorSelect, captureRef }) {
+function KendiAsansorumuz({ config: requestedConfig, selection, onSelect, editing, onMirrorSelect, onSurfaceSelect, captureRef }) {
   const environment = useContext(MetalEnvironment);
   const config = useDeferredValue(requestedConfig);
   const roofChoice = materialSource(config.ceiling);
@@ -314,12 +315,12 @@ function KendiAsansorumuz({ config: requestedConfig, selection, onSelect, editin
   const panelBottom = mirror.bottom + bottomH;
   return <group>
     <SceneCapture config={config} captureRef={captureRef} />
-    <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, -H / 2, 0]}>
+    <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, -H / 2, 0]} onClick={event => { event.stopPropagation(); if (event.delta < 5) onSurfaceSelect('floor'); }}>
       <planeGeometry args={[W, D]} />
       <meshPhysicalMaterial map={floorMap} color={floorChoice.color} roughness={0.3} metalness={0} clearcoat={0.35} clearcoatRoughness={0.24} envMap={environment} envMapIntensity={0.4} side={THREE.DoubleSide} />
     </mesh>
     <group rotation={[-Math.PI / 2, 0, 0]} position={[0, -H / 2 + .002, 0]}><WallShadow length={W} height={D} /></group>
-    <mesh rotation={[Math.PI / 2, 0, 0]} position={[0, H / 2, 0]}>
+    <mesh rotation={[Math.PI / 2, 0, 0]} position={[0, H / 2, 0]} onClick={event => { event.stopPropagation(); if (event.delta < 5) onSurfaceSelect('ceiling'); }}>
       <planeGeometry args={[W, D]} />
       <meshBasicMaterial map={roofMap} color="#ffffff" side={THREE.DoubleSide} />
     </mesh>
@@ -421,7 +422,7 @@ function CeilingPreview({ path, color, sideColor }) {
 
 function MaterialGrid({ type, count, selected, onSelect }) {
   const entries = [...ekaMaterials.filter(item => item.type === type).map(item => item.id), ...Array.from({ length: count }, (_, i) => i + 1).filter(id => type === 'paslanmaz' ? [1, 5, 6].includes(id) : type !== 'tavan' || (id <= 8 || id >= 24) && id !== 35).map(id => materialPath(type, id))];
-  return <><div className="grid grid-cols-6 sm:grid-cols-7 lg:grid-cols-6 gap-2">
+  return <><div className="cabin-material-grid grid grid-cols-6 sm:grid-cols-7 lg:grid-cols-6 gap-2">
     {entries.map((path, i) => {
       return <button key={path} type="button" title={materialName(path)} aria-label={materialName(path)}
         aria-pressed={selected === path} onClick={() => onSelect(path)}
@@ -445,6 +446,15 @@ export default function KabinTasarim() {
   const [exporting, setExporting] = useState(false);
   const [exportMessage, setExportMessage] = useState('');
   const captureRef = useRef(null);
+  const optionsRef = useRef(null);
+  const materialRef = useRef(null);
+  const focusOptions = (wall = false) => requestAnimationFrame(() => {
+    if (!window.matchMedia('(max-width: 1023px)').matches || !optionsRef.current) return;
+    const aside = optionsRef.current;
+    const target = wall ? materialRef.current : null;
+    aside.scrollTop = target ? aside.scrollTop + target.getBoundingClientRect().top - aside.getBoundingClientRect().top - 65 : 0;
+  });
+  const chooseSurface = id => { setSection(id); focusOptions(); };
   const [linked, setLinked] = useState(false);
   const [view, setView] = useState({ name: 'front', version: 0 });
   const [pending, startTransition] = useTransition();
@@ -467,6 +477,7 @@ export default function KabinTasarim() {
   const choosePanel = next => {
     setSelection(next);
     setSection('walls');
+    focusOptions(true);
     setFamily(config.walls[next.wall].materials[next.index].includes('laminant') ? 'laminant' : 'paslanmaz');
   };
   const setMaterial = path => startTransition(() => change(old => changeWall(old, selection.wall,
@@ -500,9 +511,9 @@ export default function KabinTasarim() {
   const mm = Math.round(selectedLength * selectedWall.widths[selection.index] * 10);
   const changedPanels = Object.values(config.walls).reduce((sum, wall) => sum + wall.materials.filter(path => path !== DEFAULT_MATERIAL).length, 0);
 
-  return <div className="bg-[#f5f6f7] min-h-[calc(100vh-80px)] text-slate-800 font-sans px-4 sm:px-7 lg:px-10 pt-7 pb-10">
+  return <div className="cabin-studio bg-[#f5f6f7] min-h-[calc(100vh-80px)] text-slate-800 font-sans px-4 sm:px-7 lg:px-10 pt-7 pb-10">
     <div className="max-w-[1480px] mx-auto">
-      <header className="flex flex-wrap justify-between items-end gap-4 mb-7">
+      <div className="cabin-mobile-toolbar"><a href="/">← Siteye dön</a><button type="button" disabled={exporting || pending} onClick={() => downloadCabin('png')}>PNG indir</button><button type="button" disabled={exporting || pending} onClick={() => downloadCabin('pdf')}>PDF indir</button></div><header className="flex flex-wrap justify-between items-end gap-4 mb-7">
         <div><p className="text-[10px] uppercase tracking-[0.28em] text-[#bc674b] font-semibold mb-2">HAS DOOR / TASARIM STÜDYOSU</p>
           <h1 className="text-2xl sm:text-3xl font-bold tracking-tight">Kendi kabinini oluştur<span className="text-[#e66b43]">.</span></h1>
           <p className="text-sm text-slate-500 mt-2">Malzemeleri bir araya getir. Her panelde kendi çizgini yansıt.</p>
@@ -514,9 +525,9 @@ export default function KabinTasarim() {
         </div>
       </header>
       <div className="grid grid-cols-1 lg:grid-cols-[370px_minmax(0,1fr)] xl:grid-cols-[410px_minmax(0,1fr)] gap-5 lg:gap-7 items-start">
-        <aside className="bg-white border border-slate-200 rounded-2xl shadow-sm overflow-hidden order-2 lg:order-1 lg:max-h-[calc(100svh-120px)] lg:overflow-y-auto lg:sticky lg:top-24">
+        <aside ref={optionsRef} className="bg-white border border-slate-200 rounded-2xl shadow-sm overflow-hidden order-2 lg:order-1 lg:max-h-[calc(100svh-120px)] lg:overflow-y-auto lg:sticky lg:top-24">
           <nav aria-label="Tasarım kategorileri" className="grid grid-cols-4 border-b border-slate-100 bg-[#fafafa] p-2 gap-1 sticky top-0 z-20">
-            {categories.map(({ id, name, icon: Icon }) => <button key={id} type="button" onClick={() => setSection(id)} aria-pressed={section === id}
+            {categories.map(({ id, name, icon: Icon }) => <button key={id} type="button" onClick={() => chooseSurface(id)} aria-pressed={section === id}
               className={`flex flex-col items-center gap-2 py-3 text-xs rounded-xl transition ${section === id ? 'bg-white text-[#d7623c] shadow-sm font-semibold' : 'text-slate-500 hover:bg-white'}`}><Icon size={19} strokeWidth={1.6} />{name}</button>)}
           </nav>
           <div className="p-5 sm:p-6">
@@ -541,7 +552,7 @@ export default function KabinTasarim() {
                 <span className={`w-7 h-4 rounded-full relative ${linked ? 'bg-[#e66b43]' : 'bg-slate-300'}`}><span className={`absolute top-0.5 bg-white w-3 h-3 rounded-full ${linked ? 'right-0.5' : 'left-0.5'}`} /></span>
               </button>}
               {selection.wall === 'rearCenter' && config.mirrorMode !== 'none' && <button type="button" onClick={() => change(old => ({ ...old, mirrorMode: 'none' }))} className="text-xs bg-orange-50 text-orange-800 rounded-lg p-3 w-full">Panelleri görmek için aynayı kaldır</button>}
-              <div className="border-t border-slate-100 mt-5 pt-5">
+              <div ref={materialRef} className="border-t border-slate-100 mt-5 pt-5">
                 <div className="flex justify-between items-center mb-3"><h3 className="text-sm font-semibold">Panel malzemesi</h3><span className="text-[10px] text-[#c56b4a]">PANEL {selection.index + 1}</span></div>
                 <div className="flex p-1 bg-slate-100 rounded-lg mb-4">{[['paslanmaz', 'Paslanmazlar'], ['laminant', 'Laminantlar']].map(([id, name]) => <button key={id} type="button" onClick={() => setFamily(id)} aria-pressed={family === id} className={`flex-1 py-2 rounded-md text-xs ${family === id ? 'bg-white shadow-sm font-semibold' : 'text-slate-500'}`}>{name}</button>)}</div>
                 <MaterialGrid type={family} count={27} selected={selectedPath} onSelect={setMaterial} />
@@ -604,7 +615,7 @@ export default function KabinTasarim() {
               <div><p className="text-[10px] tracking-[0.22em] uppercase text-slate-400">TASARIMINIZ</p><p className="text-sm font-medium mt-1">{section === 'walls' ? `${WALLS[selection.wall]} · Panel ${selection.index + 1}` : 'Kabin görünümü'}</p></div>
               <span role="status" className="text-[10px] bg-white/80 border border-white px-2.5 py-1.5 rounded-full flex items-center gap-1.5 text-slate-500"><span className={`w-1.5 h-1.5 rounded-full ${pending ? 'bg-orange-400' : 'bg-emerald-500'}`} />{pending ? 'Malzeme yükleniyor' : 'Canlı önizleme'}</span>
             </div>
-            <div className="h-[470px] sm:h-[560px] lg:h-[min(740px,calc(100svh-320px))] lg:min-h-[340px]">
+            <div className="cabin-preview-canvas h-[470px] sm:h-[560px] lg:h-[min(740px,calc(100svh-320px))] lg:min-h-[340px]">
               <Canvas camera={{ position: [0, 0.02, 5.25], fov: 34 }} dpr={[1.5, 2]} gl={{ antialias: true, preserveDrawingBuffer: true }}
                 onCreated={({ gl }) => { gl.toneMapping = THREE.ACESFilmicToneMapping; gl.toneMappingExposure = 1; gl.outputColorSpace = THREE.SRGBColorSpace; }}>
                 <color attach="background" args={['#e9edef']} />
@@ -612,7 +623,7 @@ export default function KabinTasarim() {
                 <rectAreaLight position={[0, H / 2 - .015, 0]} rotation={[Math.PI / 2, 0, 0]} width={1.1} height={1.45} intensity={4} color="#fff1df" />
                 <rectAreaLight position={[0, .5, 2.4]} width={3.5} height={3} intensity={2.7} color="#edf2f7" />
                 <Suspense fallback={<Html center><span className="text-xs whitespace-nowrap bg-white p-3 rounded-lg shadow-sm">Kabin hazırlanıyor…</span></Html>}>
-                  <CabinEnvironment><KendiAsansorumuz config={config} selection={selection} onSelect={choosePanel} editing={section === 'walls'} onMirrorSelect={() => setSection('mirror')} captureRef={captureRef} /></CabinEnvironment>
+                  <CabinEnvironment><KendiAsansorumuz config={config} selection={selection} onSelect={choosePanel} editing={section === 'walls'} onSurfaceSelect={chooseSurface} onMirrorSelect={() => chooseSurface('mirror')} captureRef={captureRef} /></CabinEnvironment>
                 </Suspense>
                 <CameraView view={view} />
               </Canvas>

@@ -1,0 +1,170 @@
+{
+  "door-enhanced": [
+    {
+      "src": "/media/door-enhanced-360.avif",
+      "width": 360
+    },
+    {
+      "src": "/media/door-enhanced-720.avif",
+      "width": 720
+    },
+    {
+      "src": "/media/door-enhanced-1100.avif",
+      "width": 1100
+    }
+  ],
+  "teleskopik-kat-hq": [
+    {
+      "src": "/media/teleskopik-kat-hq-360.avif",
+      "width": 360
+    },
+    {
+      "src": "/media/teleskopik-kat-hq-720.avif",
+      "width": 720
+    },
+    {
+      "src": "/media/teleskopik-kat-hq-1120.avif",
+      "width": 1120
+    }
+  ],
+  "merkezi-kat-hq": [
+    {
+      "src": "/media/merkezi-kat-hq-360.avif",
+      "width": 360
+    },
+    {
+      "src": "/media/merkezi-kat-hq-720.avif",
+      "width": 720
+    },
+    {
+      "src": "/media/merkezi-kat-hq-1120.avif",
+      "width": 1120
+    }
+  ],
+  "teleskopik-kabin-hq": [
+    {
+      "src": "/media/teleskopik-kabin-hq-360.avif",
+      "width": 360
+    },
+    {
+      "src": "/media/teleskopik-kabin-hq-720.avif",
+      "width": 720
+    },
+    {
+      "src": "/media/teleskopik-kabin-hq-1120.avif",
+      "width": 1120
+    }
+  ],
+  "merkezi-kabin-hq": [
+    {
+      "src": "/media/merkezi-kabin-hq-360.avif",
+      "width": 360
+    },
+    {
+      "src": "/media/merkezi-kabin-hq-720.avif",
+      "width": 720
+    },
+    {
+      "src": "/media/merkezi-kabin-hq-1120.avif",
+      "width": 1120
+    }
+  ],
+  "yonsuz-mekanizma-hq": [
+    {
+      "src": "/media/yonsuz-mekanizma-hq-360.avif",
+      "width": 360
+    },
+    {
+      "src": "/media/yonsuz-mekanizma-hq-720.avif",
+      "width": 720
+    },
+    {
+      "src": "/media/yonsuz-mekanizma-hq-1120.avif",
+      "width": 1120
+    }
+  ],
+  "kanalsiz-esik-hq": [
+    {
+      "src": "/media/kanalsiz-esik-hq-360.avif",
+      "width": 360
+    },
+    {
+      "src": "/media/kanalsiz-esik-hq-720.avif",
+      "width": 720
+    },
+    {
+      "src": "/media/kanalsiz-esik-hq-1120.avif",
+      "width": 1120
+    }
+  ],
+  "teleskopik-kat-photo": [
+    {
+      "src": "/media/teleskopik-kat-photo-360.avif",
+      "width": 360
+    },
+    {
+      "src": "/media/teleskopik-kat-photo-720.avif",
+      "width": 720
+    },
+    {
+      "src": "/media/teleskopik-kat-photo-1120.avif",
+      "width": 1120
+    }
+  ],
+  "merkezi-kat-photo": [
+    {
+      "src": "/media/merkezi-kat-photo-360.avif",
+      "width": 360
+    },
+    {
+      "src": "/media/merkezi-kat-photo-720.avif",
+      "width": 720
+    },
+    {
+      "src": "/media/merkezi-kat-photo-1120.avif",
+      "width": 1120
+    }
+  ],
+  "teleskopik-kabin-photo": [
+    {
+      "src": "/media/teleskopik-kabin-photo-360.avif",
+      "width": 360
+    },
+    {
+      "src": "/media/teleskopik-kabin-photo-720.avif",
+      "width": 720
+    },
+    {
+      "src": "/media/teleskopik-kabin-photo-1120.avif",
+      "width": 1120
+    }
+  ],
+  "yonsuz-mekanizma-photo": [
+    {
+      "src": "/media/yonsuz-mekanizma-photo-360.avif",
+      "width": 360
+    },
+    {
+      "src": "/media/yonsuz-mekanizma-photo-720.avif",
+      "width": 720
+    },
+    {
+      "src": "/media/yonsuz-mekanizma-photo-1120.avif",
+      "width": 1120
+    }
+  ],
+  "kanalsiz-esik-photo": [
+    {
+      "src": "/media/kanalsiz-esik-photo-360.avif",
+      "width": 360
+    },
+    {
+      "src": "/media/kanalsiz-esik-photo-720.avif",
+      "width": 720
+    },
+    {
+      "src": "/media/kanalsiz-esik-photo-1120.avif",
+      "width": 1120
+    }
+  ]
+}

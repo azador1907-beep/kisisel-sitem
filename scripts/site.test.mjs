@@ -8,7 +8,7 @@ import { validateContact, contactPayload } from '../src/lib/contact.js';
 test('Every product has existing source drawings, images and unique URL', () => {
   assert.equal(new Set(products.map(p => p.slug)).size, 6);
   for (const p of products) {
-    for (const image of p.gallery) assert.ok(existsSync(image.endsWith('-hq') ? `public/media/${image}.webp` : `public/${image}.png`), image);
+    for (const image of p.gallery) assert.ok(existsSync(`public/media/${image}.webp`) || existsSync(`public/${image}.png`), image);
     assert.ok(existsSync(`public/${p.source}`));
     assert.ok(existsSync(`public/media/${p.image}.webp`));
     if (p.type === 'system') continue;

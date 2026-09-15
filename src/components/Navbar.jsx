@@ -14,12 +14,7 @@ import {
   ArrowUpRight,
   Menu,
   X,
-  Phone,
 } from 'lucide-react';
-
-import {
-  company,
-} from '../data/site';
 
 
 const links = [
@@ -45,11 +40,6 @@ export default function Navbar() {
   const location =
     useLocation();
 
-
-  /* =========================================================
-     SAYFA DEĞİŞİNCE MOBİL MENÜYÜ KAPAT
-  ========================================================= */
-
   useEffect(() => {
     const frame =
       requestAnimationFrame(
@@ -67,12 +57,6 @@ export default function Navbar() {
     location.pathname,
   ]);
 
-
-  /* =========================================================
-     MOBİL MENÜ AÇIKKEN
-     ARKA SAYFAYI KİLİTLE + ESC DESTEĞİ
-  ========================================================= */
-
   useEffect(() => {
     if (!open) {
       return undefined;
@@ -85,7 +69,6 @@ export default function Navbar() {
     document.body.style
       .overflow =
       'hidden';
-
 
     const handleEscape = (
       event,
@@ -105,12 +88,10 @@ export default function Navbar() {
       }
     };
 
-
     document.addEventListener(
       'keydown',
       handleEscape,
     );
-
 
     return () => {
       document.body.style
@@ -126,12 +107,6 @@ export default function Navbar() {
     open,
   ]);
 
-
-  /* =========================================================
-     MASAÜSTÜNE GEÇİNCE
-     MOBİL MENÜYÜ KAPAT
-  ========================================================= */
-
   useEffect(() => {
     const handleResize = () => {
       if (
@@ -142,12 +117,10 @@ export default function Navbar() {
       }
     };
 
-
     window.addEventListener(
       'resize',
       handleResize,
     );
-
 
     return () => {
       window.removeEventListener(
@@ -157,22 +130,14 @@ export default function Navbar() {
     };
   }, []);
 
-
   function closeMenu() {
     setOpen(false);
   }
 
-
   return (
     <header className="site-header">
-
-      {/* =====================================================
-          ÜST BİLGİ ÇUBUĞU
-      ===================================================== */}
-
       <div className="utility">
         <div className="container">
-
           <span>
             ASANSÖR KAPI
             SİSTEMLERİ
@@ -183,39 +148,13 @@ export default function Navbar() {
               TÜRKİYE
             </span>
           </span>
-
-
-          <a
-            href={
-              company.phoneHref
-            }
-            aria-label={
-              `Telefon: ${company.phone}`
-            }
-          >
-            <Phone
-              size={12}
-              aria-hidden="true"
-            />
-
-            {company.phone}
-          </a>
-
         </div>
       </div>
-
-
-      {/* =====================================================
-          ANA NAVBAR
-      ===================================================== */}
 
       <nav
         className="main-nav container"
         aria-label="Ana menü"
       >
-
-        {/* LOGO */}
-
         <Link
           className="brand"
           to="/"
@@ -231,9 +170,6 @@ export default function Navbar() {
             alt="Has Door Asansör Kapıları"
           />
         </Link>
-
-
-        {/* MOBİL MENÜ BUTONU */}
 
         <button
           ref={toggle}
@@ -268,11 +204,6 @@ export default function Navbar() {
           )}
         </button>
 
-
-        {/* ===================================================
-            NAVİGASYON
-        =================================================== */}
-
         <div
           id="navigation"
           className={
@@ -303,7 +234,6 @@ export default function Navbar() {
             ),
           )}
 
-
           <Link
             to="/iletisim"
             className="button button-gold nav-cta"
@@ -318,9 +248,7 @@ export default function Navbar() {
               aria-hidden="true"
             />
           </Link>
-
         </div>
-
       </nav>
     </header>
   );

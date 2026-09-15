@@ -225,7 +225,7 @@ products.push(
     opening: 'Yönsüz sistem',
     image: 'yonsuz-mekanizma-photo',
     visualType: 'photo',
-    visualLabel: 'Katalog kaynaklı gerçek ürün fotoğrafı',
+    visualLabel: 'Katalog kaynaklı ürün görseli',
     originalImage: 'katalog',
     gallery: [
       'yonsuz-mekanizma-photo',
@@ -257,18 +257,28 @@ products.push(
     category: 'Mekanizma ve eşik',
     type: 'system',
     opening: 'Alt eşik sistemi',
-    image: 'kanalsiz-esik-photo',
+
+    /*
+     * ÖNEMLİ:
+     * Şelaleli kanalsiz-esik-photo yerine
+     * projede zaten bulunan temiz HQ görseli kullanıyoruz.
+     */
+    image: 'kanalsiz-esik-hq',
+
     visualType: 'photo',
-    visualLabel: 'Katalog kaynaklı gerçek ürün fotoğrafı',
+    visualLabel: 'Alt eşik sistem detay görseli',
+
     originalImage: 'katalog',
+
     gallery: [
-      'kanalsiz-esik-photo',
+      'kanalsiz-esik-hq',
       'katalog',
     ],
+
     source: 'katalog.png',
 
     description:
-      'Kapı girişindeki alt eşik detayını odağa alan, mevcut katalogda gösterilen kanalsız sistem çözümü.',
+      'Kapı girişindeki alt eşik detayını odağa alan kanalsız sistem çözümü.',
 
     features: [
       'Kanalsız alt eşik yaklaşımı',
@@ -282,7 +292,7 @@ products.push(
     ],
 
     detail:
-      'Eşik uygulaması kapı sistemi, giriş ölçüleri ve montaj detaylarıyla birlikte belirlenir. Kataloğun sistem tanıtım sayfasındaki görünümü inceleyin; uygunluğu ve uygulama ölçülerini teknik görüşmede netleştirelim.',
+      'Eşik uygulaması kapı sistemi, giriş ölçüleri ve montaj detaylarıyla birlikte belirlenir. Görsel alt eşik sisteminin detayını gösterir; teknik uygunluk ve uygulama ölçüleri teklif aşamasında birlikte netleştirilir.',
   },
 );
 

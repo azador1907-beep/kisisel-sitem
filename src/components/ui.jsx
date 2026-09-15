@@ -423,16 +423,6 @@ export function CTASection() {
           >
             Teklif Al
           </Button>
-
-          <a
-            className="cta-phone"
-            href={company.phoneHref}
-            aria-label={
-              `Has Door telefon numarası: ${company.phone}`
-            }
-          >
-            {company.phone}
-          </a>
         </div>
       </div>
     </section>
@@ -446,7 +436,6 @@ export function Footer() {
   return (
     <footer className="site-footer">
       <div className="container footer-grid">
-
         <div className="footer-brand">
           <Link
             to="/"

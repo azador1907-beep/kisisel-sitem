@@ -8,6 +8,7 @@ import {
   useDeferredValue,
   createContext,
   useContext,
+  useCallback,
 } from 'react';
 
 import * as THREE from 'three';
@@ -93,6 +94,17 @@ RectAreaLightUniformsLib.init();
 const W = 1.72;
 const H = 2.38;
 const D = 1.78;
+
+const INSIDE_EYE_Y = 0.12;
+const INSIDE_SIDE_MARGIN = 0.13;
+const INSIDE_REAR_MARGIN = 0.16;
+const INSIDE_FRONT_MARGIN = 0.13;
+
+const CABIN_ENTRY_Z =
+  D / 2 - 0.12;
+
+const CABIN_ENTRY_MIN_Z =
+  D / 2 - 0.48;
 
 
 const steel = {
@@ -1502,6 +1514,10 @@ function WallPanel({
 }
 
 
+/*
+  İşaretlediğin ve kaldırılacak paslanmazlar.
+  Numara sırası korunuyor.
+*/
 const HIDDEN_STAINLESS_MATERIALS =
   new Set([
     'eka-paslanmaz-sat_paslanmaz_3',
@@ -1800,7 +1816,6 @@ function CabinLabel({
             0,
           ],
         },
-
         {
           position: [
             -W / 2 + 0.017,
@@ -1813,7 +1828,6 @@ function CabinLabel({
             0,
           ],
         },
-
         {
           position: [
             W / 2 - 0.017,
@@ -2262,12 +2276,6 @@ function CeilingLedStrips({
     H / 2 -
     0.044;
 
-  /*
-    Yatay ve dikey LED'leri köşelerde
-    bir miktar üst üste bindiriyoruz.
-    Böylece tavan LED'i tek parça kapalı
-    bir çerçeve gibi görünür.
-  */
   const horizontalLength =
     W -
     insetX *
@@ -2308,9 +2316,7 @@ function CeilingLedStrips({
       glowSize: [
         horizontalLength +
           0.025,
-
         0.002,
-
         profile +
           0.04,
       ],
@@ -2341,9 +2347,7 @@ function CeilingLedStrips({
       glowSize: [
         horizontalLength +
           0.025,
-
         0.002,
-
         profile +
           0.04,
       ],
@@ -2374,9 +2378,7 @@ function CeilingLedStrips({
       glowSize: [
         profile +
           0.04,
-
         0.002,
-
         verticalLength +
           0.025,
       ],
@@ -2407,9 +2409,7 @@ function CeilingLedStrips({
       glowSize: [
         profile +
           0.04,
-
         0.002,
-
         verticalLength +
           0.025,
       ],
@@ -2471,22 +2471,16 @@ function CeilingLedStrips({
                 <boxGeometry
                   args={[
                     Math.max(
-                      strip.size[
-                        0
-                      ] -
+                      strip.size[0] -
                         0.006,
-
                       0.008,
                     ),
 
                     0.004,
 
                     Math.max(
-                      strip.size[
-                        2
-                      ] -
+                      strip.size[2] -
                         0.006,
-
                       0.008,
                     ),
                   ]}
@@ -3696,6 +3690,23 @@ function KendiAsansorumuz({
 }
 
 
+/*
+  =========================================================
+  KAMERA SİSTEMİ
+
+  Dışarıda:
+  - Normal OrbitControls
+  - Kabine yaklaşma
+  - Tavana bakabilme
+
+  İçeride:
+  - Orbit tamamen kapanır.
+  - Kamera sabit merkezinin etrafında dönmez.
+  - Kullanıcı kendi kafasını çeviriyormuş gibi bakar.
+  - Kamera yalnız kabinin içinde hareket edebilir.
+  =========================================================
+*/
+
 function CameraView({
   view,
   zoomCommand,
@@ -3703,11 +3714,257 @@ function CameraView({
   const controls =
     useRef();
 
+  const insideRef =
+    useRef(
+      false,
+    );
+
+  const yawRef =
+    useRef(
+      0,
+    );
+
+  const pitchRef =
+    useRef(
+      0,
+    );
+
+  const dragRef =
+    useRef({
+      active:
+        false,
+
+      pointerId:
+        null,
+
+      x:
+        0,
+
+      y:
+        0,
+    });
+
+  const [
+    inside,
+    setInside,
+  ] =
+    useState(
+      false,
+    );
+
   const {
     camera,
+    gl,
   } =
     useThree();
 
+
+  const clampInsidePosition =
+    useCallback(
+      position => {
+        position.x =
+          THREE.MathUtils.clamp(
+            position.x,
+
+            -W / 2 +
+              INSIDE_SIDE_MARGIN,
+
+            W / 2 -
+              INSIDE_SIDE_MARGIN,
+          );
+
+        position.y =
+          INSIDE_EYE_Y;
+
+        position.z =
+          THREE.MathUtils.clamp(
+            position.z,
+
+            -D / 2 +
+              INSIDE_REAR_MARGIN,
+
+            D / 2 -
+              INSIDE_FRONT_MARGIN,
+          );
+      },
+
+      [],
+    );
+
+
+  const applyInsideLook =
+    useCallback(
+      () => {
+        camera.rotation.order =
+          'YXZ';
+
+        camera.rotation.set(
+          pitchRef.current,
+          yawRef.current,
+          0,
+          'YXZ',
+        );
+
+        camera.updateMatrixWorld();
+      },
+
+      [
+        camera,
+      ],
+    );
+
+
+  const enterInsideMode =
+    useCallback(
+      () => {
+        if (
+          insideRef.current
+        ) {
+          return;
+        }
+
+        /*
+          Kabine girerken o an baktığımız yönü
+          kaydediyoruz. Böylece first-person moda
+          geçtiğimizde görüntü aniden başka tarafa
+          dönmüyor.
+        */
+        const direction =
+          camera.getWorldDirection(
+            new THREE.Vector3(),
+          );
+
+        yawRef.current =
+          Math.atan2(
+            -direction.x,
+            -direction.z,
+          );
+
+        pitchRef.current =
+          Math.asin(
+            THREE.MathUtils.clamp(
+              direction.y,
+              -1,
+              1,
+            ),
+          );
+
+        /*
+          Kamera giriş çizgisinin biraz içine alınır.
+        */
+        camera.position.z =
+          Math.min(
+            camera.position.z,
+            CABIN_ENTRY_Z,
+          );
+
+        clampInsidePosition(
+          camera.position,
+        );
+
+        insideRef.current =
+          true;
+
+        if (
+          controls.current
+        ) {
+          controls.current.enabled =
+            false;
+        }
+
+        setInside(
+          true,
+        );
+
+        applyInsideLook();
+      },
+
+      [
+        camera,
+        clampInsidePosition,
+        applyInsideLook,
+      ],
+    );
+
+
+  const moveInside =
+    useCallback(
+      amount => {
+        const direction =
+          camera.getWorldDirection(
+            new THREE.Vector3(),
+          );
+
+        /*
+          Yukarı veya aşağı bakarken ileri gittiğinde
+          kameranın tavana/zemine uçmasını istemiyoruz.
+
+          Bu nedenle ileri/geri hareket yalnızca
+          zemine paralel X-Z düzleminde.
+        */
+        direction.y =
+          0;
+
+        if (
+          direction.lengthSq() <
+          0.000001
+        ) {
+          return;
+        }
+
+        direction.normalize();
+
+        camera.position.addScaledVector(
+          direction,
+          amount,
+        );
+
+        /*
+          Kamera ne olursa olsun kabinin dışına çıkamaz.
+        */
+        clampInsidePosition(
+          camera.position,
+        );
+
+        camera.updateMatrixWorld();
+      },
+
+      [
+        camera,
+        clampInsidePosition,
+      ],
+    );
+
+
+  const leaveInsideMode =
+    useCallback(
+      () => {
+        insideRef.current =
+          false;
+
+        setInside(
+          false,
+        );
+
+        dragRef.current.active =
+          false;
+
+        if (
+          controls.current
+        ) {
+          controls.current.enabled =
+            true;
+        }
+      },
+
+      [],
+    );
+
+
+  /*
+    Karşıdan / sol / sağ veya reset seçildiğinde
+    tekrar dış görünüşe dönüyoruz.
+  */
   useEffect(
     () => {
       const positions = {
@@ -3730,33 +3987,83 @@ function CameraView({
         ],
       };
 
+      leaveInsideMode();
+
       camera.position.set(
         ...positions[
           view.name
         ],
       );
 
-      controls.current
-        ?.target.set(
+      /*
+        İç mekânda duvara yaklaştığımızda
+        görüntünün kesilmemesi için near çok küçük.
+      */
+      camera.near =
+        0.015;
+
+      camera.far =
+        100;
+
+      camera.updateProjectionMatrix();
+
+      if (
+        controls.current
+      ) {
+        controls.current.enabled =
+          true;
+
+        controls.current.target.set(
           0,
           0.12,
-          0,
+          -0.28,
         );
 
-      controls.current
-        ?.update();
+        controls.current.update();
+      }
     },
 
     [
       camera,
       view,
+      leaveInsideMode,
     ],
   );
 
+
+  /*
+    + / - butonlarının davranışı.
+  */
   useEffect(
     () => {
       if (
-        !zoomCommand ||
+        !zoomCommand
+      ) {
+        return;
+      }
+
+      /*
+        KABİNİN İÇİNDE:
+        Zoom yerine yürürüz.
+      */
+      if (
+        insideRef.current
+      ) {
+        moveInside(
+          zoomCommand.factor <
+            1
+            ? 0.20
+            : -0.20,
+        );
+
+        return;
+      }
+
+      /*
+        KABİNİN DIŞINDA:
+        Normal zoom.
+      */
+      if (
         !controls.current
       ) {
         return;
@@ -3776,7 +4083,9 @@ function CameraView({
         THREE.MathUtils.clamp(
           offset.length() *
             zoomCommand.factor,
-          3.15,
+
+          0.72,
+
           8.5,
         );
 
@@ -3793,52 +4102,400 @@ function CameraView({
         );
 
       controls.current.update();
+
+      /*
+        Kamera giriş kapısından içeri geçtiğinde
+        first-person moda geç.
+      */
+      if (
+        camera.position.z <=
+          CABIN_ENTRY_Z &&
+
+        camera.position.z >=
+          CABIN_ENTRY_MIN_Z &&
+
+        Math.abs(
+          camera.position.x,
+        ) <
+          W / 2 -
+            0.08 &&
+
+        camera.position.y >
+          -H / 2 +
+            0.08 &&
+
+        camera.position.y <
+          H / 2 -
+            0.08
+      ) {
+        enterInsideMode();
+      }
     },
 
     [
       camera,
       zoomCommand,
+      moveInside,
+      enterInsideMode,
     ],
   );
+
+
+  /*
+    FIRST-PERSON KONTROLLER
+
+    OrbitControls kullanmıyoruz.
+    Kamera bulunduğu konumdan hareket etmeden
+    yalnız kendi ekseninde dönüyor.
+  */
+  useEffect(
+    () => {
+      if (
+        !inside
+      ) {
+        return undefined;
+      }
+
+      const element =
+        gl.domElement;
+
+
+      const onPointerDown =
+        event => {
+          if (
+            event.pointerType ===
+              'mouse' &&
+            event.button !==
+              0
+          ) {
+            return;
+          }
+
+          /*
+            Telefonda ikinci parmağın bakışı
+            bozmasını engelle.
+          */
+          if (
+            event.isPrimary ===
+            false
+          ) {
+            return;
+          }
+
+          dragRef.current = {
+            active:
+              true,
+
+            pointerId:
+              event.pointerId,
+
+            x:
+              event.clientX,
+
+            y:
+              event.clientY,
+          };
+
+          element.setPointerCapture?.(
+            event.pointerId,
+          );
+        };
+
+
+      const onPointerMove =
+        event => {
+          const drag =
+            dragRef.current;
+
+          if (
+            !drag.active ||
+            drag.pointerId !==
+              event.pointerId
+          ) {
+            return;
+          }
+
+          const deltaX =
+            event.clientX -
+            drag.x;
+
+          const deltaY =
+            event.clientY -
+            drag.y;
+
+          drag.x =
+            event.clientX;
+
+          drag.y =
+            event.clientY;
+
+          /*
+            Sağa / sola sınırsız bakış.
+          */
+          yawRef.current -=
+            deltaX *
+            0.0042;
+
+          /*
+            Yukarı / aşağı bakış.
+            Tam 90 dereceye değdirmiyoruz;
+            aksi hâlde kamera ters dönebilir.
+          */
+          pitchRef.current =
+            THREE.MathUtils.clamp(
+              pitchRef.current -
+                deltaY *
+                  0.0038,
+
+              -Math.PI /
+                2 +
+                0.06,
+
+              Math.PI /
+                2 -
+                0.06,
+            );
+
+          applyInsideLook();
+        };
+
+
+      const endPointer =
+        event => {
+          if (
+            dragRef.current.pointerId !==
+            event.pointerId
+          ) {
+            return;
+          }
+
+          dragRef.current.active =
+            false;
+
+          dragRef.current.pointerId =
+            null;
+
+          try {
+            element.releasePointerCapture?.(
+              event.pointerId,
+            );
+          } catch {
+            /*
+              Pointer capture zaten bırakılmış olabilir.
+            */
+          }
+        };
+
+
+      /*
+        Mouse tekeri içeride ileri / geri hareket eder.
+      */
+      const onWheel =
+        event => {
+          event.preventDefault();
+
+          moveInside(
+            event.deltaY <
+              0
+              ? 0.14
+              : -0.14,
+          );
+        };
+
+
+      const onContextMenu =
+        event => {
+          event.preventDefault();
+        };
+
+
+      element.addEventListener(
+        'pointerdown',
+        onPointerDown,
+      );
+
+      element.addEventListener(
+        'pointermove',
+        onPointerMove,
+      );
+
+      element.addEventListener(
+        'pointerup',
+        endPointer,
+      );
+
+      element.addEventListener(
+        'pointercancel',
+        endPointer,
+      );
+
+      element.addEventListener(
+        'wheel',
+        onWheel,
+        {
+          passive:
+            false,
+        },
+      );
+
+      element.addEventListener(
+        'contextmenu',
+        onContextMenu,
+      );
+
+
+      return () => {
+        element.removeEventListener(
+          'pointerdown',
+          onPointerDown,
+        );
+
+        element.removeEventListener(
+          'pointermove',
+          onPointerMove,
+        );
+
+        element.removeEventListener(
+          'pointerup',
+          endPointer,
+        );
+
+        element.removeEventListener(
+          'pointercancel',
+          endPointer,
+        );
+
+        element.removeEventListener(
+          'wheel',
+          onWheel,
+        );
+
+        element.removeEventListener(
+          'contextmenu',
+          onContextMenu,
+        );
+      };
+    },
+
+    [
+      inside,
+      gl,
+      applyInsideLook,
+      moveInside,
+    ],
+  );
+
+
+  /*
+    Mouse tekeriyle dışarıdan içeri girildiğinde de
+    first-person moda otomatik geçmesi için.
+  */
+  const handleOrbitChange =
+    useCallback(
+      () => {
+        if (
+          insideRef.current
+        ) {
+          return;
+        }
+
+        if (
+          camera.position.z <=
+            CABIN_ENTRY_Z &&
+
+          camera.position.z >=
+            CABIN_ENTRY_MIN_Z &&
+
+          Math.abs(
+            camera.position.x,
+          ) <
+            W / 2 -
+              0.08 &&
+
+          camera.position.y >
+            -H / 2 +
+              0.08 &&
+
+          camera.position.y <
+            H / 2 -
+              0.08
+        ) {
+          enterInsideMode();
+        }
+      },
+
+      [
+        camera,
+        enterInsideMode,
+      ],
+    );
+
 
   return (
     <OrbitControls
       ref={
         controls
       }
-      enableZoom
-      zoomSpeed={
-        0.7
+
+      /*
+        İçeri girildiğinde OrbitControls tamamen kapanır.
+        Böylece kamera artık hedef noktanın etrafında
+        dönerek kabinin dışına çıkamaz.
+      */
+      enabled={
+        !inside
       }
-      enableRotate
+
+      enableZoom={
+        !inside
+      }
+
+      zoomSpeed={
+        0.72
+      }
+
+      enableRotate={
+        !inside
+      }
+
       rotateSpeed={
         0.72
       }
+
       enablePan={
         false
       }
+
       enableDamping
+
       dampingFactor={
         0.075
       }
+
       minDistance={
-        3.15
+        0.72
       }
+
       maxDistance={
         8.5
       }
+
       minAzimuthAngle={
         -1.35
       }
+
       maxAzimuthAngle={
         1.35
       }
+
       minPolarAngle={
         0.42
       }
+
       maxPolarAngle={
         2.38
       }
+
       touches={{
         ONE:
           THREE.TOUCH.ROTATE,
@@ -3846,6 +4503,7 @@ function CameraView({
         TWO:
           THREE.TOUCH.DOLLY_PAN,
       }}
+
       mouseButtons={{
         LEFT:
           THREE.MOUSE.ROTATE,
@@ -3856,11 +4514,16 @@ function CameraView({
         RIGHT:
           THREE.MOUSE.ROTATE,
       }}
+
       target={[
         0,
         0.12,
-        0,
+        -0.28,
       ]}
+
+      onChange={
+        handleOrbitChange
+      }
     />
   );
 }
@@ -6773,6 +7436,12 @@ export default function KabinTasarim() {
 
                     fov:
                       34,
+
+                    near:
+                      0.015,
+
+                    far:
+                      100,
                   }}
                   dpr={[
                     1.5,
@@ -6927,7 +7596,7 @@ export default function KabinTasarim() {
                   onClick={() =>
                     setZoomCommand({
                       factor:
-                        0.9,
+                        0.84,
                     })
                   }
                 >
@@ -6941,7 +7610,7 @@ export default function KabinTasarim() {
                   onClick={() =>
                     setZoomCommand({
                       factor:
-                        1.12,
+                        1.18,
                     })
                   }
                 >

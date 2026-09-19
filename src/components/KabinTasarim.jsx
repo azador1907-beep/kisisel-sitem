@@ -1002,10 +1002,6 @@ function EkaSteelMaterial({
       ),
     );
 
-  /*
-    Arka duvardaki metal yüzeyi
-    yan duvarlara göre biraz daha koyu yapıyoruz.
-  */
   const mutedColor =
     useMemo(
       () => {
@@ -1506,10 +1502,6 @@ function WallPanel({
 }
 
 
-/*
-  İşaretlediğin ve kaldırılacak paslanmazlar.
-  Numara sırası korunuyor.
-*/
 const HIDDEN_STAINLESS_MATERIALS =
   new Set([
     'eka-paslanmaz-sat_paslanmaz_3',
@@ -1794,39 +1786,85 @@ function CabinLabel({
   }
 
   return (
-    <group>{[
-      { position: [0, -H / 2 + 0.06, -D / 2 + 0.059], rotation: [0, 0, 0] },
-      { position: [-W / 2 + 0.017, -H / 2 + 0.06, 0], rotation: [0, Math.PI / 2, 0] },
-      { position: [W / 2 - 0.017, -H / 2 + 0.06, 0], rotation: [0, -Math.PI / 2, 0] },
-    ].map((placement, index) => <mesh key={index} {...placement}
-      raycast={() =>
-        null
-      }
-    >
-      <planeGeometry
-        args={[
-          0.72,
-          0.105,
-        ]}
-      />
+    <group>
+      {[
+        {
+          position: [
+            0,
+            -H / 2 + 0.06,
+            -D / 2 + 0.059,
+          ],
+          rotation: [
+            0,
+            0,
+            0,
+          ],
+        },
 
-      <meshBasicMaterial
-        map={texture}
-        transparent
-        alphaTest={
-          0.02
-        }
-        depthWrite={
-          false
-        }
-        toneMapped={
-          false
-        }
-        side={
-          THREE.DoubleSide
-        }
-      />
-    </mesh>)}</group>
+        {
+          position: [
+            -W / 2 + 0.017,
+            -H / 2 + 0.06,
+            0,
+          ],
+          rotation: [
+            0,
+            Math.PI / 2,
+            0,
+          ],
+        },
+
+        {
+          position: [
+            W / 2 - 0.017,
+            -H / 2 + 0.06,
+            0,
+          ],
+          rotation: [
+            0,
+            -Math.PI / 2,
+            0,
+          ],
+        },
+      ].map(
+        (
+          placement,
+          index,
+        ) => (
+          <mesh
+            key={index}
+            {...placement}
+            raycast={() =>
+              null
+            }
+          >
+            <planeGeometry
+              args={[
+                0.72,
+                0.105,
+              ]}
+            />
+
+            <meshBasicMaterial
+              map={texture}
+              transparent
+              alphaTest={
+                0.02
+              }
+              depthWrite={
+                false
+              }
+              toneMapped={
+                false
+              }
+              side={
+                THREE.DoubleSide
+              }
+            />
+          </mesh>
+        ),
+      )}
+    </group>
   );
 }
 
@@ -2201,45 +2239,556 @@ function SceneCapture({
 }
 
 
-function CeilingLedStrips({ enabled }) {
-  if (!enabled) return null;
-  const inset = 0.08;
-  return <group name="optional-ceiling-leds" position={[0, H / 2 - 0.045, 0]}>
-    {[
-      { position: [0, 0, -D / 2 + inset], size: [W - 2 * inset, 0.012, 0.018] },
-      { position: [0, 0, D / 2 - inset], size: [W - 2 * inset, 0.012, 0.018] },
-      { position: [-W / 2 + inset, 0, 0], size: [0.018, 0.012, D - 2 * inset] },
-      { position: [W / 2 - inset, 0, 0], size: [0.018, 0.012, D - 2 * inset] },
-    ].map(({ position, size }, index) => <group key={index} position={position}>
-      <mesh><boxGeometry args={size} /><meshBasicMaterial color="#fff1d6" toneMapped={false} /></mesh>
-      <mesh position={[0, -0.007, 0]}><boxGeometry args={[size[0] + 0.025, 0.002, size[2] + 0.025]} /><meshBasicMaterial color="#ffe6b5" transparent opacity={0.15} depthWrite={false} toneMapped={false} /></mesh>
-      <rectAreaLight rotation={[-Math.PI / 2, 0, 0]} width={size[0]} height={size[2]} intensity={3} color="#fff1d6" />
-    </group>)}
-  </group>;
+function CeilingLedStrips({
+  enabled,
+}) {
+  if (!enabled) {
+    return null;
+  }
+
+  const insetX =
+    0.07;
+
+  const insetZ =
+    0.07;
+
+  const profile =
+    0.022;
+
+  const thickness =
+    0.012;
+
+  const ledY =
+    H / 2 -
+    0.044;
+
+  /*
+    Yatay ve dikey LED'leri köşelerde
+    bir miktar üst üste bindiriyoruz.
+    Böylece tavan LED'i tek parça kapalı
+    bir çerçeve gibi görünür.
+  */
+  const horizontalLength =
+    W -
+    insetX *
+      2 +
+    profile;
+
+  const verticalLength =
+    D -
+    insetZ *
+      2 +
+    profile;
+
+  const x =
+    W / 2 -
+    insetX;
+
+  const z =
+    D / 2 -
+    insetZ;
+
+  const strips = [
+    {
+      id:
+        'rear',
+
+      position: [
+        0,
+        0,
+        -z,
+      ],
+
+      size: [
+        horizontalLength,
+        thickness,
+        profile,
+      ],
+
+      glowSize: [
+        horizontalLength +
+          0.025,
+
+        0.002,
+
+        profile +
+          0.04,
+      ],
+
+      lightWidth:
+        horizontalLength,
+
+      lightHeight:
+        0.04,
+    },
+
+    {
+      id:
+        'front',
+
+      position: [
+        0,
+        0,
+        z,
+      ],
+
+      size: [
+        horizontalLength,
+        thickness,
+        profile,
+      ],
+
+      glowSize: [
+        horizontalLength +
+          0.025,
+
+        0.002,
+
+        profile +
+          0.04,
+      ],
+
+      lightWidth:
+        horizontalLength,
+
+      lightHeight:
+        0.04,
+    },
+
+    {
+      id:
+        'left',
+
+      position: [
+        -x,
+        0,
+        0,
+      ],
+
+      size: [
+        profile,
+        thickness,
+        verticalLength,
+      ],
+
+      glowSize: [
+        profile +
+          0.04,
+
+        0.002,
+
+        verticalLength +
+          0.025,
+      ],
+
+      lightWidth:
+        0.04,
+
+      lightHeight:
+        verticalLength,
+    },
+
+    {
+      id:
+        'right',
+
+      position: [
+        x,
+        0,
+        0,
+      ],
+
+      size: [
+        profile,
+        thickness,
+        verticalLength,
+      ],
+
+      glowSize: [
+        profile +
+          0.04,
+
+        0.002,
+
+        verticalLength +
+          0.025,
+      ],
+
+      lightWidth:
+        0.04,
+
+      lightHeight:
+        verticalLength,
+    },
+  ];
+
+  return (
+    <group
+      name="optional-ceiling-leds"
+      position={[
+        0,
+        ledY,
+        0,
+      ]}
+    >
+      {
+        strips.map(
+          strip => (
+            <group
+              key={
+                strip.id
+              }
+              position={
+                strip.position
+              }
+            >
+              <mesh>
+                <boxGeometry
+                  args={
+                    strip.size
+                  }
+                />
+
+                <meshStandardMaterial
+                  color="#e7e1d5"
+                  metalness={
+                    0.35
+                  }
+                  roughness={
+                    0.3
+                  }
+                />
+              </mesh>
+
+
+              <mesh
+                position={[
+                  0,
+                  -0.008,
+                  0,
+                ]}
+              >
+                <boxGeometry
+                  args={[
+                    Math.max(
+                      strip.size[
+                        0
+                      ] -
+                        0.006,
+
+                      0.008,
+                    ),
+
+                    0.004,
+
+                    Math.max(
+                      strip.size[
+                        2
+                      ] -
+                        0.006,
+
+                      0.008,
+                    ),
+                  ]}
+                />
+
+                <meshBasicMaterial
+                  color="#fff5de"
+                  toneMapped={
+                    false
+                  }
+                />
+              </mesh>
+
+
+              <mesh
+                position={[
+                  0,
+                  -0.012,
+                  0,
+                ]}
+              >
+                <boxGeometry
+                  args={
+                    strip.glowSize
+                  }
+                />
+
+                <meshBasicMaterial
+                  color="#ffe6b0"
+                  transparent
+                  opacity={
+                    0.17
+                  }
+                  depthWrite={
+                    false
+                  }
+                  toneMapped={
+                    false
+                  }
+                />
+              </mesh>
+
+
+              <rectAreaLight
+                position={[
+                  0,
+                  -0.018,
+                  0,
+                ]}
+                rotation={[
+                  -Math.PI /
+                    2,
+
+                  0,
+
+                  0,
+                ]}
+                width={
+                  strip.lightWidth
+                }
+                height={
+                  strip.lightHeight
+                }
+                intensity={
+                  3
+                }
+                color="#fff1d6"
+              />
+            </group>
+          ),
+        )
+      }
+    </group>
+  );
 }
 
-function WallLedStrips({ config }) {
-  if (!config.wallLeds) return null;
-  const strip = (key, x) => <group key={key} position={[x, 0.06, 0.04]}>
-    <mesh><boxGeometry args={[0.026, H - 0.12, 0.012]} /><meshStandardMaterial color="#d7d3c8" metalness={0.7} roughness={0.25} /></mesh>
-    <mesh position={[0, 0, 0.008]}><boxGeometry args={[0.012, H - 0.14, 0.008]} /><meshBasicMaterial color="#fff1d6" toneMapped={false} /></mesh>
-    <mesh position={[0, 0, 0.014]}><planeGeometry args={[0.05, H - 0.14]} /><meshBasicMaterial color="#ffe6b5" transparent opacity={0.12} depthWrite={false} toneMapped={false} /></mesh>
-    <rectAreaLight position={[0, 0, 0.025]} rotation={[0, Math.PI, 0]} width={0.035} height={H - 0.14} intensity={2} color="#fff1d6" />
-  </group>;
-  const seams = (wall, length, reverse = false) => {
-    let sum = 0;
-    return config.walls[wall].widths.slice(0, -1).map((width, index) => {
-      sum += width;
-      const x = -length / 2 + length * sum / 100;
-      return strip(index, reverse ? -x : x);
-    });
+
+function WallLedStrips({
+  config,
+}) {
+  if (
+    !config.wallLeds
+  ) {
+    return null;
+  }
+
+  const strip = (
+    key,
+    x,
+  ) => (
+    <group
+      key={key}
+      position={[
+        x,
+        0.06,
+        0.04,
+      ]}
+    >
+      <mesh>
+        <boxGeometry
+          args={[
+            0.026,
+            H -
+              0.12,
+            0.012,
+          ]}
+        />
+
+        <meshStandardMaterial
+          color="#d7d3c8"
+          metalness={
+            0.7
+          }
+          roughness={
+            0.25
+          }
+        />
+      </mesh>
+
+      <mesh
+        position={[
+          0,
+          0,
+          0.008,
+        ]}
+      >
+        <boxGeometry
+          args={[
+            0.012,
+            H -
+              0.14,
+            0.008,
+          ]}
+        />
+
+        <meshBasicMaterial
+          color="#fff1d6"
+          toneMapped={
+            false
+          }
+        />
+      </mesh>
+
+      <mesh
+        position={[
+          0,
+          0,
+          0.014,
+        ]}
+      >
+        <planeGeometry
+          args={[
+            0.05,
+            H -
+              0.14,
+          ]}
+        />
+
+        <meshBasicMaterial
+          color="#ffe6b5"
+          transparent
+          opacity={
+            0.12
+          }
+          depthWrite={
+            false
+          }
+          toneMapped={
+            false
+          }
+        />
+      </mesh>
+
+      <rectAreaLight
+        position={[
+          0,
+          0,
+          0.025,
+        ]}
+        rotation={[
+          0,
+          Math.PI,
+          0,
+        ]}
+        width={
+          0.035
+        }
+        height={
+          H -
+          0.14
+        }
+        intensity={
+          2
+        }
+        color="#fff1d6"
+      />
+    </group>
+  );
+
+  const seams = (
+    wall,
+    length,
+    reverse = false,
+  ) => {
+    let sum =
+      0;
+
+    return config.walls[
+      wall
+    ].widths
+      .slice(
+        0,
+        -1,
+      )
+      .map(
+        (
+          width,
+          index,
+        ) => {
+          sum +=
+            width;
+
+          const x =
+            -length /
+              2 +
+            length *
+              sum /
+              100;
+
+          return strip(
+            index,
+            reverse
+              ? -x
+              : x,
+          );
+        },
+      );
   };
-  return <group name="optional-wall-leds">
-    <group position={[0, 0, -D / 2]}>{seams('rearCenter', W)}</group>
-    <group position={[-W / 2, 0, 0]} rotation={[0, Math.PI / 2, 0]}>{seams('left', D)}</group>
-    <group position={[W / 2, 0, 0]} rotation={[0, -Math.PI / 2, 0]}>{seams('right', D, true)}</group>
-  </group>;
+
+  return (
+    <group
+      name="optional-wall-leds"
+    >
+      <group
+        position={[
+          0,
+          0,
+          -D / 2,
+        ]}
+      >
+        {
+          seams(
+            'rearCenter',
+            W,
+          )
+        }
+      </group>
+
+      <group
+        position={[
+          -W / 2,
+          0,
+          0,
+        ]}
+        rotation={[
+          0,
+          Math.PI / 2,
+          0,
+        ]}
+      >
+        {
+          seams(
+            'left',
+            D,
+          )
+        }
+      </group>
+
+      <group
+        position={[
+          W / 2,
+          0,
+          0,
+        ]}
+        rotation={[
+          0,
+          -Math.PI / 2,
+          0,
+        ]}
+      >
+        {
+          seams(
+            'right',
+            D,
+            true,
+          )
+        }
+      </group>
+    </group>
+  );
 }
+
 
 function KendiAsansorumuz({
   config:
@@ -2358,8 +2907,17 @@ function KendiAsansorumuz({
         }
       />
 
-      <WallLedStrips config={config} />
-      <CeilingLedStrips enabled={config.ceilingLeds} />
+      <WallLedStrips
+        config={
+          config
+        }
+      />
+
+      <CeilingLedStrips
+        enabled={
+          config.ceilingLeds
+        }
+      />
 
       <mesh
         rotation={[
@@ -3155,20 +3713,20 @@ function CameraView({
       const positions = {
         front: [
           0,
-          0.02,
+          0.06,
           5.25,
         ],
 
         left: [
-          1.45,
-          0.03,
-          5.1,
+          1.55,
+          0.08,
+          5.05,
         ],
 
         right: [
-          -1.45,
-          0.03,
-          5.1,
+          -1.55,
+          0.08,
+          5.05,
         ],
       };
 
@@ -3181,7 +3739,7 @@ function CameraView({
       controls.current
         ?.target.set(
           0,
-          -0.03,
+          0.12,
           0,
         );
 
@@ -3195,55 +3753,112 @@ function CameraView({
     ],
   );
 
-  useEffect(() => {
-    if (!zoomCommand || !controls.current) return;
-    const target = controls.current.target;
-    const offset = camera.position.clone().sub(target);
-    offset.setLength(THREE.MathUtils.clamp(offset.length() * zoomCommand.factor, 1.8, 8));
-    camera.position.copy(target).add(offset);
-    controls.current.update();
-  }, [camera, zoomCommand]);
+  useEffect(
+    () => {
+      if (
+        !zoomCommand ||
+        !controls.current
+      ) {
+        return;
+      }
+
+      const target =
+        controls.current.target;
+
+      const offset =
+        camera.position
+          .clone()
+          .sub(
+            target,
+          );
+
+      const nextDistance =
+        THREE.MathUtils.clamp(
+          offset.length() *
+            zoomCommand.factor,
+          3.15,
+          8.5,
+        );
+
+      offset.setLength(
+        nextDistance,
+      );
+
+      camera.position
+        .copy(
+          target,
+        )
+        .add(
+          offset,
+        );
+
+      controls.current.update();
+    },
+
+    [
+      camera,
+      zoomCommand,
+    ],
+  );
 
   return (
     <OrbitControls
-      enableZoom
-      zoomSpeed={0.8}
-      touches={{ ONE: THREE.TOUCH.ROTATE, TWO: THREE.TOUCH.DOLLY_PAN }}
       ref={
         controls
+      }
+      enableZoom
+      zoomSpeed={
+        0.7
+      }
+      enableRotate
+      rotateSpeed={
+        0.72
       }
       enablePan={
         false
       }
       enableDamping
       dampingFactor={
-        0.08
+        0.075
       }
       minDistance={
-        1.8
+        3.15
       }
       maxDistance={
-        8
+        8.5
       }
       minAzimuthAngle={
-        -0.34
+        -1.35
       }
       maxAzimuthAngle={
-        0.34
+        1.35
       }
       minPolarAngle={
-        Math.PI /
-          2 -
-        0.07
+        0.42
       }
       maxPolarAngle={
-        Math.PI /
-          2 +
-        0.07
+        2.38
       }
+      touches={{
+        ONE:
+          THREE.TOUCH.ROTATE,
+
+        TWO:
+          THREE.TOUCH.DOLLY_PAN,
+      }}
+      mouseButtons={{
+        LEFT:
+          THREE.MOUSE.ROTATE,
+
+        MIDDLE:
+          THREE.MOUSE.DOLLY,
+
+        RIGHT:
+          THREE.MOUSE.ROTATE,
+      }}
       target={[
         0,
-        -0.03,
+        0.12,
         0,
       ]}
     />
@@ -3921,7 +4536,14 @@ export default function KabinTasarim() {
     );
 
 
-  const [zoomCommand, setZoomCommand] = useState(null);
+  const [
+    zoomCommand,
+    setZoomCommand,
+  ] =
+    useState(
+      null,
+    );
+
 
   const [
     view,
@@ -5661,13 +6283,75 @@ export default function KabinTasarim() {
                       Tavan
                       tasarımı
                     </h2>
+
+
                     <label className="cabin-led-option">
-                      <input type="checkbox" checked={Boolean(config.wallLeds)} onChange={event => change(old => ({ ...old, wallLeds: event.target.checked }))} />
-                      <span><strong>Dikey panel LED ışıkları</strong><small>Arka duvar, ayna kenarları ve iki yan duvarda sıcak beyaz ışık.</small></span>
+                      <input
+                        type="checkbox"
+                        checked={
+                          Boolean(
+                            config.wallLeds,
+                          )
+                        }
+                        onChange={
+                          event =>
+                            change(
+                              old => ({
+                                ...old,
+
+                                wallLeds:
+                                  event
+                                    .target
+                                    .checked,
+                              }),
+                            )
+                        }
+                      />
+
+                      <span>
+                        <strong>
+                          Dikey panel LED ışıkları
+                        </strong>
+
+                        <small>
+                          Arka duvar, ayna kenarları ve iki yan duvarda sıcak beyaz ışık.
+                        </small>
+                      </span>
                     </label>
+
+
                     <label className="cabin-led-option">
-                      <input type="checkbox" checked={Boolean(config.ceilingLeds)} onChange={event => change(old => ({ ...old, ceilingLeds: event.target.checked }))} />
-                      <span><strong>Tavan çevresi LED ışıkları</strong><small>Tavanın dört kenarında sıcak beyaz ışık. Duvar LED’lerinden bağımsızdır.</small></span>
+                      <input
+                        type="checkbox"
+                        checked={
+                          Boolean(
+                            config.ceilingLeds,
+                          )
+                        }
+                        onChange={
+                          event =>
+                            change(
+                              old => ({
+                                ...old,
+
+                                ceilingLeds:
+                                  event
+                                    .target
+                                    .checked,
+                              }),
+                            )
+                        }
+                      />
+
+                      <span>
+                        <strong>
+                          Tavan çevresi LED ışıkları
+                        </strong>
+
+                        <small>
+                          Tavanın dört kenarında sıcak beyaz ışık. Duvar LED’lerinden bağımsızdır.
+                        </small>
+                      </span>
                     </label>
 
 
@@ -6083,7 +6767,7 @@ export default function KabinTasarim() {
                   camera={{
                     position: [
                       0,
-                      0.02,
+                      0.06,
                       5.25,
                     ],
 
@@ -6220,7 +6904,9 @@ export default function KabinTasarim() {
 
 
                   <CameraView
-                    zoomCommand={zoomCommand}
+                    zoomCommand={
+                      zoomCommand
+                    }
                     view={
                       view
                     }
@@ -6229,11 +6915,60 @@ export default function KabinTasarim() {
               </div>
 
 
-              <div className="cabin-zoom-controls" role="group" aria-label="Kabin yakınlaştırma">
-                <button type="button" aria-label="Kabini yakınlaştır" title="Yakınlaştır" onClick={() => setZoomCommand({ factor: 0.8 })}>+</button>
-                <button type="button" aria-label="Kabini uzaklaştır" title="Uzaklaştır" onClick={() => setZoomCommand({ factor: 1.25 })}>−</button>
-                <button type="button" aria-label="Kabin görünümünü sıfırla" title="Görünümü sıfırla" onClick={() => setView(old => ({ ...old, version: old.version + 1 }))}>↺</button>
+              <div
+                className="cabin-zoom-controls"
+                role="group"
+                aria-label="Kabin yakınlaştırma"
+              >
+                <button
+                  type="button"
+                  aria-label="Kabini yakınlaştır"
+                  title="Yakınlaştır"
+                  onClick={() =>
+                    setZoomCommand({
+                      factor:
+                        0.9,
+                    })
+                  }
+                >
+                  +
+                </button>
+
+                <button
+                  type="button"
+                  aria-label="Kabini uzaklaştır"
+                  title="Uzaklaştır"
+                  onClick={() =>
+                    setZoomCommand({
+                      factor:
+                        1.12,
+                    })
+                  }
+                >
+                  −
+                </button>
+
+                <button
+                  type="button"
+                  aria-label="Kabin görünümünü sıfırla"
+                  title="Görünümü sıfırla"
+                  onClick={() =>
+                    setView(
+                      old => ({
+                        ...old,
+
+                        version:
+                          old.version +
+                          1,
+                      }),
+                    )
+                  }
+                >
+                  ↺
+                </button>
               </div>
+
+
               <div className="cabin-gesture-hint absolute bottom-4 inset-x-0 flex justify-center pointer-events-none">
                 <p>
                   Sürükleyerek

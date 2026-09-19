@@ -2,6 +2,30 @@
   display: none;
 }
 
+.cabin-gesture-hint { padding-inline: 12px; }
+.cabin-gesture-hint p {
+  margin: 0;
+  max-width: 100%;
+  padding: 7px 12px;
+  border: 1px solid #cbd5e1;
+  border-radius: 12px;
+  background: #fff;
+  color: #334155;
+  font-size: 12px;
+  line-height: 1.4;
+  text-align: center;
+  white-space: normal;
+}
+.cabin-led-option { display: flex; align-items: flex-start; gap: 10px; padding: 12px; margin-block: 12px 18px; border: 1px solid #cbd5e1; border-radius: 10px; cursor: pointer; }
+.cabin-led-option input { width: 20px; height: 20px; margin-top: 2px; accent-color: #9a6534; flex-shrink: 0; }
+.cabin-led-option strong { display: block; font-size: 13px; color: #334155; }
+.cabin-led-option small { display: block; margin-top: 4px; font-size: 12px; line-height: 1.5; color: #475569; }
+@media (max-width: 1023px) {
+  .cabin-studio section > div:first-child { padding-bottom: 44px; }
+  .cabin-studio .cabin-gesture-hint { bottom: 4px; }
+  .cabin-studio .cabin-gesture-hint p { font-size: 11px; line-height: 1.4; padding: 5px 9px; }
+}
+
 @media (max-width: 1023px) {
 
   .cabin-studio {
@@ -315,3 +339,25 @@
     font-size: 11px;
   }
 }
+.cabin-zoom-controls {
+  position: absolute;
+  right: 12px;
+  bottom: 56px;
+  z-index: 10;
+  display: flex;
+  flex-direction: row;
+  gap: 6px;
+}
+.cabin-zoom-controls button {
+  width: 40px;
+  height: 40px;
+  border: 1px solid #cbd5e1;
+  border-radius: 10px;
+  background: #fff;
+  color: #334155;
+  font-size: 24px;
+  cursor: pointer;
+  touch-action: manipulation;
+}
+.cabin-zoom-controls button:hover { background: #f1f5f9; }
+.cabin-zoom-controls button:focus-visible { outline: 2px solid #e66b43; outline-offset: 2px; }

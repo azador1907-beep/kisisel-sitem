@@ -32,6 +32,8 @@ export function createCabinConfig() {
 
     ceilingColor: 'silver',
     floorTrimColor: 'silver',
+    wallLeds: false,
+    ceilingLeds: false,
 
     mirrorMode: 'none',
     mirrorHeight: 160,

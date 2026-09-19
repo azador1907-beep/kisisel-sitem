@@ -6,8 +6,10 @@ export const WALLS = {
 
 export const PANEL_WIDTHS = Object.freeze([30, 40, 30]);
 
+// Eski varsayılan /paslanmaz-1.png kaldırıldığı için
+// kalan seçeneklerden Satine Paslanmaz varsayılan yapıldı.
 export const DEFAULT_MATERIAL =
-  '/kabin-materyalleri/paslanmaz-1.png';
+  'eka-paslanmaz-sat_paslanmaz_1';
 
 export const materialPath = (type, id) =>
   `/kabin-materyalleri/${type}-${id}.png`;
@@ -39,6 +41,7 @@ export function createCabinConfig() {
     ceiling: materialPath('tavan', 36),
     floor: materialPath('granit', 26),
 
+    // Kabin yazısı sistemi aynen korunuyor.
     cabinText: 'HAS DOOR',
     cabinTextFont: 'modern',
   };

@@ -72,17 +72,20 @@ import {
 } from './ceilingDesign';
 
 
-const ekaById = Object.fromEntries(
-  ekaMaterials.map(
-    (item) => [
-      item.id,
-      item,
-    ],
-  ),
-);
+const ekaById =
+  Object.fromEntries(
+    ekaMaterials.map(
+      item => [
+        item.id,
+        item,
+      ],
+    ),
+  );
+
 
 const MetalEnvironment =
   createContext(null);
+
 
 RectAreaLightUniformsLib.init();
 
@@ -130,9 +133,6 @@ const steelNames = [
   'Kabartma Altın',
 ];
 
-
-// HD kaynaklar ortak kullanılır; renk seçenekleri malzeme rengidir.
-// Eski 104 seçenek kimliği korunur, küçük ekran görüntüleri 3D'ye yüklenmez.
 
 const stoneColors = [
   '#687780',
@@ -208,7 +208,8 @@ function materialSource(path) {
       /(paslanmaz|laminant|tavan|granit)-(\d+)\.png$/,
     ) || [];
 
-  const id = Number(number);
+  const id =
+    Number(number);
 
   const root =
     '/kabin-materyalleri/hd/';
@@ -217,8 +218,12 @@ function materialSource(path) {
     return {
       url:
         `${root}paslanmaz-${id}.svg?v=3`,
-      color: '#ffffff',
-      name: steelNames[id - 1],
+
+      color:
+        '#ffffff',
+
+      name:
+        steelNames[id - 1],
     };
   }
 
@@ -226,7 +231,10 @@ function materialSource(path) {
     return {
       url:
         `${root}${type}-${id}.svg`,
-      color: '#ffffff',
+
+      color:
+        '#ffffff',
+
       name:
         id >= 24
           ? `T-${String(
@@ -261,7 +269,9 @@ function materialSource(path) {
       return {
         url:
           `${root}granit-${id}.png`,
-        color: '#ffffff',
+
+        color:
+          '#ffffff',
       };
     }
 
@@ -280,6 +290,7 @@ function materialSource(path) {
             ? 'gneiss.png'
             : 'granite.png'
         ),
+
       color:
         stoneColors[id - 1],
     };
@@ -304,6 +315,7 @@ function materialSource(path) {
             ? 'walnut.png'
             : 'oak.png'
         ),
+
       color:
         woodColors[id - 1],
     };
@@ -316,8 +328,6 @@ function materialSource(path) {
 }
 
 
-// Her yüzey kendi dokusuna sahip: useTexture önbelleği değiştirilmez.
-
 function useSurfaceTexture(
   source,
   width,
@@ -329,94 +339,101 @@ function useSurfaceTexture(
 ) {
   const gl =
     useThree(
-      (state) => state.gl,
+      state =>
+        state.gl,
     );
 
   const texture =
-    useMemo(() => {
-      const copy =
-        source.clone();
+    useMemo(
+      () => {
+        const copy =
+          source.clone();
 
-      copy.colorSpace =
-        dataMap
-          ? THREE.NoColorSpace
-          : THREE.SRGBColorSpace;
+        copy.colorSpace =
+          dataMap
+            ? THREE.NoColorSpace
+            : THREE.SRGBColorSpace;
 
-      copy.anisotropy =
-        gl.capabilities.getMaxAnisotropy();
+        copy.anisotropy =
+          gl.capabilities.getMaxAnisotropy();
 
-      copy.minFilter =
-        THREE.LinearMipmapLinearFilter;
+        copy.minFilter =
+          THREE.LinearMipmapLinearFilter;
 
-      copy.magFilter =
-        THREE.LinearFilter;
+        copy.magFilter =
+          THREE.LinearFilter;
 
-      copy.generateMipmaps =
-        true;
+        copy.generateMipmaps =
+          true;
 
-      copy.wrapS =
-        copy.wrapT =
-          tiled
-            ? THREE.MirroredRepeatWrapping
-            : THREE.ClampToEdgeWrapping;
+        copy.wrapS =
+          copy.wrapT =
+            tiled
+              ? THREE.MirroredRepeatWrapping
+              : THREE.ClampToEdgeWrapping;
 
-      if (tiled) {
-        const aspect =
-          source.image.width /
-          source.image.height;
+        if (tiled) {
+          const aspect =
+            source.image.width /
+            source.image.height;
 
-        const tileHeight =
-          1.18;
+          const tileHeight =
+            1.18;
 
-        copy.repeat.set(
-          width /
-            (
-              tileHeight *
-              aspect
-            ),
-          height /
-            tileHeight,
-        );
-      } else {
-        copy.repeat.set(
-          1,
-          1,
-        );
-      }
+          copy.repeat.set(
+            width /
+              (
+                tileHeight *
+                aspect
+              ),
 
-      copy.repeat.x *=
-        repeatX;
+            height /
+              tileHeight,
+          );
+        } else {
+          copy.repeat.set(
+            1,
+            1,
+          );
+        }
 
-      copy.repeat.y *=
-        repeatY;
+        copy.repeat.x *=
+          repeatX;
 
-      copy.needsUpdate =
-        true;
+        copy.repeat.y *=
+          repeatY;
 
-      return copy;
-    }, [
-      source,
-      width,
-      height,
-      tiled,
-      gl,
-      dataMap,
-      repeatX,
-      repeatY,
-    ]);
+        copy.needsUpdate =
+          true;
+
+        return copy;
+      },
+
+      [
+        source,
+        width,
+        height,
+        tiled,
+        gl,
+        dataMap,
+        repeatX,
+        repeatY,
+      ],
+    );
 
   useEffect(
-    () => () =>
-      texture.dispose(),
-    [texture],
+    () =>
+      () =>
+        texture.dispose(),
+
+    [
+      texture,
+    ],
   );
 
   return texture;
 }
 
-
-// Kontrollü yansıma: kamera ışını arka düzlemden sanal tavan/zemine uzatılır.
-// Böylece doku bir resim gibi sıkıştırılmaz; kamera döndükçe perspektif değişir.
 
 function SurfaceReflection({
   texture,
@@ -480,6 +497,7 @@ function SurfaceReflection({
                   2,
         },
       }),
+
       [
         texture,
         ceiling,
@@ -689,110 +707,149 @@ function CabinEnvironment({
 }) {
   const gl =
     useThree(
-      (state) => state.gl,
+      state =>
+        state.gl,
     );
 
   const environment =
-    useMemo(() => {
-      const room =
-        new THREE.Scene();
+    useMemo(
+      () => {
+        const room =
+          new THREE.Scene();
 
-      room.background =
-        new THREE.Color(
-          '#52565a',
-        );
-
-      const addSurface = (
-        width,
-        height,
-        position,
-        rotation,
-        color,
-        intensity = 1,
-      ) => {
-        const mesh =
-          new THREE.Mesh(
-            new THREE.PlaneGeometry(
-              width,
-              height,
-            ),
-
-            new THREE.MeshBasicMaterial({
-              color:
-                new THREE.Color(
-                  color,
-                ).multiplyScalar(
-                  intensity,
-                ),
-
-              side:
-                THREE.DoubleSide,
-            }),
+        room.background =
+          new THREE.Color(
+            '#52565a',
           );
 
-        mesh.position.set(
-          ...position,
-        );
+        const addSurface = (
+          width,
+          height,
+          position,
+          rotation,
+          color,
+          intensity = 1,
+        ) => {
+          const mesh =
+            new THREE.Mesh(
+              new THREE.PlaneGeometry(
+                width,
+                height,
+              ),
 
-        mesh.rotation.set(
-          ...rotation,
-        );
+              new THREE.MeshBasicMaterial({
+                color:
+                  new THREE.Color(
+                    color,
+                  ).multiplyScalar(
+                    intensity,
+                  ),
 
-        room.add(
-          mesh,
-        );
-      };
+                side:
+                  THREE.DoubleSide,
+              }),
+            );
 
-      addSurface(
-        W,
-        H,
-        [
-          0,
-          0,
-          -D / 2,
-        ],
-        [
-          0,
-          0,
-          0,
-        ],
-        '#8e9294',
-      );
+          mesh.position.set(
+            ...position,
+          );
 
-      for (
-        const side of [
-          -1,
-          1,
-        ]
-      ) {
+          mesh.rotation.set(
+            ...rotation,
+          );
+
+          room.add(
+            mesh,
+          );
+        };
+
         addSurface(
-          D,
+          W,
           H,
           [
-            side *
-              W /
-              2,
             0,
             0,
+            -D / 2,
           ],
           [
             0,
+            0,
+            0,
+          ],
+          '#8e9294',
+        );
+
+        for (
+          const side of [
+            -1,
+            1,
+          ]
+        ) {
+          addSurface(
+            D,
+            H,
+            [
+              side *
+                W /
+                2,
+              0,
+              0,
+            ],
+            [
+              0,
+              Math.PI /
+                2,
+              0,
+            ],
+            '#85898b',
+          );
+
+          addSurface(
+            0.035,
+            D * 0.9,
+            [
+              side *
+                W *
+                0.31,
+              H / 2 -
+                0.005,
+              0,
+            ],
+            [
+              Math.PI /
+                2,
+              0,
+              0,
+            ],
+            '#fff1da',
+            5,
+          );
+        }
+
+        addSurface(
+          W,
+          D,
+          [
+            0,
+            -H / 2,
+            0,
+          ],
+          [
             Math.PI /
               2,
             0,
+            0,
           ],
-          '#85898b',
+          '#343435',
         );
 
         addSurface(
-          0.035,
-          D * 0.9,
+          W,
+          D,
           [
-            side *
-              W *
-              0.31,
-            H / 2 -
-              0.005,
+            0,
+            H / 2 +
+              0.01,
             0,
           ],
           [
@@ -801,111 +858,79 @@ function CabinEnvironment({
             0,
             0,
           ],
-          '#fff1da',
-          5,
-        );
-      }
-
-      addSurface(
-        W,
-        D,
-        [
-          0,
-          -H / 2,
-          0,
-        ],
-        [
-          Math.PI /
-            2,
-          0,
-          0,
-        ],
-        '#343435',
-      );
-
-      addSurface(
-        W,
-        D,
-        [
-          0,
-          H / 2 +
-            0.01,
-          0,
-        ],
-        [
-          Math.PI /
-            2,
-          0,
-          0,
-        ],
-        '#a3a09a',
-      );
-
-      addSurface(
-        W * 0.55,
-        D * 0.5,
-        [
-          0,
-          H / 2,
-          0,
-        ],
-        [
-          Math.PI /
-            2,
-          0,
-          0,
-        ],
-        '#fff4e4',
-        2,
-      );
-
-      addSurface(
-        W * 3,
-        H * 3,
-        [
-          0,
-          0,
-          D * 2,
-        ],
-        [
-          0,
-          0,
-          0,
-        ],
-        '#999c9e',
-      );
-
-      const generator =
-        new THREE.PMREMGenerator(
-          gl,
+          '#a3a09a',
         );
 
-      const target =
-        generator.fromScene(
-          room,
-          0.04,
+        addSurface(
+          W * 0.55,
+          D * 0.5,
+          [
+            0,
+            H / 2,
+            0,
+          ],
+          [
+            Math.PI /
+              2,
+            0,
+            0,
+          ],
+          '#fff4e4',
+          2,
         );
 
-      room.traverse(
-        (object) => {
-          object.geometry
-            ?.dispose();
+        addSurface(
+          W * 3,
+          H * 3,
+          [
+            0,
+            0,
+            D * 2,
+          ],
+          [
+            0,
+            0,
+            0,
+          ],
+          '#999c9e',
+        );
 
-          object.material
-            ?.dispose();
-        },
-      );
+        const generator =
+          new THREE.PMREMGenerator(
+            gl,
+          );
 
-      generator.dispose();
+        const target =
+          generator.fromScene(
+            room,
+            0.04,
+          );
 
-      return target;
-    }, [
-      gl,
-    ]);
+        room.traverse(
+          object => {
+            object.geometry
+              ?.dispose();
+
+            object.material
+              ?.dispose();
+          },
+        );
+
+        generator.dispose();
+
+        return target;
+      },
+
+      [
+        gl,
+      ],
+    );
 
   useEffect(
-    () => () =>
-      environment.dispose(),
+    () =>
+      () =>
+        environment.dispose(),
+
     [
       environment,
     ],
@@ -927,6 +952,7 @@ function EkaSteelMaterial({
   choice,
   map,
   width,
+  muted = false,
 }) {
   const environment =
     useContext(
@@ -939,6 +965,7 @@ function EkaSteelMaterial({
   ] =
     useTexture([
       choice.normalMap,
+
       choice.roughnessMap ||
         choice.url,
     ]);
@@ -975,18 +1002,57 @@ function EkaSteelMaterial({
       ),
     );
 
+  /*
+    Arka duvardaki metal yüzeyi
+    yan duvarlara göre biraz daha koyu yapıyoruz.
+  */
+  const mutedColor =
+    useMemo(
+      () => {
+        const base =
+          new THREE.Color(
+            choice.color ||
+              '#a3a3a3',
+          );
+
+        if (muted) {
+          base.multiplyScalar(
+            0.78,
+          );
+        }
+
+        return base;
+      },
+
+      [
+        choice.color,
+        muted,
+      ],
+    );
+
   return (
     <meshStandardMaterial
       map={map}
       color={
-        choice.color
+        mutedColor
       }
       normalMap={
         normal
       }
       normalScale={[
-        choice.normalStrength,
-        choice.normalStrength,
+        choice.normalStrength *
+          (
+            muted
+              ? 0.72
+              : 1
+          ),
+
+        choice.normalStrength *
+          (
+            muted
+              ? 0.72
+              : 1
+          ),
       ]}
       roughnessMap={
         choice.roughnessMap
@@ -997,19 +1063,31 @@ function EkaSteelMaterial({
         environment
       }
       roughness={
-        Math.max(
-          0.4,
-          choice.roughness,
-        )
+        muted
+          ? Math.max(
+              0.68,
+              choice.roughness,
+            )
+          : Math.max(
+              0.4,
+              choice.roughness,
+            )
       }
       metalness={
-        Math.min(
-          0.6,
-          choice.metalness,
-        )
+        muted
+          ? Math.min(
+              0.48,
+              choice.metalness,
+            )
+          : Math.min(
+              0.6,
+              choice.metalness,
+            )
       }
       envMapIntensity={
-        0.3
+        muted
+          ? 0.14
+          : 0.3
       }
       side={
         THREE.DoubleSide
@@ -1021,6 +1099,7 @@ function EkaSteelMaterial({
 
 function BrushedSteelMaterial({
   path,
+  muted = false,
 }) {
   const environment =
     useContext(
@@ -1028,119 +1107,161 @@ function BrushedSteelMaterial({
     );
 
   const brushing =
-    useMemo(() => {
-      const canvas =
-        document.createElement(
-          'canvas',
-        );
+    useMemo(
+      () => {
+        const canvas =
+          document.createElement(
+            'canvas',
+          );
 
-      canvas.width =
-        512;
+        canvas.width =
+          512;
 
-      canvas.height =
-        512;
+        canvas.height =
+          512;
 
-      const context =
-        canvas.getContext(
-          '2d',
-        );
-
-      context.fillStyle =
-        '#8080ff';
-
-      context.fillRect(
-        0,
-        0,
-        512,
-        512,
-      );
-
-      for (
-        let x = 0;
-        x < 512;
-        x += 1
-      ) {
-        const value =
-          128 +
-          Math.round(
-            12 *
-              Math.sin(
-                x *
-                  13.37,
-              ),
+        const context =
+          canvas.getContext(
+            '2d',
           );
 
         context.fillStyle =
-          `rgb(${value},128,255)`;
+          '#8080ff';
 
         context.fillRect(
-          x,
           0,
-          1,
+          0,
+          512,
           512,
         );
-      }
 
-      const texture =
-        new THREE.CanvasTexture(
-          canvas,
+        for (
+          let x = 0;
+          x < 512;
+          x += 1
+        ) {
+          const value =
+            128 +
+            Math.round(
+              12 *
+                Math.sin(
+                  x *
+                    13.37,
+                ),
+            );
+
+          context.fillStyle =
+            `rgb(${value},128,255)`;
+
+          context.fillRect(
+            x,
+            0,
+            1,
+            512,
+          );
+        }
+
+        const texture =
+          new THREE.CanvasTexture(
+            canvas,
+          );
+
+        texture.wrapS =
+          texture.wrapT =
+            THREE.RepeatWrapping;
+
+        texture.repeat.set(
+          3,
+          1,
         );
 
-      texture.wrapS =
-        texture.wrapT =
-          THREE.RepeatWrapping;
+        return texture;
+      },
 
-      texture.repeat.set(
-        3,
-        1,
-      );
-
-      return texture;
-    }, []);
+      [],
+    );
 
   useEffect(
-    () => () =>
-      brushing.dispose(),
+    () =>
+      () =>
+        brushing.dispose(),
+
     [
       brushing,
     ],
   );
 
-  const color =
+  const baseColor =
     path.includes(
       'paslanmaz-5.',
     )
       ? '#326780'
       : path.includes(
-            'paslanmaz-6.',
-          )
+          'paslanmaz-6.',
+        )
         ? '#7196ab'
         : '#a2aaae';
+
+  const color =
+    useMemo(
+      () => {
+        const value =
+          new THREE.Color(
+            baseColor,
+          );
+
+        if (muted) {
+          value.multiplyScalar(
+            0.78,
+          );
+        }
+
+        return value;
+      },
+
+      [
+        baseColor,
+        muted,
+      ],
+    );
 
   return (
     <meshPhysicalMaterial
       color={color}
       metalness={
-        0.58
+        muted
+          ? 0.45
+          : 0.58
       }
       roughness={
-        0.36
+        muted
+          ? 0.58
+          : 0.36
       }
       envMap={
         environment
       }
       envMapIntensity={
-        1.15
+        muted
+          ? 0.28
+          : 1.15
       }
       normalMap={
         brushing
       }
       normalScale={[
-        0.24,
-        0.24,
+        muted
+          ? 0.14
+          : 0.24,
+
+        muted
+          ? 0.14
+          : 0.24,
       ]}
       anisotropy={
-        0.55
+        muted
+          ? 0.34
+          : 0.55
       }
       anisotropyRotation={
         Math.PI /
@@ -1160,6 +1281,7 @@ function WallPanel({
   x,
   selected,
   onSelect,
+  muted = false,
 }) {
   const choice =
     materialSource(
@@ -1193,18 +1315,18 @@ function WallPanel({
       ]}
     >
       <mesh
-        onClick={(
-          event,
-        ) => {
-          event.stopPropagation();
+        onClick={
+          event => {
+            event.stopPropagation();
 
-          if (
-            event.delta <
-            5
-          ) {
-            onSelect();
+            if (
+              event.delta <
+              5
+            ) {
+              onSelect();
+            }
           }
-        }}
+        }
       >
         <planeGeometry
           args={[
@@ -1213,42 +1335,54 @@ function WallPanel({
           ]}
         />
 
-        {choice.normalMap ? (
-          <EkaSteelMaterial
-            choice={
-              choice
-            }
-            map={map}
-            width={
-              width
-            }
-          />
-        ) : !laminate ? (
-          <BrushedSteelMaterial
-            path={
-              path
-            }
-          />
-        ) : (
-          <meshStandardMaterial
-            map={map}
-            color={
-              choice.color
-            }
-            metalness={
-              0
-            }
-            roughness={
-              0.72
-            }
-            envMapIntensity={
-              0
-            }
-            side={
-              THREE.DoubleSide
-            }
-          />
-        )}
+        {
+          choice.normalMap
+            ? (
+              <EkaSteelMaterial
+                choice={
+                  choice
+                }
+                map={map}
+                width={
+                  width
+                }
+                muted={
+                  muted
+                }
+              />
+            )
+            : !laminate
+              ? (
+                <BrushedSteelMaterial
+                  path={
+                    path
+                  }
+                  muted={
+                    muted
+                  }
+                />
+              )
+              : (
+                <meshStandardMaterial
+                  map={map}
+                  color={
+                    choice.color
+                  }
+                  metalness={
+                    0
+                  }
+                  roughness={
+                    0.72
+                  }
+                  envMapIntensity={
+                    0
+                  }
+                  side={
+                    THREE.DoubleSide
+                  }
+                />
+              )
+        }
       </mesh>
 
       <mesh
@@ -1272,176 +1406,428 @@ function WallPanel({
         />
       </mesh>
 
-      {selected && (
-        <group
-          userData={{
-            exportHidden:
-              true,
-          }}
-        >
-          {[
-            -1,
-            1,
-          ].map(
-            (side) => (
-              <mesh
-                key={
-                  side
-                }
-                position={[
-                  side *
-                    (
-                      width /
-                        2 -
-                      0.009
-                    ),
-                  0,
-                  0.017,
-                ]}
-              >
-                <planeGeometry
-                  args={[
-                    0.009,
-                    H -
-                      0.025,
-                  ]}
-                />
+      {
+        selected && (
+          <group
+            userData={{
+              exportHidden:
+                true,
+            }}
+          >
+            {
+              [
+                -1,
+                1,
+              ].map(
+                side => (
+                  <mesh
+                    key={
+                      side
+                    }
+                    position={[
+                      side *
+                        (
+                          width /
+                            2 -
+                          0.009
+                        ),
 
-                <meshBasicMaterial
-                  color="#ef784d"
-                  depthWrite={
-                    false
-                  }
-                />
-              </mesh>
-            ),
-          )}
+                      0,
 
-          {[
-            -1,
-            1,
-          ].map(
-            (side) => (
-              <mesh
-                key={
-                  side
-                }
-                position={[
-                  0,
-                  side *
-                    (
-                      H /
-                        2 -
-                      0.012
-                    ),
-                  0.017,
-                ]}
-              >
-                <planeGeometry
-                  args={[
-                    width -
-                      0.018,
-                    0.009,
-                  ]}
-                />
+                      0.017,
+                    ]}
+                  >
+                    <planeGeometry
+                      args={[
+                        0.009,
+                        H -
+                          0.025,
+                      ]}
+                    />
 
-                <meshBasicMaterial
-                  color="#ef784d"
-                  depthWrite={
-                    false
-                  }
-                />
-              </mesh>
-            ),
-          )}
-        </group>
-      )}
+                    <meshBasicMaterial
+                      color="#ef784d"
+                      depthWrite={
+                        false
+                      }
+                    />
+                  </mesh>
+                ),
+              )
+            }
+
+            {
+              [
+                -1,
+                1,
+              ].map(
+                side => (
+                  <mesh
+                    key={
+                      side
+                    }
+                    position={[
+                      0,
+
+                      side *
+                        (
+                          H /
+                            2 -
+                          0.012
+                        ),
+
+                      0.017,
+                    ]}
+                  >
+                    <planeGeometry
+                      args={[
+                        width -
+                          0.018,
+
+                        0.009,
+                      ]}
+                    />
+
+                    <meshBasicMaterial
+                      color="#ef784d"
+                      depthWrite={
+                        false
+                      }
+                    />
+                  </mesh>
+                ),
+              )
+            }
+          </group>
+        )
+      }
     </group>
   );
 }
 
 
+/*
+  İşaretlediğin ve kaldırılacak paslanmazlar.
+  Numara sırası korunuyor.
+*/
+const HIDDEN_STAINLESS_MATERIALS =
+  new Set([
+    'eka-paslanmaz-sat_paslanmaz_3',
+    'eka-paslanmaz-gold_sat_paslanmaz_2',
+    'eka-paslanmaz-gold_sat_paslanmaz_3',
+    'eka-paslanmaz-bronze_sat_paslanmaz_2',
+    'eka-paslanmaz-bronze_sat_paslanmaz_3',
+    'eka-paslanmaz-champ_sat_paslanmaz_1',
+    'eka-paslanmaz-champ_sat_paslanmaz_2',
+    'eka-paslanmaz-black_sat_paslanmaz_3',
+
+    '/kabin-materyalleri/paslanmaz-1.png',
+    '/kabin-materyalleri/paslanmaz-5.png',
+    '/kabin-materyalleri/paslanmaz-6.png',
+  ]);
+
+
 const CABIN_FONT_OPTIONS = [
-  { id: 'modern', name: 'Modern', family: 'Arial, Helvetica, sans-serif' },
-  { id: 'soft', name: 'Yumuşak', family: '"Trebuchet MS", Arial, sans-serif' },
-  { id: 'classic', name: 'Klasik', family: 'Georgia, "Times New Roman", serif' },
-  { id: 'mono', name: 'Teknik', family: '"Courier New", Courier, monospace' },
-  { id: 'bold', name: 'Güçlü', family: 'Impact, "Arial Black", Arial, sans-serif' },
-  { id: 'narrow', name: 'Dar', family: '"Arial Narrow", Arial, Helvetica, sans-serif' },
+  {
+    id:
+      'modern',
+
+    name:
+      'Modern',
+
+    family:
+      'Arial, Helvetica, sans-serif',
+  },
+
+  {
+    id:
+      'soft',
+
+    name:
+      'Yumuşak',
+
+    family:
+      '"Trebuchet MS", Arial, sans-serif',
+  },
+
+  {
+    id:
+      'classic',
+
+    name:
+      'Klasik',
+
+    family:
+      'Georgia, "Times New Roman", serif',
+  },
+
+  {
+    id:
+      'mono',
+
+    name:
+      'Teknik',
+
+    family:
+      '"Courier New", Courier, monospace',
+  },
+
+  {
+    id:
+      'bold',
+
+    name:
+      'Güçlü',
+
+    family:
+      'Impact, "Arial Black", Arial, sans-serif',
+  },
+
+  {
+    id:
+      'narrow',
+
+    name:
+      'Dar',
+
+    family:
+      '"Arial Narrow", Arial, Helvetica, sans-serif',
+  },
 ];
 
-const cabinFont = id =>
-  CABIN_FONT_OPTIONS.find(item => item.id === id) || CABIN_FONT_OPTIONS[0];
 
-function CabinLabel({ text, fontKey = 'modern' }) {
-  const label = String(text ?? '')
-    .trim()
-    .toLocaleUpperCase('tr-TR')
-    .slice(0, 18);
+const cabinFont =
+  id =>
+    CABIN_FONT_OPTIONS.find(
+      item =>
+        item.id === id,
+    ) ||
+    CABIN_FONT_OPTIONS[0];
 
-  const font = cabinFont(fontKey);
 
-  const texture = useMemo(() => {
-    const canvas = document.createElement('canvas');
-    canvas.width = 1024;
-    canvas.height = 256;
+function CabinLabel({
+  text,
+  fontKey = 'modern',
+}) {
+  const label =
+    String(
+      text ?? '',
+    )
+      .trim()
+      .toLocaleUpperCase(
+        'tr-TR',
+      )
+      .slice(
+        0,
+        18,
+      );
 
-    const context = canvas.getContext('2d');
-    context.clearRect(0, 0, canvas.width, canvas.height);
+  const font =
+    cabinFont(
+      fontKey,
+    );
 
-    context.textAlign = 'center';
-    context.textBaseline = 'middle';
-    context.lineJoin = 'round';
+  const texture =
+    useMemo(
+      () => {
+        const canvas =
+          document.createElement(
+            'canvas',
+          );
 
-    let fontSize = 142;
-    context.font = `700 ${fontSize}px ${font.family}`;
-    while (context.measureText(label).width > 900 && fontSize > 62) {
-      fontSize -= 4;
-      context.font = `700 ${fontSize}px ${font.family}`;
-    }
+        canvas.width =
+          1024;
 
-    context.shadowColor = 'rgba(0, 0, 0, 0.38)';
-    context.shadowBlur = 12;
-    context.shadowOffsetY = 6;
-    context.strokeStyle = 'rgba(37, 46, 52, 0.72)';
-    context.lineWidth = 9;
-    context.strokeText(label, canvas.width / 2, canvas.height / 2 + 4);
+        canvas.height =
+          256;
 
-    context.shadowColor = 'transparent';
-    const gradient = context.createLinearGradient(0, 48, 0, 208);
-    gradient.addColorStop(0, '#f8fbfc');
-    gradient.addColorStop(0.35, '#bcc6cb');
-    gradient.addColorStop(0.62, '#6f7a80');
-    gradient.addColorStop(1, '#dce3e6');
-    context.fillStyle = gradient;
-    context.fillText(label, canvas.width / 2, canvas.height / 2 + 4);
+        const context =
+          canvas.getContext(
+            '2d',
+          );
 
-    const result = new THREE.CanvasTexture(canvas);
-    result.colorSpace = THREE.SRGBColorSpace;
-    result.minFilter = THREE.LinearFilter;
-    result.magFilter = THREE.LinearFilter;
-    result.generateMipmaps = false;
-    result.needsUpdate = true;
-    return result;
-  }, [label, font.family]);
+        context.clearRect(
+          0,
+          0,
+          canvas.width,
+          canvas.height,
+        );
 
-  useEffect(() => () => texture.dispose(), [texture]);
+        context.textAlign =
+          'center';
 
-  if (!label) return null;
+        context.textBaseline =
+          'middle';
+
+        context.lineJoin =
+          'round';
+
+        let fontSize =
+          142;
+
+        context.font =
+          `700 ${fontSize}px ${font.family}`;
+
+        while (
+          context.measureText(
+            label,
+          ).width >
+            900 &&
+          fontSize >
+            62
+        ) {
+          fontSize -=
+            4;
+
+          context.font =
+            `700 ${fontSize}px ${font.family}`;
+        }
+
+        context.shadowColor =
+          'rgba(0, 0, 0, 0.38)';
+
+        context.shadowBlur =
+          12;
+
+        context.shadowOffsetY =
+          6;
+
+        context.strokeStyle =
+          'rgba(37, 46, 52, 0.72)';
+
+        context.lineWidth =
+          9;
+
+        context.strokeText(
+          label,
+          canvas.width /
+            2,
+          canvas.height /
+            2 +
+            4,
+        );
+
+        context.shadowColor =
+          'transparent';
+
+        const gradient =
+          context.createLinearGradient(
+            0,
+            48,
+            0,
+            208,
+          );
+
+        gradient.addColorStop(
+          0,
+          '#f8fbfc',
+        );
+
+        gradient.addColorStop(
+          0.35,
+          '#bcc6cb',
+        );
+
+        gradient.addColorStop(
+          0.62,
+          '#6f7a80',
+        );
+
+        gradient.addColorStop(
+          1,
+          '#dce3e6',
+        );
+
+        context.fillStyle =
+          gradient;
+
+        context.fillText(
+          label,
+          canvas.width /
+            2,
+          canvas.height /
+            2 +
+            4,
+        );
+
+        const result =
+          new THREE.CanvasTexture(
+            canvas,
+          );
+
+        result.colorSpace =
+          THREE.SRGBColorSpace;
+
+        result.minFilter =
+          THREE.LinearFilter;
+
+        result.magFilter =
+          THREE.LinearFilter;
+
+        result.generateMipmaps =
+          false;
+
+        result.needsUpdate =
+          true;
+
+        return result;
+      },
+
+      [
+        label,
+        font.family,
+      ],
+    );
+
+  useEffect(
+    () =>
+      () =>
+        texture.dispose(),
+
+    [
+      texture,
+    ],
+  );
+
+  if (!label) {
+    return null;
+  }
 
   return (
     <mesh
-      position={[0, -H / 2 + 0.17, -D / 2 + 0.028]}
-      raycast={() => null}
+      position={[
+        0,
+        -H / 2 +
+          0.17,
+        -D / 2 +
+          0.028,
+      ]}
+      raycast={() =>
+        null
+      }
     >
-      <planeGeometry args={[0.64, 0.16]} />
+      <planeGeometry
+        args={[
+          0.64,
+          0.16,
+        ]}
+      />
+
       <meshBasicMaterial
         map={texture}
         transparent
-        alphaTest={0.02}
-        depthWrite={false}
-        toneMapped={false}
-        side={THREE.DoubleSide}
+        alphaTest={
+          0.02
+        }
+        depthWrite={
+          false
+        }
+        toneMapped={
+          false
+        }
+        side={
+          THREE.DoubleSide
+        }
       />
     </mesh>
   );
@@ -1453,84 +1839,92 @@ function WallShadow({
   height = H,
 }) {
   const map =
-    useMemo(() => {
-      const canvas =
-        document.createElement(
-          'canvas',
-        );
-
-      canvas.width =
-        canvas.height =
-          256;
-
-      const context =
-        canvas.getContext(
-          '2d',
-        );
-
-      for (
-        const horizontal of [
-          true,
-          false,
-        ]
-      ) {
-        const gradient =
-          context.createLinearGradient(
-            0,
-            0,
-            horizontal
-              ? 256
-              : 0,
-            horizontal
-              ? 0
-              : 256,
+    useMemo(
+      () => {
+        const canvas =
+          document.createElement(
+            'canvas',
           );
 
-        gradient.addColorStop(
-          0,
-          'rgba(17,26,34,.22)',
-        );
+        canvas.width =
+          canvas.height =
+            256;
 
-        gradient.addColorStop(
-          0.035,
-          'rgba(17,26,34,0)',
-        );
+        const context =
+          canvas.getContext(
+            '2d',
+          );
 
-        gradient.addColorStop(
-          0.965,
-          'rgba(17,26,34,0)',
-        );
+        for (
+          const horizontal of [
+            true,
+            false,
+          ]
+        ) {
+          const gradient =
+            context.createLinearGradient(
+              0,
+              0,
 
-        gradient.addColorStop(
-          1,
-          'rgba(17,26,34,.22)',
-        );
+              horizontal
+                ? 256
+                : 0,
 
-        context.fillStyle =
-          gradient;
+              horizontal
+                ? 0
+                : 256,
+            );
 
-        context.fillRect(
-          0,
-          0,
-          256,
-          256,
-        );
-      }
+          gradient.addColorStop(
+            0,
+            'rgba(17,26,34,.22)',
+          );
 
-      const texture =
-        new THREE.CanvasTexture(
-          canvas,
-        );
+          gradient.addColorStop(
+            0.035,
+            'rgba(17,26,34,0)',
+          );
 
-      texture.colorSpace =
-        THREE.SRGBColorSpace;
+          gradient.addColorStop(
+            0.965,
+            'rgba(17,26,34,0)',
+          );
 
-      return texture;
-    }, []);
+          gradient.addColorStop(
+            1,
+            'rgba(17,26,34,.22)',
+          );
+
+          context.fillStyle =
+            gradient;
+
+          context.fillRect(
+            0,
+            0,
+            256,
+            256,
+          );
+        }
+
+        const texture =
+          new THREE.CanvasTexture(
+            canvas,
+          );
+
+        texture.colorSpace =
+          THREE.SRGBColorSpace;
+
+        return texture;
+      },
+
+      [],
+    );
 
   useEffect(
-    () => () =>
-      map.dispose(),
+    () =>
+      () =>
+        map.dispose(),
+
     [
       map,
     ],
@@ -1596,76 +1990,83 @@ function PanelWall({
         }
       />
 
-      {config.widths.map(
-        (
-          ratio,
-          index,
-        ) => {
-          const width =
-            length *
-            ratio /
-            100;
+      {
+        config.widths.map(
+          (
+            ratio,
+            index,
+          ) => {
+            const width =
+              length *
+              ratio /
+              100;
 
-          const preceding =
-            config.widths
-              .slice(
-                0,
-                index,
-              )
-              .reduce(
-                (
-                  sum,
-                  value,
-                ) =>
-                  sum +
-                  value,
-                0,
-              );
-
-          const center =
-            -length /
-              2 +
-            length *
-              preceding /
-              100 +
-            width /
-              2;
-
-          return (
-            <WallPanel
-              key={
-                index
-              }
-              path={
-                config.materials[
-                  index
-                ]
-              }
-              width={
-                width
-              }
-              x={
-                reverse
-                  ? -center
-                  : center
-              }
-              selected={
-                editing &&
-                selection.wall ===
-                  wall &&
-                selection.index ===
-                  index
-              }
-              onSelect={() =>
-                onSelect({
-                  wall,
+            const preceding =
+              config.widths
+                .slice(
+                  0,
                   index,
-                })
-              }
-            />
-          );
-        },
-      )}
+                )
+                .reduce(
+                  (
+                    sum,
+                    value,
+                  ) =>
+                    sum +
+                    value,
+
+                  0,
+                );
+
+            const center =
+              -length /
+                2 +
+              length *
+                preceding /
+                100 +
+              width /
+                2;
+
+            return (
+              <WallPanel
+                key={
+                  index
+                }
+                path={
+                  config.materials[
+                    index
+                  ]
+                }
+                width={
+                  width
+                }
+                x={
+                  reverse
+                    ? -center
+                    : center
+                }
+                selected={
+                  editing &&
+                  selection.wall ===
+                    wall &&
+                  selection.index ===
+                    index
+                }
+                onSelect={() =>
+                  onSelect({
+                    wall,
+                    index,
+                  })
+                }
+                muted={
+                  wall ===
+                  'rearCenter'
+                }
+              />
+            );
+          },
+        )
+      }
     </group>
   );
 }
@@ -1682,116 +2083,122 @@ function SceneCapture({
   } =
     useThree();
 
-  useEffect(() => {
-    const entry = {
-      config,
+  useEffect(
+    () => {
+      const entry = {
+        config,
 
-      capture: () => {
-        const size =
-          gl.getSize(
-            new THREE.Vector2(),
-          );
-
-        const ratio =
-          gl.getPixelRatio();
-
-        const aspect =
-          camera.aspect;
-
-        const hidden = [];
-
-        scene.traverse(
-          (object) => {
-            if (
-              object.userData
-                .exportHidden &&
-              object.visible
-            ) {
-              hidden.push(
-                object,
+        capture:
+          () => {
+            const size =
+              gl.getSize(
+                new THREE.Vector2(),
               );
 
-              object.visible =
-                false;
+            const ratio =
+              gl.getPixelRatio();
+
+            const aspect =
+              camera.aspect;
+
+            const hidden =
+              [];
+
+            scene.traverse(
+              object => {
+                if (
+                  object.userData
+                    .exportHidden &&
+                  object.visible
+                ) {
+                  hidden.push(
+                    object,
+                  );
+
+                  object.visible =
+                    false;
+                }
+              },
+            );
+
+            try {
+              gl.setPixelRatio(
+                1,
+              );
+
+              gl.setSize(
+                1800,
+                2100,
+                false,
+              );
+
+              camera.aspect =
+                1800 /
+                2100;
+
+              camera.updateProjectionMatrix();
+
+              gl.render(
+                scene,
+                camera,
+              );
+
+              return gl.domElement.toDataURL(
+                'image/png',
+              );
+            } finally {
+              hidden.forEach(
+                object => {
+                  object.visible =
+                    true;
+                },
+              );
+
+              camera.aspect =
+                aspect;
+
+              camera.updateProjectionMatrix();
+
+              gl.setPixelRatio(
+                ratio,
+              );
+
+              gl.setSize(
+                size.x,
+                size.y,
+                false,
+              );
+
+              gl.render(
+                scene,
+                camera,
+              );
             }
           },
-        );
+      };
 
-        try {
-          gl.setPixelRatio(
-            1,
-          );
+      captureRef.current =
+        entry;
 
-          gl.setSize(
-            1800,
-            2100,
-            false,
-          );
-
-          camera.aspect =
-            1800 /
-            2100;
-
-          camera.updateProjectionMatrix();
-
-          gl.render(
-            scene,
-            camera,
-          );
-
-          return gl.domElement.toDataURL(
-            'image/png',
-          );
-        } finally {
-          hidden.forEach(
-            (object) => {
-              object.visible =
-                true;
-            },
-          );
-
-          camera.aspect =
-            aspect;
-
-          camera.updateProjectionMatrix();
-
-          gl.setPixelRatio(
-            ratio,
-          );
-
-          gl.setSize(
-            size.x,
-            size.y,
-            false,
-          );
-
-          gl.render(
-            scene,
-            camera,
-          );
+      return () => {
+        if (
+          captureRef.current ===
+          entry
+        ) {
+          captureRef.current =
+            null;
         }
-      },
-    };
+      };
+    },
 
-    captureRef.current =
-      entry;
-
-    return () => {
-      if (
-        captureRef.current ===
-        entry
-      ) {
-        captureRef.current =
-          null;
-      }
-    };
-  }, [
-    gl,
-    scene,
-    camera,
-    config,
-    captureRef,
-  ]);
+    [
+      gl,
+      scene,
+      camera,
+      config,
+      captureRef,
+    ],
+  );
 
   return null;
 }
@@ -1837,32 +2244,38 @@ function KendiAsansorumuz({
     ]);
 
   const roofMap =
-    useMemo(() => {
-      const texture =
-        new THREE.CanvasTexture(
-          composeCeiling(
-            roof.image,
-            config.ceilingColor,
-            config.ceilingSideColor,
-          ),
-        );
+    useMemo(
+      () => {
+        const texture =
+          new THREE.CanvasTexture(
+            composeCeiling(
+              roof.image,
+              config.ceilingColor,
+              config.ceilingSideColor,
+            ),
+          );
 
-      texture.colorSpace =
-        THREE.SRGBColorSpace;
+        texture.colorSpace =
+          THREE.SRGBColorSpace;
 
-      texture.anisotropy =
-        8;
+        texture.anisotropy =
+          8;
 
-      return texture;
-    }, [
-      roof,
-      config.ceilingColor,
-      config.ceilingSideColor,
-    ]);
+        return texture;
+      },
+
+      [
+        roof,
+        config.ceilingColor,
+        config.ceilingSideColor,
+      ],
+    );
 
   useEffect(
-    () => () =>
-      roofMap.dispose(),
+    () =>
+      () =>
+        roofMap.dispose(),
+
     [
       roofMap,
     ],
@@ -1917,24 +2330,23 @@ function KendiAsansorumuz({
         ]}
         position={[
           0,
-          -H /
-            2,
+          -H / 2,
           0,
         ]}
-        onClick={(
-          event,
-        ) => {
-          event.stopPropagation();
+        onClick={
+          event => {
+            event.stopPropagation();
 
-          if (
-            event.delta <
-            5
-          ) {
-            onSurfaceSelect(
-              'floor',
-            );
+            if (
+              event.delta <
+              5
+            ) {
+              onSurfaceSelect(
+                'floor',
+              );
+            }
           }
-        }}
+        }
       >
         <planeGeometry
           args={[
@@ -2004,24 +2416,23 @@ function KendiAsansorumuz({
         ]}
         position={[
           0,
-          H /
-            2,
+          H / 2,
           0,
         ]}
-        onClick={(
-          event,
-        ) => {
-          event.stopPropagation();
+        onClick={
+          event => {
+            event.stopPropagation();
 
-          if (
-            event.delta <
-            5
-          ) {
-            onSurfaceSelect(
-              'ceiling',
-            );
+            if (
+              event.delta <
+              5
+            ) {
+              onSurfaceSelect(
+                'ceiling',
+              );
+            }
           }
-        }}
+        }
       >
         <planeGeometry
           args={[
@@ -2041,111 +2452,114 @@ function KendiAsansorumuz({
         />
       </mesh>
 
-      {[
-        -1,
-        1,
-      ].map(
-        (side) => {
-          const wall =
-            side === -1
-              ? 'left'
-              : 'right';
+      {
+        [
+          -1,
+          1,
+        ].map(
+          side => {
+            const wall =
+              side === -1
+                ? 'left'
+                : 'right';
 
-          return (
-            <group
-              key={
-                side
-              }
-            >
-              <PanelWall
-                wall={
-                  wall
+            return (
+              <group
+                key={
+                  side
                 }
-                config={
-                  config.walls[
+              >
+                <PanelWall
+                  wall={
                     wall
-                  ]
-                }
-                length={
-                  D
-                }
-                position={[
-                  side *
-                    W /
-                    2,
-                  0,
-                  0,
-                ]}
-                rotation={[
-                  0,
-                  -side *
-                    Math.PI /
-                    2,
-                  0,
-                ]}
-                reverse={
-                  side ===
-                  1
-                }
-                selection={
-                  selection
-                }
-                onSelect={
-                  onSelect
-                }
-                editing={
-                  editing
-                }
-              />
-
-              <MetalBox
-                position={[
-                  side *
-                    (
+                  }
+                  config={
+                    config.walls[
+                      wall
+                    ]
+                  }
+                  length={D}
+                  position={[
+                    side *
                       W /
-                        2 -
-                      0.009
-                    ),
-                  -H /
-                    2 +
+                      2,
+                    0,
+                    0,
+                  ]}
+                  rotation={[
+                    0,
+                    -side *
+                      Math.PI /
+                      2,
+                    0,
+                  ]}
+                  reverse={
+                    side ===
+                    1
+                  }
+                  selection={
+                    selection
+                  }
+                  onSelect={
+                    onSelect
+                  }
+                  editing={
+                    editing
+                  }
+                />
+
+                <MetalBox
+                  position={[
+                    side *
+                      (
+                        W /
+                          2 -
+                        0.009
+                      ),
+
+                    -H /
+                      2 +
+                      0.035,
+
+                    0,
+                  ]}
+                  size={[
+                    0.014,
+                    0.07,
+                    D,
+                  ]}
+                  color={
+                    ceilingColor(
+                      config.floorTrimColor,
+                    ).color
+                  }
+                />
+
+                <MetalBox
+                  position={[
+                    side *
+                      (
+                        W /
+                          2 +
+                        0.015
+                      ),
+
+                    0,
+
+                    D / 2,
+                  ]}
+                  size={[
+                    0.03,
+                    H +
+                      0.06,
                     0.035,
-                  0,
-                ]}
-                size={[
-                  0.014,
-                  0.07,
-                  D,
-                ]}
-                color={
-                  ceilingColor(
-                    config.floorTrimColor,
-                  ).color
-                }
-              />
-
-              <MetalBox
-                position={[
-                  side *
-                    (
-                      W /
-                        2 +
-                      0.015
-                    ),
-                  0,
-                  D /
-                    2,
-                ]}
-                size={[
-                  0.03,
-                  H +
-                    0.06,
-                  0.035,
-                ]}
-              />
-            </group>
-          );
-        },
-      )}
+                  ]}
+                />
+              </group>
+            );
+          },
+        )
+      }
 
       <PanelWall
         wall="rearCenter"
@@ -2157,8 +2571,7 @@ function KendiAsansorumuz({
         position={[
           0,
           0,
-          -D /
-            2,
+          -D / 2,
         ]}
         selection={
           selection
@@ -2173,159 +2586,182 @@ function KendiAsansorumuz({
 
 
       <CabinLabel
-        text={config.cabinText ?? ''}
-        fontKey={config.cabinTextFont || 'modern'}
+        text={
+          config.cabinText ??
+          ''
+        }
+        fontKey={
+          config.cabinTextFont ||
+          'modern'
+        }
       />
 
-      {config.mirrorMode !==
-        'none' && (
-        <group
-          position={[
-            mirror.x,
-            0,
-            0,
-          ]}
-          onClick={(
-            event,
-          ) => {
-            event.stopPropagation();
 
-            if (
-              event.delta <
-              5
-            ) {
-              onMirrorSelect();
-            }
-          }}
-        >
-          {topH >
-            0 && (
-            <SurfaceReflection
-              texture={
-                roofMap
-              }
-              ceiling
-              y={
-                mirror.top -
-                topH /
-                  2
-              }
-              height={
-                topH
-              }
-              width={
-                panelW
-              }
-            />
-          )}
-
-          <mesh
+      {
+        config.mirrorMode !==
+          'none' && (
+          <group
             position={[
+              mirror.x,
               0,
-              (
-                panelTop +
-                panelBottom
-              ) /
-                2,
-              -D /
-                2 +
-                0.014,
+              0,
             ]}
-          >
-            <planeGeometry
-              args={[
-                panelW,
-                panelTop -
-                  panelBottom,
-              ]}
-            />
+            onClick={
+              event => {
+                event.stopPropagation();
 
-            <meshBasicMaterial
-              color="#b9cbd1"
-            />
-          </mesh>
-
-          {bottomH >
-            0 && (
-            <SurfaceReflection
-              texture={
-                floorMap
-              }
-              tint={
-                floorChoice.color
-              }
-              ceiling={
-                false
-              }
-              y={
-                mirror.bottom +
-                bottomH /
-                  2
-              }
-              height={
-                bottomH
-              }
-              width={
-                panelW
-              }
-            />
-          )}
-
-          {[
-            -1,
-            1,
-          ].map(
-            (side) => (
-              <MetalBox
-                key={
-                  side
+                if (
+                  event.delta <
+                  5
+                ) {
+                  onMirrorSelect();
                 }
-                position={[
-                  side *
-                    panelW /
-                    2,
-                  (
-                    mirror.top +
-                    mirror.bottom
-                  ) /
-                    2,
-                  -D /
-                    2 +
-                    0.02,
-                ]}
-                size={[
-                  0.006,
-                  mirror.height,
-                  0.012,
-                ]}
-              />
-            ),
-          )}
+              }
+            }
+          >
+            {
+              topH >
+                0 && (
+                <SurfaceReflection
+                  texture={
+                    roofMap
+                  }
+                  ceiling
+                  y={
+                    mirror.top -
+                    topH /
+                      2
+                  }
+                  height={
+                    topH
+                  }
+                  width={
+                    panelW
+                  }
+                />
+              )
+            }
 
-          {[
-            mirror.top,
-            mirror.bottom,
-          ].map(
-            (y) => (
-              <MetalBox
-                key={y}
-                position={[
-                  0,
-                  y,
-                  -D /
-                    2 +
-                    0.021,
-                ]}
-                size={[
+            <mesh
+              position={[
+                0,
+
+                (
+                  panelTop +
+                  panelBottom
+                ) /
+                  2,
+
+                -D /
+                  2 +
+                  0.014,
+              ]}
+            >
+              <planeGeometry
+                args={[
                   panelW,
-                  0.009,
-                  0.012,
+
+                  panelTop -
+                    panelBottom,
                 ]}
               />
-            ),
-          )}
-        </group>
-      )}
+
+              <meshBasicMaterial
+                color="#b9cbd1"
+              />
+            </mesh>
+
+            {
+              bottomH >
+                0 && (
+                <SurfaceReflection
+                  texture={
+                    floorMap
+                  }
+                  tint={
+                    floorChoice.color
+                  }
+                  ceiling={
+                    false
+                  }
+                  y={
+                    mirror.bottom +
+                    bottomH /
+                      2
+                  }
+                  height={
+                    bottomH
+                  }
+                  width={
+                    panelW
+                  }
+                />
+              )
+            }
+
+            {
+              [
+                -1,
+                1,
+              ].map(
+                side => (
+                  <MetalBox
+                    key={
+                      side
+                    }
+                    position={[
+                      side *
+                        panelW /
+                        2,
+
+                      (
+                        mirror.top +
+                        mirror.bottom
+                      ) /
+                        2,
+
+                      -D /
+                        2 +
+                        0.02,
+                    ]}
+                    size={[
+                      0.006,
+                      mirror.height,
+                      0.012,
+                    ]}
+                  />
+                ),
+              )
+            }
+
+            {
+              [
+                mirror.top,
+                mirror.bottom,
+              ].map(
+                y => (
+                  <MetalBox
+                    key={y}
+                    position={[
+                      0,
+                      y,
+                      -D /
+                        2 +
+                        0.021,
+                    ]}
+                    size={[
+                      panelW,
+                      0.009,
+                      0.012,
+                    ]}
+                  />
+                ),
+              )
+            }
+          </group>
+        )
+      }
+
 
       <MetalBox
         position={[
@@ -2349,6 +2785,7 @@ function KendiAsansorumuz({
         }
       />
 
+
       <MetalBox
         position={[
           0,
@@ -2365,6 +2802,7 @@ function KendiAsansorumuz({
           0.035,
         ]}
       />
+
 
       <MetalBox
         position={[
@@ -2388,7 +2826,6 @@ function KendiAsansorumuz({
         }
       />
 
-      {/* Sağ duvara sıfıra yakın, ince fırçalı çelik kumanda paneli. */}
 
       <group
         position={[
@@ -2438,79 +2875,84 @@ function KendiAsansorumuz({
           />
         </mesh>
 
-        {/* Yerel geometri ile dijital 3 ve yukarı oku; dış font gerektirmez. */}
-
-        {[
+        {
           [
-            -0.015,
-            0.71,
-            0.041,
-            0.006,
-          ],
-          [
-            -0.015,
-            0.68,
-            0.041,
-            0.006,
-          ],
-          [
-            -0.015,
-            0.65,
-            0.041,
-            0.006,
-          ],
-          [
-            0.003,
-            0.695,
-            0.006,
-            0.03,
-          ],
-          [
-            0.003,
-            0.665,
-            0.006,
-            0.03,
-          ],
-          [
-            0.038,
-            0.68,
-            0.005,
-            0.04,
-          ],
-        ].map(
-          (
             [
-              x,
-              y,
-              w,
-              h,
+              -0.015,
+              0.71,
+              0.041,
+              0.006,
             ],
-            i,
-          ) => (
-            <mesh
-              key={i}
-              position={[
+
+            [
+              -0.015,
+              0.68,
+              0.041,
+              0.006,
+            ],
+
+            [
+              -0.015,
+              0.65,
+              0.041,
+              0.006,
+            ],
+
+            [
+              0.003,
+              0.695,
+              0.006,
+              0.03,
+            ],
+
+            [
+              0.003,
+              0.665,
+              0.006,
+              0.03,
+            ],
+
+            [
+              0.038,
+              0.68,
+              0.005,
+              0.04,
+            ],
+          ].map(
+            (
+              [
                 x,
                 y,
-                0.009,
-              ]}
-            >
-              <planeGeometry
-                args={[
-                  w,
-                  h,
+                w,
+                h,
+              ],
+              i,
+            ) => (
+              <mesh
+                key={i}
+                position={[
+                  x,
+                  y,
+                  0.009,
                 ]}
-              />
+              >
+                <planeGeometry
+                  args={[
+                    w,
+                    h,
+                  ]}
+                />
 
-              <meshBasicMaterial
-                color="#b8e8ff"
-                toneMapped={
-                  false
-                }
-              />
-            </mesh>
-          ),
-        )}
+                <meshBasicMaterial
+                  color="#b8e8ff"
+                  toneMapped={
+                    false
+                  }
+                />
+              </mesh>
+            ),
+          )
+        }
 
         <mesh
           position={[
@@ -2534,97 +2976,100 @@ function KendiAsansorumuz({
           />
         </mesh>
 
-        {Array.from(
-          {
-            length:
-              12,
-          },
-          (
-            _,
-            i,
-          ) => (
-            <group
-              key={i}
-              position={[
-                (
-                  i %
-                    2 -
-                  0.5
-                ) *
-                  0.069,
+        {
+          Array.from(
+            {
+              length:
+                12,
+            },
 
-                0.2 -
-                  Math.floor(
-                    i /
-                      2,
-                  ) *
-                    0.075,
-
-                0.011,
-              ]}
-            >
-              <mesh>
-                <ringGeometry
-                  args={[
-                    0.016,
-                    0.02,
-                    24,
-                  ]}
-                />
-
-                <meshStandardMaterial
-                  color={
-                    i ===
-                    2
-                      ? '#94c8db'
-                      : '#626d72'
-                  }
-                  roughness={
+            (
+              _,
+              i,
+            ) => (
+              <group
+                key={i}
+                position={[
+                  (
+                    i %
+                      2 -
                     0.5
-                  }
-                />
-              </mesh>
+                  ) *
+                    0.069,
 
-              <mesh
-                position={[
-                  0,
-                  0,
-                  0.001,
+                  0.2 -
+                    Math.floor(
+                      i /
+                        2,
+                    ) *
+                      0.075,
+
+                  0.011,
                 ]}
               >
-                <circleGeometry
-                  args={[
-                    0.015,
-                    24,
+                <mesh>
+                  <ringGeometry
+                    args={[
+                      0.016,
+                      0.02,
+                      24,
+                    ]}
+                  />
+
+                  <meshStandardMaterial
+                    color={
+                      i ===
+                      2
+                        ? '#94c8db'
+                        : '#626d72'
+                    }
+                    roughness={
+                      0.5
+                    }
+                  />
+                </mesh>
+
+                <mesh
+                  position={[
+                    0,
+                    0,
+                    0.001,
                   ]}
-                />
+                >
+                  <circleGeometry
+                    args={[
+                      0.015,
+                      24,
+                    ]}
+                  />
 
-                <meshStandardMaterial
-                  {...steel}
-                />
-              </mesh>
+                  <meshStandardMaterial
+                    {...steel}
+                  />
+                </mesh>
 
-              <mesh
-                position={[
-                  0,
-                  0,
-                  0.002,
-                ]}
-              >
-                <circleGeometry
-                  args={[
+                <mesh
+                  position={[
+                    0,
+                    0,
                     0.002,
-                    8,
                   ]}
-                />
+                >
+                  <circleGeometry
+                    args={[
+                      0.002,
+                      8,
+                    ]}
+                  />
 
-                <meshBasicMaterial
-                  color="#45535b"
-                />
-              </mesh>
-            </group>
-          ),
-        )}
+                  <meshBasicMaterial
+                    color="#45535b"
+                  />
+                </mesh>
+              </group>
+            ),
+          )
+        }
 
         <mesh
           position={[
@@ -2664,46 +3109,50 @@ function CameraView({
   } =
     useThree();
 
-  useEffect(() => {
-    const positions = {
-      front: [
-        0,
-        0.02,
-        5.25,
-      ],
+  useEffect(
+    () => {
+      const positions = {
+        front: [
+          0,
+          0.02,
+          5.25,
+        ],
 
-      left: [
-        1.45,
-        0.03,
-        5.1,
-      ],
+        left: [
+          1.45,
+          0.03,
+          5.1,
+        ],
 
-      right: [
-        -1.45,
-        0.03,
-        5.1,
-      ],
-    };
+        right: [
+          -1.45,
+          0.03,
+          5.1,
+        ],
+      };
 
-    camera.position.set(
-      ...positions[
-        view.name
-      ],
-    );
-
-    controls.current
-      ?.target.set(
-        0,
-        -0.03,
-        0,
+      camera.position.set(
+        ...positions[
+          view.name
+        ],
       );
 
-    controls.current
-      ?.update();
-  }, [
-    camera,
-    view,
-  ]);
+      controls.current
+        ?.target.set(
+          0,
+          -0.03,
+          0,
+        );
+
+      controls.current
+        ?.update();
+    },
+
+    [
+      camera,
+      view,
+    ],
+  );
 
   return (
     <OrbitControls
@@ -2749,60 +3198,58 @@ function CameraView({
 }
 
 
-const swatchStyle = (
-  path,
-) => {
-  const source =
+const swatchStyle =
+  path => {
+    const source =
+      materialSource(
+        path,
+      );
+
+    return {
+      backgroundImage:
+        `url('${source.thumbnail || source.url}')`,
+
+      backgroundColor:
+        source.thumbnail
+          ? '#ffffff'
+          : source.color,
+
+      backgroundBlendMode:
+        'multiply',
+
+      backgroundSize:
+        'cover',
+
+      backgroundPosition:
+        'center',
+    };
+  };
+
+
+const materialName =
+  path =>
     materialSource(
       path,
-    );
-
-  return {
-    backgroundImage:
-      `url('${source.thumbnail || source.url}')`,
-
-    backgroundColor:
-      source.thumbnail
-        ? '#ffffff'
-        : source.color,
-
-    backgroundBlendMode:
-      'multiply',
-
-    backgroundSize:
-      'cover',
-
-    backgroundPosition:
-      'center',
-  };
-};
-
-
-const materialName = (
-  path,
-) =>
-  materialSource(
-    path,
-  ).name ||
-  path
-    .split('/')
-    .pop()
-    .replace(
-      '.png',
-      '',
-    )
-    .replace(
-      'laminant-',
-      'Laminant ',
-    )
-    .replace(
-      'granit-',
-      'Granit ',
-    )
-    .replace(
-      'tavan-',
-      'Tavan ',
-    );
+    ).name ||
+    path
+      .split('/')
+      .pop()
+      .replace(
+        '.png',
+        '',
+      )
+      .replace(
+        'laminant-',
+        'Laminant ',
+      )
+      .replace(
+        'granit-',
+        'Granit ',
+      )
+      .replace(
+        'tavan-',
+        'Tavan ',
+      );
 
 
 const mirrorModeNames = {
@@ -2850,6 +3297,7 @@ function createCabinOfferMessage(
       },
     );
 
+
   const mirror =
     mirrorGeometry(
       config,
@@ -2860,6 +3308,7 @@ function createCabinOfferMessage(
     'none'
       ? 'Ayna yok'
       : `${mirrorModeNames[config.mirrorMode] || 'Ayna'} - ${Math.round(mirror.width * 100)} × ${Math.round(mirror.height * 100)} cm`;
+
 
   return [
     'Merhaba, Has Door Kabin Tasarla üzerinden oluşturduğum tasarım için teklif almak istiyorum.',
@@ -2887,8 +3336,10 @@ const categories = [
   {
     id:
       'walls',
+
     name:
       'Duvarlar',
+
     icon:
       Layers3,
   },
@@ -2896,8 +3347,10 @@ const categories = [
   {
     id:
       'mirror',
+
     name:
       'Ayna',
+
     icon:
       ScanLine,
   },
@@ -2905,8 +3358,10 @@ const categories = [
   {
     id:
       'ceiling',
+
     name:
       'Tavan',
+
     icon:
       LampCeiling,
   },
@@ -2914,8 +3369,10 @@ const categories = [
   {
     id:
       'floor',
+
     name:
       'Zemin',
+
     icon:
       Grid2X2,
   },
@@ -2956,16 +3413,13 @@ function RangeControl({
         value={
           value
         }
-        onChange={(
-          event,
-        ) =>
-          onChange(
-            Number(
-              event
-                .target
-                .value,
-            ),
-          )
+        onChange={
+          event =>
+            onChange(
+              Number(
+                event.target.value,
+              ),
+            )
         }
         onPointerUp={
           onFinish
@@ -3015,52 +3469,58 @@ function CeilingPreview({
       path,
     ).url;
 
-  useEffect(() => {
-    let active =
-      true;
+  useEffect(
+    () => {
+      let active =
+        true;
 
-    const image =
-      new Image();
+      const image =
+        new Image();
 
-    image.onload =
-      () => {
-        if (
-          active
-        ) {
-          setPreview(
-            composeCeiling(
-              image,
-              color,
-              sideColor,
-            ).toDataURL(),
-          );
-        }
+      image.onload =
+        () => {
+          if (
+            active
+          ) {
+            setPreview(
+              composeCeiling(
+                image,
+                color,
+                sideColor,
+              ).toDataURL(),
+            );
+          }
+        };
+
+      image.src =
+        source;
+
+      return () => {
+        active =
+          false;
       };
+    },
 
-    image.src =
-      source;
-
-    return () => {
-      active =
-        false;
-    };
-  }, [
-    source,
-    color,
-    sideColor,
-  ]);
+    [
+      source,
+      color,
+      sideColor,
+    ],
+  );
 
   return (
     <div className="mt-5 rounded-xl border border-slate-200 bg-slate-50 p-3">
-      {preview && (
-        <img
-          src={
-            preview
-          }
-          alt="Üç bölümlü tavan: sabit yanlar, seçili orta desen"
-          className="w-full aspect-square object-contain"
-        />
-      )}
+      {
+        preview && (
+          <img
+            src={
+              preview
+            }
+            alt="Üç bölümlü tavan: sabit yanlar, seçili orta desen"
+            className="w-full aspect-square object-contain"
+          />
+        )
+      }
     </div>
   );
 }
@@ -3072,15 +3532,15 @@ function MaterialGrid({
   selected,
   onSelect,
 }) {
-  const entries = [
+  const rawEntries = [
     ...ekaMaterials
       .filter(
-        (item) =>
+        item =>
           item.type ===
           type,
       )
       .map(
-        (item) =>
+        item =>
           item.id,
       ),
 
@@ -3097,7 +3557,7 @@ function MaterialGrid({
         1,
     )
       .filter(
-        (id) =>
+        id =>
           type ===
           'paslanmaz'
             ? [
@@ -3121,7 +3581,7 @@ function MaterialGrid({
               ),
       )
       .map(
-        (id) =>
+        id =>
           materialPath(
             type,
             id,
@@ -3129,73 +3589,105 @@ function MaterialGrid({
       ),
   ];
 
+
+  const entries =
+    rawEntries
+      .map(
+        (
+          path,
+          index,
+        ) => ({
+          path,
+
+          originalNumber:
+            index +
+            1,
+        }),
+      )
+      .filter(
+        ({
+          path,
+        }) =>
+          type !==
+            'paslanmaz' ||
+          !HIDDEN_STAINLESS_MATERIALS.has(
+            path,
+          ),
+      );
+
+
   return (
     <>
       <div className="cabin-material-grid grid grid-cols-6 sm:grid-cols-7 lg:grid-cols-6 gap-2">
-        {entries.map(
-          (
-            path,
-            i,
-          ) => (
-            <button
-              key={
-                path
-              }
-              type="button"
-              title={
-                materialName(
-                  path,
-                )
-              }
-              aria-label={
-                materialName(
-                  path,
-                )
-              }
-              aria-pressed={
-                selected ===
-                path
-              }
-              onClick={() =>
-                onSelect(
-                  path,
-                )
-              }
-              className={`relative aspect-square rounded-md border transition hover:-translate-y-0.5 focus-visible:outline-2 focus-visible:outline-orange-500 ${
-                selected ===
-                path
-                  ? 'border-[#e66b43] ring-2 ring-orange-200'
-                  : 'border-slate-200'
-              }`}
-              style={
-                swatchStyle(
-                  path,
-                )
-              }
-            >
-              <span className="absolute bottom-1 left-1 text-[9px] bg-black/40 text-white rounded px-1 leading-4">
-                {String(
-                  i +
-                    1,
-                ).padStart(
-                  2,
-                  '0',
-                )}
-              </span>
-
-              {selected ===
-                path && (
-                <span className="absolute top-1 right-1 bg-[#e66b43] text-white p-0.5 rounded-full">
-                  <Check
-                    size={
-                      10
-                    }
-                  />
+        {
+          entries.map(
+            ({
+              path,
+              originalNumber,
+            }) => (
+              <button
+                key={
+                  path
+                }
+                type="button"
+                title={
+                  materialName(
+                    path,
+                  )
+                }
+                aria-label={
+                  materialName(
+                    path,
+                  )
+                }
+                aria-pressed={
+                  selected ===
+                  path
+                }
+                onClick={() =>
+                  onSelect(
+                    path,
+                  )
+                }
+                className={`relative aspect-square rounded-md border transition hover:-translate-y-0.5 focus-visible:outline-2 focus-visible:outline-orange-500 ${
+                  selected ===
+                  path
+                    ? 'border-[#e66b43] ring-2 ring-orange-200'
+                    : 'border-slate-200'
+                }`}
+                style={
+                  swatchStyle(
+                    path,
+                  )
+                }
+              >
+                <span className="absolute bottom-1 left-1 text-[9px] bg-black/40 text-white rounded px-1 leading-4">
+                  {
+                    String(
+                      originalNumber,
+                    ).padStart(
+                      2,
+                      '0',
+                    )
+                  }
                 </span>
-              )}
-            </button>
-          ),
-        )}
+
+                {
+                  selected ===
+                    path && (
+                    <span className="absolute top-1 right-1 bg-[#e66b43] text-white p-0.5 rounded-full">
+                      <Check
+                        size={
+                          10
+                        }
+                      />
+                    </span>
+                  )
+                }
+              </button>
+            ),
+          )
+        }
       </div>
 
       <p className="mt-2 text-[10px] text-slate-400">
@@ -3219,16 +3711,21 @@ export default function KabinTasarim() {
   ] =
     useState(
       () => ({
-        past: [],
+        past:
+          [],
+
         present:
           createCabinConfig(),
+
         future:
           [],
       }),
     );
 
+
   const config =
     history.present;
+
 
   const [
     section,
@@ -3238,6 +3735,7 @@ export default function KabinTasarim() {
       'walls',
     );
 
+
   const [
     selection,
     setSelection,
@@ -3245,8 +3743,11 @@ export default function KabinTasarim() {
     useState({
       wall:
         'rearCenter',
-      index: 1,
+
+      index:
+        1,
     });
+
 
   const [
     family,
@@ -3256,6 +3757,7 @@ export default function KabinTasarim() {
       'paslanmaz',
     );
 
+
   const [
     ceilingTab,
     setCeilingTab,
@@ -3263,6 +3765,7 @@ export default function KabinTasarim() {
     useState(
       'patterns',
     );
+
 
   const [
     floorTab,
@@ -3272,6 +3775,7 @@ export default function KabinTasarim() {
       'materials',
     );
 
+
   const [
     exporting,
     setExporting,
@@ -3280,6 +3784,7 @@ export default function KabinTasarim() {
       false,
     );
 
+
   const [
     exportMessage,
     setExportMessage,
@@ -3287,6 +3792,7 @@ export default function KabinTasarim() {
     useState(
       '',
     );
+
 
   const captureRef =
     useRef(
@@ -3302,6 +3808,7 @@ export default function KabinTasarim() {
     useRef(
       null,
     );
+
 
   const focusOptions = (
     wall = false,
@@ -3339,15 +3846,16 @@ export default function KabinTasarim() {
       },
     );
 
-  const chooseSurface = (
-    id,
-  ) => {
-    setSection(
-      id,
-    );
 
-    focusOptions();
-  };
+  const chooseSurface =
+    id => {
+      setSection(
+        id,
+      );
+
+      focusOptions();
+    };
+
 
   const [
     linked,
@@ -3357,6 +3865,7 @@ export default function KabinTasarim() {
       false,
     );
 
+
   const [
     view,
     setView,
@@ -3364,8 +3873,11 @@ export default function KabinTasarim() {
     useState({
       name:
         'front',
-      version: 0,
+
+      version:
+        0,
     });
+
 
   const [
     pending,
@@ -3373,10 +3885,12 @@ export default function KabinTasarim() {
   ] =
     useTransition();
 
+
   const gesture =
     useRef(
       null,
     );
+
 
   const change = (
     update,
@@ -3392,7 +3906,7 @@ export default function KabinTasarim() {
       group;
 
     setHistory(
-      (old) => ({
+      old => ({
         past:
           coalesce
             ? old.past
@@ -3417,20 +3931,21 @@ export default function KabinTasarim() {
     );
   };
 
+
   const finishGesture =
     () => {
       gesture.current =
         null;
     };
 
+
   const undo =
     () => {
       finishGesture();
 
       setHistory(
-        (old) =>
-          old.past
-            .length
+        old =>
+          old.past.length
             ? {
                 past:
                   old.past.slice(
@@ -3443,24 +3958,23 @@ export default function KabinTasarim() {
                     -1,
                   ),
 
-                future:
-                  [
-                    old.present,
-                    ...old.future,
-                  ],
+                future: [
+                  old.present,
+                  ...old.future,
+                ],
               }
             : old,
       );
     };
+
 
   const redo =
     () => {
       finishGesture();
 
       setHistory(
-        (old) =>
-          old.future
-            .length
+        old =>
+          old.future.length
             ? {
                 past: [
                   ...old.past,
@@ -3468,9 +3982,7 @@ export default function KabinTasarim() {
                 ],
 
                 present:
-                  old.future[
-                    0
-                  ],
+                  old.future[0],
 
                 future:
                   old.future.slice(
@@ -3481,72 +3993,72 @@ export default function KabinTasarim() {
       );
     };
 
-  const choosePanel = (
-    next,
-  ) => {
-    setSelection(
-      next,
-    );
 
-    setSection(
-      'walls',
-    );
+  const choosePanel =
+    next => {
+      setSelection(
+        next,
+      );
 
-    focusOptions(
-      true,
-    );
+      setSection(
+        'walls',
+      );
 
-    setFamily(
-      config.walls[
-        next.wall
-      ].materials[
-        next.index
-      ].includes(
-        'laminant',
-      )
-        ? 'laminant'
-        : 'paslanmaz',
-    );
-  };
+      focusOptions(
+        true,
+      );
 
-  const setMaterial = (
-    path,
-  ) =>
-    startTransition(
-      () =>
-        change(
-          (old) =>
-            changeWall(
-              old,
-              selection.wall,
-              (wall) => ({
-                ...wall,
+      setFamily(
+        config.walls[
+          next.wall
+        ].materials[
+          next.index
+        ].includes(
+          'laminant',
+        )
+          ? 'laminant'
+          : 'paslanmaz',
+      );
+    };
 
-                materials:
-                  wall.materials.map(
-                    (
-                      value,
-                      index,
-                    ) =>
-                      index ===
-                      selection.index
-                        ? path
-                        : value,
-                  ),
-              }),
-              linked,
-            ),
-        ),
-    );
+
+  const setMaterial =
+    path =>
+      startTransition(
+        () =>
+          change(
+            old =>
+              changeWall(
+                old,
+                selection.wall,
+
+                wall => ({
+                  ...wall,
+
+                  materials:
+                    wall.materials.map(
+                      (
+                        value,
+                        index,
+                      ) =>
+                        index ===
+                        selection.index
+                          ? path
+                          : value,
+                    ),
+                }),
+
+                linked,
+              ),
+          ),
+      );
+
 
   const downloadCabin =
-    async (
-      format,
-    ) => {
+    async format => {
       if (
         !captureRef.current ||
-        captureRef.current
-          .config !==
+        captureRef.current.config !==
           config
       ) {
         setExportMessage(
@@ -3622,6 +4134,7 @@ export default function KabinTasarim() {
           const width =
             Math.min(
               190,
+
               250 *
                 image.width /
                 image.height,
@@ -3668,6 +4181,7 @@ export default function KabinTasarim() {
               new Date().toLocaleDateString(
                 'tr-TR',
               ),
+
             105,
             287,
             {
@@ -3706,6 +4220,7 @@ export default function KabinTasarim() {
       }
     };
 
+
   const selectedWall =
     config.walls[
       selection.wall
@@ -3731,6 +4246,7 @@ export default function KabinTasarim() {
         10,
     );
 
+
   const changedPanels =
     Object.values(
       config.walls,
@@ -3741,12 +4257,14 @@ export default function KabinTasarim() {
       ) =>
         sum +
         wall.materials.filter(
-          (path) =>
+          path =>
             path !==
             DEFAULT_MATERIAL,
         ).length,
+
       0,
     );
+
 
   const offerMessage =
     useMemo(
@@ -3754,10 +4272,12 @@ export default function KabinTasarim() {
         createCabinOfferMessage(
           config,
         ),
+
       [
         config,
       ],
     );
+
 
   const offerHref =
     whatsapp(
@@ -3765,12 +4285,12 @@ export default function KabinTasarim() {
       company.phone,
     );
 
+
   const shareCabinOffer =
     async () => {
       if (
         !captureRef.current ||
-        captureRef.current
-          .config !==
+        captureRef.current.config !==
           config
       ) {
         setExportMessage(
@@ -3845,7 +4365,9 @@ export default function KabinTasarim() {
             [
               bytes,
             ],
+
             fileName,
+
             {
               type:
                 mime,
@@ -3944,6 +4466,7 @@ export default function KabinTasarim() {
   return (
     <div className="cabin-studio bg-[#f5f6f7] min-h-[calc(100vh-80px)] text-slate-800 font-sans px-4 sm:px-7 lg:px-10 pt-7 pb-10">
       <div className="max-w-[1480px] mx-auto">
+
         <div className="cabin-mobile-toolbar">
           <a href="/">
             ← Siteye dön
@@ -3980,6 +4503,7 @@ export default function KabinTasarim() {
           </button>
         </div>
 
+
         <header className="flex flex-wrap justify-between items-end gap-4 mb-7">
           <div>
             <p className="text-[10px] uppercase tracking-[0.28em] text-[#bc674b] font-semibold mb-2">
@@ -3991,6 +4515,7 @@ export default function KabinTasarim() {
             <h1 className="text-2xl sm:text-3xl font-bold tracking-tight">
               Kendi kabinini
               oluştur
+
               <span className="text-[#e66b43]">
                 .
               </span>
@@ -4006,6 +4531,7 @@ export default function KabinTasarim() {
             </p>
           </div>
 
+
           <div className="flex items-center gap-2">
             <button
               type="button"
@@ -4013,9 +4539,7 @@ export default function KabinTasarim() {
                 undo
               }
               disabled={
-                !history
-                  .past
-                  .length
+                !history.past.length
               }
               aria-label="Geri al"
               title="Geri al"
@@ -4028,15 +4552,14 @@ export default function KabinTasarim() {
               />
             </button>
 
+
             <button
               type="button"
               onClick={
                 redo
               }
               disabled={
-                !history
-                  .future
-                  .length
+                !history.future.length
               }
               aria-label="Yinele"
               title="Yinele"
@@ -4048,6 +4571,7 @@ export default function KabinTasarim() {
                 }
               />
             </button>
+
 
             <button
               type="button"
@@ -4102,7 +4626,9 @@ export default function KabinTasarim() {
           </div>
         </header>
 
+
         <div className="grid grid-cols-1 lg:grid-cols-[370px_minmax(0,1fr)] xl:grid-cols-[410px_minmax(0,1fr)] gap-5 lg:gap-7 items-start">
+
           <aside
             ref={
               optionsRef
@@ -4113,1203 +4639,1342 @@ export default function KabinTasarim() {
               aria-label="Tasarım kategorileri"
               className="grid grid-cols-4 border-b border-slate-100 bg-[#fafafa] p-2 gap-1 sticky top-0 z-20"
             >
-              {categories.map(
-                ({
-                  id,
-                  name,
-                  icon:
-                    Icon,
-                }) => (
-                  <button
-                    key={
-                      id
-                    }
-                    type="button"
-                    onClick={() =>
-                      chooseSurface(
-                        id,
-                      )
-                    }
-                    aria-pressed={
-                      section ===
-                      id
-                    }
-                    className={`flex flex-col items-center gap-2 py-3 text-xs rounded-xl transition ${
-                      section ===
-                      id
-                        ? 'bg-white text-[#d7623c] shadow-sm font-semibold'
-                        : 'text-slate-500 hover:bg-white'
-                    }`}
-                  >
-                    <Icon
-                      size={
-                        19
-                      }
-                      strokeWidth={
-                        1.6
-                      }
-                    />
-
-                    {name}
-                  </button>
-                ),
-              )}
-            </nav>
-
-            <div className="p-5 sm:p-6">
-              {section ===
-                'walls' && (
-                <>
-                  <div className="flex justify-between items-center mb-4">
-                    <h2 className="font-semibold text-base">
-                      Duvar &
-                      panel
-                      seçimi
-                    </h2>
-
-                    <span className="text-[10px] text-slate-400">
-                      01 / 04
-                    </span>
-                  </div>
-
-                  <div className="grid grid-cols-2 gap-2 mb-5">
-                    {Object.entries(
-                      WALLS,
-                    ).map(
-                      ([
-                        key,
-                        name,
-                      ]) => (
-                        <button
-                          type="button"
-                          key={
-                            key
-                          }
-                          onClick={() =>
-                            choosePanel({
-                              wall:
-                                key,
-
-                              index:
-                                selection.index,
-                            })
-                          }
-                          aria-pressed={
-                            selection.wall ===
-                            key
-                          }
-                          className={`rounded-lg border py-2.5 text-xs transition ${
-                            selection.wall ===
-                            key
-                              ? 'border-[#e4a68e] bg-[#fcf1ec] text-[#ac4d2d] font-semibold'
-                              : 'border-slate-200 text-slate-500 hover:border-slate-400'
-                          }`}
-                        >
-                          {
-                            name
-                          }
-                        </button>
-                      ),
-                    )}
-                  </div>
-
-                  <div className="flex justify-between items-center mb-2">
-                    <span className="text-xs text-slate-500">
-                      {selection.wall.startsWith(
-                        'rear',
-                      )
-                        ? 'Soldan sağa üç dikey panel'
-                        : 'Girişten arkaya üç dikey panel'}
-                    </span>
-
-                    <span className="text-[10px] uppercase tracking-wider text-slate-400">
-                      PANEL SEÇ
-                    </span>
-                  </div>
-
-                  <div className="flex gap-1.5 h-24 mb-3">
-                    {selectedWall.materials.map(
-                      (
-                        path,
-                        index,
-                      ) => (
-                        <button
-                          type="button"
-                          key={
-                            index
-                          }
-                          style={{
-                            ...swatchStyle(
-                              path,
-                            ),
-
-                            flex:
-                              selectedWall.widths[
-                                index
-                              ],
-                          }}
-                          onClick={() =>
-                            choosePanel({
-                              ...selection,
-                              index,
-                            })
-                          }
-                          aria-label={`Panel ${index + 1}`}
-                          aria-pressed={
-                            selection.index ===
-                            index
-                          }
-                          className={`relative rounded-md border-2 overflow-hidden min-w-0 ${
-                            selection.index ===
-                            index
-                              ? 'border-[#e66b43]'
-                              : 'border-transparent'
-                          }`}
-                        >
-                          <span className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
-
-                          <span className="absolute bottom-2 inset-x-0 text-white text-[11px] font-medium">
-                            {index +
-                              1}{' '}
-                            · %
-                            {
-                              selectedWall.widths[
-                                index
-                              ]
-                            }
-                          </span>
-
-                          {selection.index ===
-                            index && (
-                            <Check
-                              size={
-                                13
-                              }
-                              className="absolute right-1 top-1 text-white bg-[#e66b43] rounded-full p-0.5"
-                            />
-                          )}
-                        </button>
-                      ),
-                    )}
-                  </div>
-
-                  <p className="text-[11px] text-slate-400 mb-5 flex items-center gap-1.5">
-                    <MousePointer2
-                      size={
-                        12
-                      }
-                    />
-
-                    Kabin
-                    üzerinden
-                    bir panele
-                    de
-                    tıklayabilirsin.
-                  </p>
-
-                  <p className="text-[11px] text-slate-400 mb-4">
-                    Panel
-                    genişliği
-                    sabit ·
-                    Yaklaşık{' '}
-                    {mm} mm
-                  </p>
-
-                  {selection.wall !==
-                    'rearCenter' && (
+              {
+                categories.map(
+                  ({
+                    id,
+                    name,
+                    icon:
+                      Icon,
+                  }) => (
                     <button
+                      key={
+                        id
+                      }
                       type="button"
                       onClick={() =>
-                        setLinked(
-                          !linked,
+                        chooseSurface(
+                          id,
                         )
                       }
                       aria-pressed={
-                        linked
+                        section ===
+                        id
                       }
-                      className={`w-full flex items-center justify-between p-3 rounded-lg border text-xs ${
-                        linked
-                          ? 'bg-[#fcf1ec] border-orange-200 text-[#ac4d2d]'
-                          : 'bg-slate-50 border-slate-100 text-slate-500'
+                      className={`flex flex-col items-center gap-2 py-3 text-xs rounded-xl transition ${
+                        section ===
+                        id
+                          ? 'bg-white text-[#d7623c] shadow-sm font-semibold'
+                          : 'text-slate-500 hover:bg-white'
                       }`}
                     >
-                      <span className="flex gap-2 items-center">
-                        {linked ? (
-                          <Link2
-                            size={
-                              14
-                            }
-                          />
-                        ) : (
-                          <Unlink2
-                            size={
-                              14
-                            }
-                          />
-                        )}
+                      <Icon
+                        size={
+                          19
+                        }
+                        strokeWidth={
+                          1.6
+                        }
+                      />
 
-                        {selection.wall.startsWith(
-                          'rear',
-                        )
-                          ? 'Arka iki yana aynı uygula'
-                          : 'İki yan duvara aynı uygula'}
-                      </span>
-
-                      <span
-                        className={`w-7 h-4 rounded-full relative ${
-                          linked
-                            ? 'bg-[#e66b43]'
-                            : 'bg-slate-300'
-                        }`}
-                      >
-                        <span
-                          className={`absolute top-0.5 bg-white w-3 h-3 rounded-full ${
-                            linked
-                              ? 'right-0.5'
-                              : 'left-0.5'
-                          }`}
-                        />
-                      </span>
+                      {name}
                     </button>
-                  )}
+                  ),
+                )
+              }
+            </nav>
 
-                  {selection.wall ===
-                    'rearCenter' &&
-                    config.mirrorMode !==
-                      'none' && (
+
+            <div className="p-5 sm:p-6">
+
+              {
+                section ===
+                  'walls' && (
+                  <>
+                    <div className="flex justify-between items-center mb-4">
+                      <h2 className="font-semibold text-base">
+                        Duvar &
+                        panel
+                        seçimi
+                      </h2>
+
+                      <span className="text-[10px] text-slate-400">
+                        01 / 04
+                      </span>
+                    </div>
+
+
+                    <div className="grid grid-cols-2 gap-2 mb-5">
+                      {
+                        Object.entries(
+                          WALLS,
+                        ).map(
+                          ([
+                            key,
+                            name,
+                          ]) => (
+                            <button
+                              type="button"
+                              key={
+                                key
+                              }
+                              onClick={() =>
+                                choosePanel({
+                                  wall:
+                                    key,
+
+                                  index:
+                                    selection.index,
+                                })
+                              }
+                              aria-pressed={
+                                selection.wall ===
+                                key
+                              }
+                              className={`rounded-lg border py-2.5 text-xs transition ${
+                                selection.wall ===
+                                key
+                                  ? 'border-[#e4a68e] bg-[#fcf1ec] text-[#ac4d2d] font-semibold'
+                                  : 'border-slate-200 text-slate-500 hover:border-slate-400'
+                              }`}
+                            >
+                              {name}
+                            </button>
+                          ),
+                        )
+                      }
+                    </div>
+
+
+                    <div className="flex justify-between items-center mb-2">
+                      <span className="text-xs text-slate-500">
+                        {
+                          selection.wall.startsWith(
+                            'rear',
+                          )
+                            ? 'Soldan sağa üç dikey panel'
+                            : 'Girişten arkaya üç dikey panel'
+                        }
+                      </span>
+
+                      <span className="text-[10px] uppercase tracking-wider text-slate-400">
+                        PANEL SEÇ
+                      </span>
+                    </div>
+
+
+                    <div className="flex gap-1.5 h-24 mb-3">
+                      {
+                        selectedWall.materials.map(
+                          (
+                            path,
+                            index,
+                          ) => (
+                            <button
+                              type="button"
+                              key={
+                                index
+                              }
+                              style={{
+                                ...swatchStyle(
+                                  path,
+                                ),
+
+                                flex:
+                                  selectedWall.widths[
+                                    index
+                                  ],
+                              }}
+                              onClick={() =>
+                                choosePanel({
+                                  ...selection,
+                                  index,
+                                })
+                              }
+                              aria-label={`Panel ${index + 1}`}
+                              aria-pressed={
+                                selection.index ===
+                                index
+                              }
+                              className={`relative rounded-md border-2 overflow-hidden min-w-0 ${
+                                selection.index ===
+                                index
+                                  ? 'border-[#e66b43]'
+                                  : 'border-transparent'
+                              }`}
+                            >
+                              <span className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
+
+                              <span className="absolute bottom-2 inset-x-0 text-white text-[11px] font-medium">
+                                {
+                                  index +
+                                  1
+                                }{' '}
+                                · %
+                                {
+                                  selectedWall.widths[
+                                    index
+                                  ]
+                                }
+                              </span>
+
+                              {
+                                selection.index ===
+                                  index && (
+                                  <Check
+                                    size={
+                                      13
+                                    }
+                                    className="absolute right-1 top-1 text-white bg-[#e66b43] rounded-full p-0.5"
+                                  />
+                                )
+                              }
+                            </button>
+                          ),
+                        )
+                      }
+                    </div>
+
+
+                    <p className="text-[11px] text-slate-400 mb-5 flex items-center gap-1.5">
+                      <MousePointer2
+                        size={
+                          12
+                        }
+                      />
+
+                      Kabin
+                      üzerinden
+                      bir panele
+                      de
+                      tıklayabilirsin.
+                    </p>
+
+
+                    <p className="text-[11px] text-slate-400 mb-4">
+                      Panel
+                      genişliği
+                      sabit ·
+                      Yaklaşık{' '}
+                      {mm} mm
+                    </p>
+
+
+                    {
+                      selection.wall !==
+                        'rearCenter' && (
+                        <button
+                          type="button"
+                          onClick={() =>
+                            setLinked(
+                              !linked,
+                            )
+                          }
+                          aria-pressed={
+                            linked
+                          }
+                          className={`w-full flex items-center justify-between p-3 rounded-lg border text-xs ${
+                            linked
+                              ? 'bg-[#fcf1ec] border-orange-200 text-[#ac4d2d]'
+                              : 'bg-slate-50 border-slate-100 text-slate-500'
+                          }`}
+                        >
+                          <span className="flex gap-2 items-center">
+                            {
+                              linked
+                                ? (
+                                  <Link2
+                                    size={
+                                      14
+                                    }
+                                  />
+                                )
+                                : (
+                                  <Unlink2
+                                    size={
+                                      14
+                                    }
+                                  />
+                                )
+                            }
+
+                            {
+                              selection.wall.startsWith(
+                                'rear',
+                              )
+                                ? 'Arka iki yana aynı uygula'
+                                : 'İki yan duvara aynı uygula'
+                            }
+                          </span>
+
+                          <span
+                            className={`w-7 h-4 rounded-full relative ${
+                              linked
+                                ? 'bg-[#e66b43]'
+                                : 'bg-slate-300'
+                            }`}
+                          >
+                            <span
+                              className={`absolute top-0.5 bg-white w-3 h-3 rounded-full ${
+                                linked
+                                  ? 'right-0.5'
+                                  : 'left-0.5'
+                              }`}
+                            />
+                          </span>
+                        </button>
+                      )
+                    }
+
+
+                    {
+                      selection.wall ===
+                        'rearCenter' &&
+                        config.mirrorMode !==
+                          'none' && (
+                          <button
+                            type="button"
+                            onClick={() =>
+                              change(
+                                old => ({
+                                  ...old,
+
+                                  mirrorMode:
+                                    'none',
+                                }),
+                              )
+                            }
+                            className="text-xs bg-orange-50 text-orange-800 rounded-lg p-3 w-full"
+                          >
+                            Panelleri
+                            görmek
+                            için aynayı
+                            kaldır
+                          </button>
+                        )
+                    }
+
+
+                    <div
+                      ref={
+                        materialRef
+                      }
+                      className="border-t border-slate-100 mt-5 pt-5"
+                    >
+                      <div className="flex justify-between items-center mb-3">
+                        <h3 className="text-sm font-semibold">
+                          Panel
+                          malzemesi
+                        </h3>
+
+                        <span className="text-[10px] text-[#c56b4a]">
+                          PANEL{' '}
+                          {
+                            selection.index +
+                            1
+                          }
+                        </span>
+                      </div>
+
+
+                      <div className="flex p-1 bg-slate-100 rounded-lg mb-4">
+                        {
+                          [
+                            [
+                              'paslanmaz',
+                              'Paslanmazlar',
+                            ],
+
+                            [
+                              'laminant',
+                              'Laminantlar',
+                            ],
+                          ].map(
+                            ([
+                              id,
+                              name,
+                            ]) => (
+                              <button
+                                key={
+                                  id
+                                }
+                                type="button"
+                                onClick={() =>
+                                  setFamily(
+                                    id,
+                                  )
+                                }
+                                aria-pressed={
+                                  family ===
+                                  id
+                                }
+                                className={`flex-1 py-2 rounded-md text-xs ${
+                                  family ===
+                                  id
+                                    ? 'bg-white shadow-sm font-semibold'
+                                    : 'text-slate-500'
+                                }`}
+                              >
+                                {name}
+                              </button>
+                            ),
+                          )
+                        }
+                      </div>
+
+
+                      <MaterialGrid
+                        type={
+                          family
+                        }
+                        count={
+                          27
+                        }
+                        selected={
+                          selectedPath
+                        }
+                        onSelect={
+                          setMaterial
+                        }
+                      />
+
+
+                      <p className="text-xs text-slate-500 mt-3 min-h-4">
+                        Seçili:{' '}
+
+                        <span className="text-slate-800 font-medium">
+                          {
+                            materialName(
+                              selectedPath,
+                            )
+                          }
+                        </span>
+                      </p>
+
+
                       <button
                         type="button"
                         onClick={() =>
-                          change(
-                            (
-                              old,
-                            ) => ({
-                              ...old,
+                          startTransition(
+                            () =>
+                              change(
+                                old =>
+                                  changeWall(
+                                    old,
+                                    selection.wall,
 
-                              mirrorMode:
-                                'none',
-                            }),
+                                    wall => ({
+                                      ...wall,
+
+                                      materials:
+                                        Array(
+                                          3,
+                                        ).fill(
+                                          selectedPath,
+                                        ),
+                                    }),
+
+                                    linked,
+                                  ),
+                              ),
                           )
                         }
-                        className="text-xs bg-orange-50 text-orange-800 rounded-lg p-3 w-full"
+                        className="mt-4 flex items-center justify-between w-full text-xs text-slate-600 bg-slate-50 rounded-lg py-3 px-3 hover:bg-slate-100"
                       >
-                        Panelleri
-                        görmek
-                        için aynayı
-                        kaldır
+                        Bu
+                        malzemeyi
+                        duvarın üç
+                        paneline
+                        uygula
+
+                        <ArrowRight
+                          size={
+                            14
+                          }
+                        />
                       </button>
-                    )}
-
-                  <div
-                    ref={
-                      materialRef
-                    }
-                    className="border-t border-slate-100 mt-5 pt-5"
-                  >
-                    <div className="flex justify-between items-center mb-3">
-                      <h3 className="text-sm font-semibold">
-                        Panel
-                        malzemesi
-                      </h3>
-
-                      <span className="text-[10px] text-[#c56b4a]">
-                        PANEL{' '}
-                        {selection.index +
-                          1}
-                      </span>
                     </div>
 
-                    <div className="flex p-1 bg-slate-100 rounded-lg mb-4">
-                      {[
-                        [
-                          'paslanmaz',
-                          'Paslanmazlar',
-                        ],
-                        [
-                          'laminant',
-                          'Laminantlar',
-                        ],
-                      ].map(
-                        ([
-                          id,
-                          name,
-                        ]) => (
-                          <button
-                            key={
-                              id
-                            }
-                            type="button"
-                            onClick={() =>
-                              setFamily(
-                                id,
-                              )
-                            }
-                            aria-pressed={
-                              family ===
-                              id
-                            }
-                            className={`flex-1 py-2 rounded-md text-xs ${
-                              family ===
-                              id
-                                ? 'bg-white shadow-sm font-semibold'
-                                : 'text-slate-500'
-                            }`}
-                          >
-                            {
-                              name
-                            }
-                          </button>
-                        ),
-                      )}
-                    </div>
 
-                    <MaterialGrid
-                      type={
-                        family
-                      }
-                      count={
-                        27
-                      }
-                      selected={
-                        selectedPath
-                      }
-                      onSelect={
-                        setMaterial
-                      }
-                    />
+                    <div className="border-t border-slate-100 mt-5 pt-5">
+                      <div className="flex items-center justify-between gap-3 mb-3">
+                        <h3 className="text-sm font-semibold">
+                          Kabin yazısı
+                        </h3>
 
-                    <p className="text-xs text-slate-500 mt-3 min-h-4">
-                      Seçili:{' '}
-
-                      <span className="text-slate-800 font-medium">
-                        {materialName(
-                          selectedPath,
-                        )}
-                      </span>
-                    </p>
-
-                    <button
-                      type="button"
-                      onClick={() =>
-                        startTransition(
-                          () =>
-                            change(
-                              (
-                                old,
-                              ) =>
-                                changeWall(
-                                  old,
-                                  selection.wall,
-                                  (
-                                    wall,
-                                  ) => ({
-                                    ...wall,
-
-                                    materials:
-                                      Array(
-                                        3,
-                                      ).fill(
-                                        selectedPath,
-                                      ),
-                                  }),
-                                  linked,
-                                ),
-                            ),
-                        )
-                      }
-                      className="mt-4 flex items-center justify-between w-full text-xs text-slate-600 bg-slate-50 rounded-lg py-3 px-3 hover:bg-slate-100"
-                    >
-                      Bu
-                      malzemeyi
-                      duvarın üç
-                      paneline
-                      uygula
-
-                      <ArrowRight
-                        size={
-                          14
-                        }
-                      />
-                    </button>
-                  </div>
-
-                  <div className="border-t border-slate-100 mt-5 pt-5">
-                    <div className="flex items-center justify-between gap-3 mb-3">
-                      <h3 className="text-sm font-semibold">
-                        Kabin yazısı
-                      </h3>
-
-                      <span className="text-[10px] text-slate-400">
-                        ARKA ALT ORTA
-                      </span>
-                    </div>
-
-                    <p className="text-xs leading-5 text-slate-500 mb-3">
-                      Kabinin arka duvarının alt orta kısmında görünür. Varsayılan yazı HAS DOOR'dur.
-                    </p>
-
-                    <input
-                      type="text"
-                      value={config.cabinText ?? ''}
-                      maxLength={18}
-                      aria-label="Kabin yazısı"
-                      onChange={(event) =>
-                        change(
-                          (old) => ({
-                            ...old,
-                            cabinText: event.target.value
-                              .toLocaleUpperCase('tr-TR')
-                              .slice(0, 18),
-                          }),
-                          'cabin-text',
-                        )
-                      }
-                      onBlur={finishGesture}
-                      placeholder="HAS DOOR"
-                      className="w-full rounded-lg border border-slate-200 bg-white px-3 py-3 text-sm font-semibold tracking-[0.08em] text-slate-800 outline-none transition focus:border-[#e66b43] focus:ring-2 focus:ring-orange-100"
-                    />
-
-                    <div className="mt-4">
-                      <label htmlFor="cabin-text-font" className="mb-2 block text-xs font-medium text-slate-600">
-                        Yazı tipi
-                      </label>
-
-                      <select
-                        id="cabin-text-font"
-                        value={config.cabinTextFont || 'modern'}
-                        onChange={(event) => {
-                          finishGesture();
-                          change((old) => ({
-                            ...old,
-                            cabinTextFont: event.target.value,
-                          }));
-                        }}
-                        className="w-full rounded-lg border border-slate-200 bg-white px-3 py-3 text-sm text-slate-700 outline-none transition focus:border-[#e66b43] focus:ring-2 focus:ring-orange-100"
-                      >
-                        {CABIN_FONT_OPTIONS.map((font) => (
-                          <option key={font.id} value={font.id}>
-                            {font.name}
-                          </option>
-                        ))}
-                      </select>
-
-                      <div
-                        className="mt-2 rounded-lg border border-slate-100 bg-slate-50 px-3 py-3 text-center text-lg text-slate-700"
-                        style={{ fontFamily: cabinFont(config.cabinTextFont).family }}
-                      >
-                        {config.cabinText?.trim() || 'Önizleme'}
+                        <span className="text-[10px] text-slate-400">
+                          ARKA ALT ORTA
+                        </span>
                       </div>
-                    </div>
 
-                    <div className="mt-3 flex items-center justify-between gap-3">
-                      <span className="text-[10px] text-slate-400">
-                        En fazla 18 karakter
-                      </span>
 
-                      <button
-                        type="button"
-                        onClick={() => {
-                          finishGesture();
-                          change((old) => ({
-                            ...old,
-                            cabinText: 'HAS DOOR',
-                          }));
-                        }}
-                        className="rounded-lg bg-slate-50 px-3 py-2 text-[11px] font-medium text-slate-600 hover:bg-slate-100"
-                      >
-                        HAS DOOR'a sıfırla
-                      </button>
-                    </div>
-                  </div>
-                </>
-              )}
+                      <p className="text-xs leading-5 text-slate-500 mb-3">
+                        Kabinin arka duvarının alt orta kısmında görünür.
+                        Varsayılan yazı HAS DOOR'dur.
+                      </p>
 
-              {section ===
-                'mirror' && (
-                <>
-                  <div className="flex justify-between mb-2">
-                    <h2 className="font-semibold">
-                      İsteğe
-                      bağlı ayna
-                    </h2>
 
-                    <span className="text-[10px] text-slate-400">
-                      02 / 04
-                    </span>
-                  </div>
-
-                  <p className="text-xs leading-5 text-slate-500 mb-5">
-                    Arka duvar
-                    toplam üç
-                    dikey
-                    panelden
-                    oluşur.
-                    Ayna orta
-                    panele
-                    eklenir;
-                    panel
-                    seçimlerin
-                    korunur.
-                    Yansıma
-                    yalnız tam
-                    boy aynada
-                    görünür.
-                  </p>
-
-                  <div className="grid grid-cols-2 gap-2 mb-6">
-                    {[
-                      [
-                        'none',
-                        'Ayna yok',
-                      ],
-                      [
-                        'full',
-                        'Tam boy',
-                      ],
-                      [
-                        'half',
-                        'Yarım boy',
-                      ],
-                      [
-                        'custom',
-                        'Özel ölçü',
-                      ],
-                    ].map(
-                      ([
-                        mode,
-                        label,
-                      ]) => (
-                        <button
-                          type="button"
-                          key={
-                            mode
-                          }
-                          aria-pressed={
-                            config.mirrorMode ===
-                            mode
-                          }
-                          onClick={() =>
+                      <input
+                        type="text"
+                        value={
+                          config.cabinText ??
+                          ''
+                        }
+                        maxLength={
+                          18
+                        }
+                        aria-label="Kabin yazısı"
+                        onChange={
+                          event =>
                             change(
-                              (
-                                old,
-                              ) => ({
+                              old => ({
                                 ...old,
 
-                                mirrorMode:
-                                  mode,
+                                cabinText:
+                                  event.target.value
+                                    .toLocaleUpperCase(
+                                      'tr-TR',
+                                    )
+                                    .slice(
+                                      0,
+                                      18,
+                                    ),
                               }),
+
+                              'cabin-text',
                             )
+                        }
+                        onBlur={
+                          finishGesture
+                        }
+                        placeholder="HAS DOOR"
+                        className="w-full rounded-lg border border-slate-200 bg-white px-3 py-3 text-sm font-semibold tracking-[0.08em] text-slate-800 outline-none transition focus:border-[#e66b43] focus:ring-2 focus:ring-orange-100"
+                      />
+
+
+                      <div className="mt-4">
+                        <label
+                          htmlFor="cabin-text-font"
+                          className="mb-2 block text-xs font-medium text-slate-600"
+                        >
+                          Yazı tipi
+                        </label>
+
+
+                        <select
+                          id="cabin-text-font"
+                          value={
+                            config.cabinTextFont ||
+                            'modern'
                           }
-                          className={`border rounded-lg py-3 text-xs ${
-                            config.mirrorMode ===
-                            mode
-                              ? 'border-orange-300 bg-orange-50 text-orange-800 font-semibold'
-                              : 'border-slate-200 text-slate-500'
-                          }`}
+                          onChange={
+                            event => {
+                              finishGesture();
+
+                              change(
+                                old => ({
+                                  ...old,
+
+                                  cabinTextFont:
+                                    event.target.value,
+                                }),
+                              );
+                            }
+                          }
+                          className="w-full rounded-lg border border-slate-200 bg-white px-3 py-3 text-sm text-slate-700 outline-none transition focus:border-[#e66b43] focus:ring-2 focus:ring-orange-100"
                         >
                           {
-                            label
-                          }
-                        </button>
-                      ),
-                    )}
-                  </div>
-
-                  <div className="flex h-44 gap-1 mx-auto max-w-52 mb-6 relative border-4 border-slate-200 rounded overflow-hidden">
-                    {config.walls.rearCenter.materials.map(
-                      (
-                        path,
-                        i,
-                      ) => (
-                        <div
-                          key={
-                            i
-                          }
-                          style={{
-                            ...swatchStyle(
-                              path,
-                            ),
-
-                            flex:
-                              config
-                                .walls
-                                .rearCenter
-                                .widths[
-                                i
-                              ],
-                          }}
-                        />
-                      ),
-                    )}
-
-                    {config.mirrorMode !==
-                      'none' && (
-                      <div
-                        style={{
-                          height:
-                            `${mirrorGeometry(config).height / H * 100}%`,
-
-                          left:
-                            `${config.walls.rearCenter.widths[0]}%`,
-
-                          width:
-                            `${config.walls.rearCenter.widths[1]}%`,
-                        }}
-                        className="absolute top-0 bg-gradient-to-br from-slate-100 via-[#b8cdd4] to-[#e8f3f5] border-b border-slate-400 flex items-center justify-center text-[10px] text-slate-600 tracking-wider"
-                      >
-                        AYNA
-                      </div>
-                    )}
-                  </div>
-
-                  <div className="space-y-6">
-                    <p className="text-xs text-slate-500">
-                      Ayna
-                      genişliği
-                      orta
-                      panelle
-                      birlikte
-                      sabittir:{' '}
-
-                      {Math.round(
-                        mirrorGeometry(
-                          config,
-                        ).width *
-                          100,
-                      )}{' '}
-                      cm.
-                    </p>
-
-                    {config.mirrorMode !==
-                      'none' && (
-                      <>
-                        <RangeControl
-                          label="Ayna yüksekliği"
-                          value={Math.round(
-                            mirrorGeometry(
-                              config,
-                            ).height *
-                              100,
-                          )}
-                          min={
-                            60
-                          }
-                          max={
-                            238
-                          }
-                          suffix=" cm"
-                          onChange={(
-                            value,
-                          ) =>
-                            change(
-                              (
-                                old,
-                              ) => ({
-                                ...old,
-
-                                mirrorMode:
-                                  'custom',
-
-                                mirrorHeight:
-                                  value,
-                              }),
-                              'mirror-height',
+                            CABIN_FONT_OPTIONS.map(
+                              font => (
+                                <option
+                                  key={
+                                    font.id
+                                  }
+                                  value={
+                                    font.id
+                                  }
+                                >
+                                  {
+                                    font.name
+                                  }
+                                </option>
+                              ),
                             )
                           }
-                          onFinish={
-                            finishGesture
+                        </select>
+
+
+                        <div
+                          className="mt-2 rounded-lg border border-slate-100 bg-slate-50 px-3 py-3 text-center text-lg text-slate-700"
+                          style={{
+                            fontFamily:
+                              cabinFont(
+                                config.cabinTextFont,
+                              ).family,
+                          }}
+                        >
+                          {
+                            config.cabinText?.trim() ||
+                            'Önizleme'
                           }
-                        />
+                        </div>
+                      </div>
 
-                        <p className="text-xs text-slate-500">
-                          Ayna
-                          ölçüsü:{' '}
 
-                          {Math.round(
+                      <div className="mt-3 flex items-center justify-between gap-3">
+                        <span className="text-[10px] text-slate-400">
+                          En fazla 18 karakter
+                        </span>
+
+                        <button
+                          type="button"
+                          onClick={() => {
+                            finishGesture();
+
+                            change(
+                              old => ({
+                                ...old,
+
+                                cabinText:
+                                  'HAS DOOR',
+                              }),
+                            );
+                          }}
+                          className="rounded-lg bg-slate-50 px-3 py-2 text-[11px] font-medium text-slate-600 hover:bg-slate-100"
+                        >
+                          HAS DOOR'a sıfırla
+                        </button>
+                      </div>
+                    </div>
+                  </>
+                )
+              }
+
+
+              {
+                section ===
+                  'mirror' && (
+                  <>
+                    <div className="flex justify-between mb-2">
+                      <h2 className="font-semibold">
+                        İsteğe
+                        bağlı ayna
+                      </h2>
+
+                      <span className="text-[10px] text-slate-400">
+                        02 / 04
+                      </span>
+                    </div>
+
+
+                    <p className="text-xs leading-5 text-slate-500 mb-5">
+                      Arka duvar
+                      toplam üç
+                      dikey
+                      panelden
+                      oluşur.
+                      Ayna orta
+                      panele
+                      eklenir;
+                      panel
+                      seçimlerin
+                      korunur.
+                      Yansıma
+                      yalnız tam
+                      boy aynada
+                      görünür.
+                    </p>
+
+
+                    <div className="grid grid-cols-2 gap-2 mb-6">
+                      {
+                        [
+                          [
+                            'none',
+                            'Ayna yok',
+                          ],
+
+                          [
+                            'full',
+                            'Tam boy',
+                          ],
+
+                          [
+                            'half',
+                            'Yarım boy',
+                          ],
+
+                          [
+                            'custom',
+                            'Özel ölçü',
+                          ],
+                        ].map(
+                          ([
+                            mode,
+                            label,
+                          ]) => (
+                            <button
+                              type="button"
+                              key={
+                                mode
+                              }
+                              aria-pressed={
+                                config.mirrorMode ===
+                                mode
+                              }
+                              onClick={() =>
+                                change(
+                                  old => ({
+                                    ...old,
+
+                                    mirrorMode:
+                                      mode,
+                                  }),
+                                )
+                              }
+                              className={`border rounded-lg py-3 text-xs ${
+                                config.mirrorMode ===
+                                mode
+                                  ? 'border-orange-300 bg-orange-50 text-orange-800 font-semibold'
+                                  : 'border-slate-200 text-slate-500'
+                              }`}
+                            >
+                              {label}
+                            </button>
+                          ),
+                        )
+                      }
+                    </div>
+
+
+                    <div className="flex h-44 gap-1 mx-auto max-w-52 mb-6 relative border-4 border-slate-200 rounded overflow-hidden">
+                      {
+                        config.walls.rearCenter.materials.map(
+                          (
+                            path,
+                            i,
+                          ) => (
+                            <div
+                              key={i}
+                              style={{
+                                ...swatchStyle(
+                                  path,
+                                ),
+
+                                flex:
+                                  config.walls.rearCenter.widths[
+                                    i
+                                  ],
+                              }}
+                            />
+                          ),
+                        )
+                      }
+
+                      {
+                        config.mirrorMode !==
+                          'none' && (
+                          <div
+                            style={{
+                              height:
+                                `${mirrorGeometry(config).height / H * 100}%`,
+
+                              left:
+                                `${config.walls.rearCenter.widths[0]}%`,
+
+                              width:
+                                `${config.walls.rearCenter.widths[1]}%`,
+                            }}
+                            className="absolute top-0 bg-gradient-to-br from-slate-100 via-[#b8cdd4] to-[#e8f3f5] border-b border-slate-400 flex items-center justify-center text-[10px] text-slate-600 tracking-wider"
+                          >
+                            AYNA
+                          </div>
+                        )
+                      }
+                    </div>
+
+
+                    <div className="space-y-6">
+                      <p className="text-xs text-slate-500">
+                        Ayna
+                        genişliği
+                        orta
+                        panelle
+                        birlikte
+                        sabittir:{' '}
+
+                        {
+                          Math.round(
                             mirrorGeometry(
                               config,
                             ).width *
                               100,
-                          )}{' '}
-                          ×{' '}
-
-                          {Math.round(
-                            mirrorGeometry(
-                              config,
-                            ).height *
-                              100,
-                          )}{' '}
-                          cm
-                        </p>
-
-                        {config.mirrorMode ===
-                          'full' && (
-                          <details className="text-xs border-t border-slate-100 pt-4">
-                            <summary className="cursor-pointer text-slate-500">
-                              Yansıma
-                              ayarları
-                            </summary>
-
-                            <div className="space-y-5 mt-5">
-                              <RangeControl
-                                label="Üst yansıma yüksekliği"
-                                value={
-                                  config.topReflection
-                                }
-                                min={
-                                  25
-                                }
-                                max={
-                                  62
-                                }
-                                suffix=" cm"
-                                onChange={(
-                                  value,
-                                ) =>
-                                  change(
-                                    (
-                                      old,
-                                    ) => ({
-                                      ...old,
-
-                                      topReflection:
-                                        value,
-                                    }),
-                                    'mirror-top',
-                                  )
-                                }
-                                onFinish={
-                                  finishGesture
-                                }
-                              />
-
-                              <RangeControl
-                                label="Alt yansıma yüksekliği"
-                                value={
-                                  config.bottomReflection
-                                }
-                                min={
-                                  25
-                                }
-                                max={
-                                  62
-                                }
-                                suffix=" cm"
-                                onChange={(
-                                  value,
-                                ) =>
-                                  change(
-                                    (
-                                      old,
-                                    ) => ({
-                                      ...old,
-
-                                      bottomReflection:
-                                        value,
-                                    }),
-                                    'mirror-bottom',
-                                  )
-                                }
-                                onFinish={
-                                  finishGesture
-                                }
-                              />
-
-                              <p className="text-slate-400 leading-5">
-                                Yansıma
-                                yalnız
-                                tam boy
-                                aynada
-                                gösterilir.
-                              </p>
-                            </div>
-                          </details>
-                        )}
-                      </>
-                    )}
-                  </div>
-
-                  <button
-                    type="button"
-                    onClick={() =>
-                      choosePanel({
-                        wall:
-                          'rearCenter',
-
-                        index:
-                          1,
-                      })
-                    }
-                    className="mt-6 w-full rounded-lg bg-slate-50 p-3 text-xs text-slate-600"
-                  >
-                    Orta
-                    alanın üç
-                    panelini
-                    düzenle →
-                  </button>
-                </>
-              )}
-
-              {section ===
-                'ceiling' && (
-                <>
-                  <h2 className="font-semibold mb-2">
-                    Tavan
-                    tasarımı
-                  </h2>
-
-                  <p className="text-xs leading-5 text-slate-500 mb-4">
-                    Sağ ve sol
-                    kenarlar
-                    ile dört
-                    spot
-                    sabit.
-                    Seçtiğin
-                    desen
-                    yalnız orta
-                    bölümde
-                    değişir.
-                  </p>
-
-                  <div className="flex p-1 bg-slate-100 rounded-lg mb-4">
-                    <button
-                      type="button"
-                      aria-pressed={
-                        ceilingTab ===
-                        'patterns'
-                      }
-                      onClick={() =>
-                        setCeilingTab(
-                          'patterns',
-                        )
-                      }
-                      className={
-                        ceilingTab ===
-                        'patterns'
-                          ? 'flex-1 py-2 rounded-md text-xs bg-white shadow-sm font-semibold'
-                          : 'flex-1 py-2 rounded-md text-xs text-slate-500'
-                      }
-                    >
-                      Desenler
-                    </button>
-
-                    <button
-                      type="button"
-                      aria-pressed={
-                        ceilingTab ===
-                        'colors'
-                      }
-                      onClick={() =>
-                        setCeilingTab(
-                          'colors',
-                        )
-                      }
-                      className={
-                        ceilingTab ===
-                        'colors'
-                          ? 'flex-1 py-2 rounded-md text-xs bg-white shadow-sm font-semibold'
-                          : 'flex-1 py-2 rounded-md text-xs text-slate-500'
-                      }
-                    >
-                      Renkler
-                    </button>
-                  </div>
-
-                  {ceilingTab ===
-                  'patterns' ? (
-                    <MaterialGrid
-                      type="tavan"
-                      count={
-                        39
-                      }
-                      selected={
-                        config.ceiling
-                      }
-                      onSelect={(
-                        path,
-                      ) =>
-                        startTransition(
-                          () =>
-                            change(
-                              (
-                                old,
-                              ) => ({
-                                ...old,
-
-                                ceiling:
-                                  path,
-                              }),
-                            ),
-                        )
-                      }
-                    />
-                  ) : (
-                    <>
-                      <div className="grid grid-cols-3 gap-3">
-                        {CEILING_COLORS.map(
-                          (
-                            item,
-                          ) => (
-                            <button
-                              type="button"
-                              key={
-                                item.id
-                              }
-                              aria-label={
-                                'Tavan rengi: ' +
-                                item.name
-                              }
-                              aria-pressed={
-                                config.ceilingColor ===
-                                item.id
-                              }
-                              onClick={() =>
-                                change(
-                                  (
-                                    old,
-                                  ) => ({
-                                    ...old,
-
-                                    ceilingColor:
-                                      item.id,
-                                  }),
-                                )
-                              }
-                              className={
-                                config.ceilingColor ===
-                                item.id
-                                  ? 'rounded-lg p-1 border-2 border-orange-400 text-xs'
-                                  : 'rounded-lg p-1 border-2 border-transparent text-xs'
-                              }
-                            >
-                              <span
-                                className="block h-14 rounded-md mb-2"
-                                style={{
-                                  background:
-                                    'linear-gradient(110deg,#ffffff30,transparent,#00000025),' +
-                                    item.color,
-                                }}
-                              />
-
-                              {
-                                item.name
-                              }
-                            </button>
-                          ),
-                        )}
-                      </div>
-                    </>
-                  )}
-
-                  <CeilingPreview
-                    path={
-                      config.ceiling
-                    }
-                    color={
-                      config.ceilingColor
-                    }
-                    sideColor={
-                      config.ceilingSideColor
-                    }
-                  />
-
-                  <p className="mt-3 text-xs text-slate-500">
-                    {materialName(
-                      config.ceiling,
-                    )}{' '}
-                    ·{' '}
-
-                    {
-                      ceilingColor(
-                        config.ceilingColor,
-                      ).name
-                    }
-                  </p>
-                </>
-              )}
-
-              {section ===
-                'floor' && (
-                <>
-                  <h2 className="font-semibold mb-2">
-                    Taban
-                    Granitleri
-                  </h2>
-
-                  <p className="text-xs leading-5 text-slate-500 mb-5">
-                    Doğal
-                    taşlar ve
-                    tek parça
-                    dekoratif
-                    zeminler.
-                  </p>
-
-                  <div className="flex gap-2 mb-4">
-                    <button
-                      type="button"
-                      aria-pressed={
-                        floorTab ===
-                        'materials'
-                      }
-                      onClick={() =>
-                        setFloorTab(
-                          'materials',
-                        )
-                      }
-                      className="border rounded-lg px-3 py-2 text-xs"
-                    >
-                      Granitler
-                    </button>
-
-                    <button
-                      type="button"
-                      aria-pressed={
-                        floorTab ===
-                        'colors'
-                      }
-                      onClick={() =>
-                        setFloorTab(
-                          'colors',
-                        )
-                      }
-                      className="border rounded-lg px-3 py-2 text-xs"
-                    >
-                      Tarak /
-                      eşik
-                      renkleri
-                    </button>
-                  </div>
-
-                  {floorTab ===
-                    'colors' && (
-                    <>
-                      <p className="text-xs text-slate-500 mb-3">
-                        Zemin
-                        kenarlarındaki
-                        metal
-                        parçalar
-                        ve giriş
-                        eşiği
+                          )
+                        }{' '}
+                        cm.
                       </p>
 
-                      <div className="grid grid-cols-3 gap-3">
-                        {CEILING_COLORS.map(
-                          (
-                            item,
-                          ) => (
-                            <button
-                              type="button"
-                              key={
-                                item.id
-                              }
-                              aria-label={
-                                'Zemin tarak rengi: ' +
-                                item.name
-                              }
-                              aria-pressed={
-                                config.floorTrimColor ===
-                                item.id
-                              }
-                              onClick={() =>
-                                change(
-                                  (
-                                    old,
-                                  ) => ({
-                                    ...old,
 
-                                    floorTrimColor:
-                                      item.id,
-                                  }),
+                      {
+                        config.mirrorMode !==
+                          'none' && (
+                          <>
+                            <RangeControl
+                              label="Ayna yüksekliği"
+                              value={
+                                Math.round(
+                                  mirrorGeometry(
+                                    config,
+                                  ).height *
+                                    100,
                                 )
                               }
-                              className={
-                                config.floorTrimColor ===
-                                item.id
-                                  ? 'border-2 border-orange-400 rounded p-1 text-xs'
-                                  : 'border-2 border-transparent rounded p-1 text-xs'
+                              min={
+                                60
                               }
-                            >
-                              <span
-                                className="block h-12 rounded mb-2"
-                                style={{
-                                  background:
-                                    'linear-gradient(110deg,#ffffff35,transparent,#00000030),' +
-                                    item.color,
-                                }}
-                              />
+                              max={
+                                238
+                              }
+                              suffix=" cm"
+                              onChange={
+                                value =>
+                                  change(
+                                    old => ({
+                                      ...old,
+
+                                      mirrorMode:
+                                        'custom',
+
+                                      mirrorHeight:
+                                        value,
+                                    }),
+
+                                    'mirror-height',
+                                  )
+                              }
+                              onFinish={
+                                finishGesture
+                              }
+                            />
+
+
+                            <p className="text-xs text-slate-500">
+                              Ayna
+                              ölçüsü:{' '}
 
                               {
-                                item.name
-                              }
-                            </button>
-                          ),
-                        )}
-                      </div>
-                    </>
-                  )}
+                                Math.round(
+                                  mirrorGeometry(
+                                    config,
+                                  ).width *
+                                    100,
+                                )
+                              }{' '}
+                              ×{' '}
 
-                  {floorTab ===
-                    'materials' && (
-                    <MaterialGrid
-                      type="granit"
-                      count={
-                        27
-                      }
-                      selected={
-                        config.floor
-                      }
-                      onSelect={(
-                        path,
-                      ) =>
-                        startTransition(
-                          () =>
-                            change(
-                              (
-                                old,
-                              ) => ({
-                                ...old,
+                              {
+                                Math.round(
+                                  mirrorGeometry(
+                                    config,
+                                  ).height *
+                                    100,
+                                )
+                              }{' '}
+                              cm
+                            </p>
 
-                                floor:
-                                  path,
-                              }),
-                            ),
+
+                            {
+                              config.mirrorMode ===
+                                'full' && (
+                                <details className="text-xs border-t border-slate-100 pt-4">
+                                  <summary className="cursor-pointer text-slate-500">
+                                    Yansıma
+                                    ayarları
+                                  </summary>
+
+                                  <div className="space-y-5 mt-5">
+                                    <RangeControl
+                                      label="Üst yansıma yüksekliği"
+                                      value={
+                                        config.topReflection
+                                      }
+                                      min={
+                                        25
+                                      }
+                                      max={
+                                        62
+                                      }
+                                      suffix=" cm"
+                                      onChange={
+                                        value =>
+                                          change(
+                                            old => ({
+                                              ...old,
+
+                                              topReflection:
+                                                value,
+                                            }),
+
+                                            'mirror-top',
+                                          )
+                                      }
+                                      onFinish={
+                                        finishGesture
+                                      }
+                                    />
+
+
+                                    <RangeControl
+                                      label="Alt yansıma yüksekliği"
+                                      value={
+                                        config.bottomReflection
+                                      }
+                                      min={
+                                        25
+                                      }
+                                      max={
+                                        62
+                                      }
+                                      suffix=" cm"
+                                      onChange={
+                                        value =>
+                                          change(
+                                            old => ({
+                                              ...old,
+
+                                              bottomReflection:
+                                                value,
+                                            }),
+
+                                            'mirror-bottom',
+                                          )
+                                      }
+                                      onFinish={
+                                        finishGesture
+                                      }
+                                    />
+
+
+                                    <p className="text-slate-400 leading-5">
+                                      Yansıma
+                                      yalnız
+                                      tam boy
+                                      aynada
+                                      gösterilir.
+                                    </p>
+                                  </div>
+                                </details>
+                              )
+                            }
+                          </>
                         )
                       }
-                    />
-                  )}
+                    </div>
 
-                  <div className="mt-5 rounded-xl border border-slate-200 overflow-hidden">
-                    <div
-                      className="aspect-[2/1]"
-                      style={{
-                        ...swatchStyle(
-                          config.floor,
-                        ),
 
-                        backgroundSize:
-                          'contain',
+                    <button
+                      type="button"
+                      onClick={() =>
+                        choosePanel({
+                          wall:
+                            'rearCenter',
 
-                        backgroundRepeat:
-                          'no-repeat',
-                      }}
-                    />
+                          index:
+                            1,
+                        })
+                      }
+                      className="mt-6 w-full rounded-lg bg-slate-50 p-3 text-xs text-slate-600"
+                    >
+                      Orta
+                      alanın üç
+                      panelini
+                      düzenle →
+                    </button>
+                  </>
+                )
+              }
 
-                    <p className="text-xs px-3 py-3 border-t border-slate-100">
-                      {materialName(
-                        config.floor,
-                      )}
+
+              {
+                section ===
+                  'ceiling' && (
+                  <>
+                    <h2 className="font-semibold mb-2">
+                      Tavan
+                      tasarımı
+                    </h2>
+
+
+                    <p className="text-xs leading-5 text-slate-500 mb-4">
+                      Sağ ve sol
+                      kenarlar
+                      ile dört
+                      spot
+                      sabit.
+                      Seçtiğin
+                      desen
+                      yalnız orta
+                      bölümde
+                      değişir.
                     </p>
-                  </div>
-                </>
-              )}
+
+
+                    <div className="flex p-1 bg-slate-100 rounded-lg mb-4">
+                      <button
+                        type="button"
+                        aria-pressed={
+                          ceilingTab ===
+                          'patterns'
+                        }
+                        onClick={() =>
+                          setCeilingTab(
+                            'patterns',
+                          )
+                        }
+                        className={
+                          ceilingTab ===
+                          'patterns'
+                            ? 'flex-1 py-2 rounded-md text-xs bg-white shadow-sm font-semibold'
+                            : 'flex-1 py-2 rounded-md text-xs text-slate-500'
+                        }
+                      >
+                        Desenler
+                      </button>
+
+
+                      <button
+                        type="button"
+                        aria-pressed={
+                          ceilingTab ===
+                          'colors'
+                        }
+                        onClick={() =>
+                          setCeilingTab(
+                            'colors',
+                          )
+                        }
+                        className={
+                          ceilingTab ===
+                          'colors'
+                            ? 'flex-1 py-2 rounded-md text-xs bg-white shadow-sm font-semibold'
+                            : 'flex-1 py-2 rounded-md text-xs text-slate-500'
+                        }
+                      >
+                        Renkler
+                      </button>
+                    </div>
+
+
+                    {
+                      ceilingTab ===
+                      'patterns'
+                        ? (
+                          <MaterialGrid
+                            type="tavan"
+                            count={
+                              39
+                            }
+                            selected={
+                              config.ceiling
+                            }
+                            onSelect={
+                              path =>
+                                startTransition(
+                                  () =>
+                                    change(
+                                      old => ({
+                                        ...old,
+
+                                        ceiling:
+                                          path,
+                                      }),
+                                    ),
+                                )
+                            }
+                          />
+                        )
+                        : (
+                          <div className="grid grid-cols-3 gap-3">
+                            {
+                              CEILING_COLORS.map(
+                                item => (
+                                  <button
+                                    type="button"
+                                    key={
+                                      item.id
+                                    }
+                                    aria-label={
+                                      'Tavan rengi: ' +
+                                      item.name
+                                    }
+                                    aria-pressed={
+                                      config.ceilingColor ===
+                                      item.id
+                                    }
+                                    onClick={() =>
+                                      change(
+                                        old => ({
+                                          ...old,
+
+                                          ceilingColor:
+                                            item.id,
+                                        }),
+                                      )
+                                    }
+                                    className={
+                                      config.ceilingColor ===
+                                      item.id
+                                        ? 'rounded-lg p-1 border-2 border-orange-400 text-xs'
+                                        : 'rounded-lg p-1 border-2 border-transparent text-xs'
+                                    }
+                                  >
+                                    <span
+                                      className="block h-14 rounded-md mb-2"
+                                      style={{
+                                        background:
+                                          'linear-gradient(110deg,#ffffff30,transparent,#00000025),' +
+                                          item.color,
+                                      }}
+                                    />
+
+                                    {
+                                      item.name
+                                    }
+                                  </button>
+                                ),
+                              )
+                            }
+                          </div>
+                        )
+                    }
+
+
+                    <CeilingPreview
+                      path={
+                        config.ceiling
+                      }
+                      color={
+                        config.ceilingColor
+                      }
+                      sideColor={
+                        config.ceilingSideColor
+                      }
+                    />
+
+
+                    <p className="mt-3 text-xs text-slate-500">
+                      {
+                        materialName(
+                          config.ceiling,
+                        )
+                      }{' '}
+                      ·{' '}
+
+                      {
+                        ceilingColor(
+                          config.ceilingColor,
+                        ).name
+                      }
+                    </p>
+                  </>
+                )
+              }
+
+
+              {
+                section ===
+                  'floor' && (
+                  <>
+                    <h2 className="font-semibold mb-2">
+                      Taban
+                      Granitleri
+                    </h2>
+
+
+                    <p className="text-xs leading-5 text-slate-500 mb-5">
+                      Doğal
+                      taşlar ve
+                      tek parça
+                      dekoratif
+                      zeminler.
+                    </p>
+
+
+                    <div className="flex gap-2 mb-4">
+                      <button
+                        type="button"
+                        aria-pressed={
+                          floorTab ===
+                          'materials'
+                        }
+                        onClick={() =>
+                          setFloorTab(
+                            'materials',
+                          )
+                        }
+                        className="border rounded-lg px-3 py-2 text-xs"
+                      >
+                        Granitler
+                      </button>
+
+
+                      <button
+                        type="button"
+                        aria-pressed={
+                          floorTab ===
+                          'colors'
+                        }
+                        onClick={() =>
+                          setFloorTab(
+                            'colors',
+                          )
+                        }
+                        className="border rounded-lg px-3 py-2 text-xs"
+                      >
+                        Tarak /
+                        eşik
+                        renkleri
+                      </button>
+                    </div>
+
+
+                    {
+                      floorTab ===
+                        'colors' && (
+                        <>
+                          <p className="text-xs text-slate-500 mb-3">
+                            Zemin
+                            kenarlarındaki
+                            metal
+                            parçalar
+                            ve giriş
+                            eşiği
+                          </p>
+
+                          <div className="grid grid-cols-3 gap-3">
+                            {
+                              CEILING_COLORS.map(
+                                item => (
+                                  <button
+                                    type="button"
+                                    key={
+                                      item.id
+                                    }
+                                    aria-label={
+                                      'Zemin tarak rengi: ' +
+                                      item.name
+                                    }
+                                    aria-pressed={
+                                      config.floorTrimColor ===
+                                      item.id
+                                    }
+                                    onClick={() =>
+                                      change(
+                                        old => ({
+                                          ...old,
+
+                                          floorTrimColor:
+                                            item.id,
+                                        }),
+                                      )
+                                    }
+                                    className={
+                                      config.floorTrimColor ===
+                                      item.id
+                                        ? 'border-2 border-orange-400 rounded p-1 text-xs'
+                                        : 'border-2 border-transparent rounded p-1 text-xs'
+                                    }
+                                  >
+                                    <span
+                                      className="block h-12 rounded mb-2"
+                                      style={{
+                                        background:
+                                          'linear-gradient(110deg,#ffffff35,transparent,#00000030),' +
+                                          item.color,
+                                      }}
+                                    />
+
+                                    {
+                                      item.name
+                                    }
+                                  </button>
+                                ),
+                              )
+                            }
+                          </div>
+                        </>
+                      )
+                    }
+
+
+                    {
+                      floorTab ===
+                        'materials' && (
+                        <MaterialGrid
+                          type="granit"
+                          count={
+                            27
+                          }
+                          selected={
+                            config.floor
+                          }
+                          onSelect={
+                            path =>
+                              startTransition(
+                                () =>
+                                  change(
+                                    old => ({
+                                      ...old,
+
+                                      floor:
+                                        path,
+                                    }),
+                                  ),
+                              )
+                          }
+                        />
+                      )
+                    }
+
+
+                    <div className="mt-5 rounded-xl border border-slate-200 overflow-hidden">
+                      <div
+                        className="aspect-[2/1]"
+                        style={{
+                          ...swatchStyle(
+                            config.floor,
+                          ),
+
+                          backgroundSize:
+                            'contain',
+
+                          backgroundRepeat:
+                            'no-repeat',
+                        }}
+                      />
+
+                      <p className="text-xs px-3 py-3 border-t border-slate-100">
+                        {
+                          materialName(
+                            config.floor,
+                          )
+                        }
+                      </p>
+                    </div>
+                  </>
+                )
+              }
             </div>
           </aside>
+
 
           <section
             aria-label="3D kabin önizlemesi"
             className="order-1 lg:order-2 lg:sticky lg:top-24"
           >
             <div className="relative rounded-2xl border border-slate-200 overflow-hidden bg-[#e9edef] shadow-sm">
+
               <div className="absolute top-4 left-4 right-4 flex justify-between items-start z-10 pointer-events-none">
                 <div>
                   <p className="text-[10px] tracking-[0.22em] uppercase text-slate-400">
@@ -5317,12 +5982,15 @@ export default function KabinTasarim() {
                   </p>
 
                   <p className="text-sm font-medium mt-1">
-                    {section ===
-                    'walls'
-                      ? `${WALLS[selection.wall]} · Panel ${selection.index + 1}`
-                      : 'Kabin görünümü'}
+                    {
+                      section ===
+                      'walls'
+                        ? `${WALLS[selection.wall]} · Panel ${selection.index + 1}`
+                        : 'Kabin görünümü'
+                    }
                   </p>
                 </div>
+
 
                 <span
                   role="status"
@@ -5336,11 +6004,14 @@ export default function KabinTasarim() {
                     }`}
                   />
 
-                  {pending
-                    ? 'Malzeme yükleniyor'
-                    : 'Canlı önizleme'}
+                  {
+                    pending
+                      ? 'Malzeme yükleniyor'
+                      : 'Canlı önizleme'
+                  }
                 </span>
               </div>
+
 
               <div className="cabin-preview-canvas h-[470px] sm:h-[560px] lg:h-[min(740px,calc(100svh-320px))] lg:min-h-[340px]">
                 <Canvas
@@ -5365,18 +6036,20 @@ export default function KabinTasarim() {
                     preserveDrawingBuffer:
                       true,
                   }}
-                  onCreated={({
-                    gl,
-                  }) => {
-                    gl.toneMapping =
-                      THREE.ACESFilmicToneMapping;
+                  onCreated={
+                    ({
+                      gl,
+                    }) => {
+                      gl.toneMapping =
+                        THREE.ACESFilmicToneMapping;
 
-                    gl.toneMappingExposure =
-                      1;
+                      gl.toneMappingExposure =
+                        1;
 
-                    gl.outputColorSpace =
-                      THREE.SRGBColorSpace;
-                  }}
+                      gl.outputColorSpace =
+                        THREE.SRGBColorSpace;
+                    }
+                  }
                 >
                   <color
                     attach="background"
@@ -5437,6 +6110,7 @@ export default function KabinTasarim() {
                     color="#edf2f7"
                   />
 
+
                   <Suspense
                     fallback={
                       <Html
@@ -5479,6 +6153,7 @@ export default function KabinTasarim() {
                     </CabinEnvironment>
                   </Suspense>
 
+
                   <CameraView
                     view={
                       view
@@ -5486,6 +6161,7 @@ export default function KabinTasarim() {
                   />
                 </Canvas>
               </div>
+
 
               <div className="absolute bottom-4 inset-x-0 flex justify-center pointer-events-none">
                 <p className="text-[10px] sm:text-xs text-slate-500 bg-white/80 border border-white rounded-full px-3 py-2">
@@ -5498,55 +6174,59 @@ export default function KabinTasarim() {
               </div>
             </div>
 
+
             <div className="flex flex-wrap justify-between items-center gap-3 mt-3">
               <div className="inline-flex bg-white p-1 rounded-xl border border-slate-200">
-                {[
+                {
                   [
-                    'front',
-                    'Karşıdan',
-                  ],
-                  [
-                    'left',
-                    'Sol duvar',
-                  ],
-                  [
-                    'right',
-                    'Sağ duvar',
-                  ],
-                ].map(
-                  ([
-                    name,
-                    label,
-                  ]) => (
-                    <button
-                      key={
-                        name
-                      }
-                      type="button"
-                      onClick={() =>
-                        setView({
-                          name,
+                    [
+                      'front',
+                      'Karşıdan',
+                    ],
 
-                          version:
-                            view.version +
-                            1,
-                        })
-                      }
-                      aria-label={`${label} görünümü`}
-                      className={`px-3 py-2 text-[11px] rounded-lg ${
-                        view.name ===
-                        name
-                          ? 'bg-slate-800 text-white'
-                          : 'text-slate-500'
-                      }`}
-                    >
-                      {
-                        label
-                      }
-                    </button>
-                  ),
-                )}
+                    [
+                      'left',
+                      'Sol duvar',
+                    ],
+
+                    [
+                      'right',
+                      'Sağ duvar',
+                    ],
+                  ].map(
+                    ([
+                      name,
+                      label,
+                    ]) => (
+                      <button
+                        key={
+                          name
+                        }
+                        type="button"
+                        onClick={() =>
+                          setView({
+                            name,
+
+                            version:
+                              view.version +
+                              1,
+                          })
+                        }
+                        aria-label={`${label} görünümü`}
+                        className={`px-3 py-2 text-[11px] rounded-lg ${
+                          view.name ===
+                          name
+                            ? 'bg-slate-800 text-white'
+                            : 'text-slate-500'
+                        }`}
+                      >
+                        {label}
+                      </button>
+                    ),
+                  )
+                }
               </div>
+
 
               <button
                 type="button"
@@ -5573,6 +6253,7 @@ export default function KabinTasarim() {
               </button>
             </div>
 
+
             <div className="mt-5 grid grid-cols-3 gap-3 border-t border-slate-200 pt-4">
               <div>
                 <p className="text-[9px] uppercase tracking-widest text-slate-400">
@@ -5586,6 +6267,7 @@ export default function KabinTasarim() {
                 </p>
               </div>
 
+
               <div>
                 <p className="text-[9px] uppercase tracking-widest text-slate-400">
                   DİKEY
@@ -5598,31 +6280,36 @@ export default function KabinTasarim() {
                 </p>
               </div>
 
+
               <div>
                 <p className="text-[9px] uppercase tracking-widest text-slate-400">
                   AYNA
                 </p>
 
                 <p className="text-xs mt-1.5 font-medium">
-                  {config.mirrorMode ===
-                  'none'
-                    ? 'Ayna yok'
-                    : `${Math.round(
-                        mirrorGeometry(
-                          config,
-                        ).width *
-                          100,
-                      )} × ${Math.round(
-                        mirrorGeometry(
-                          config,
-                        ).height *
-                          100,
-                      )} cm`}
+                  {
+                    config.mirrorMode ===
+                    'none'
+                      ? 'Ayna yok'
+                      : `${Math.round(
+                          mirrorGeometry(
+                            config,
+                          ).width *
+                            100,
+                        )} × ${Math.round(
+                          mirrorGeometry(
+                            config,
+                          ).height *
+                            100,
+                        )} cm`
+                  }
                 </p>
               </div>
             </div>
 
+
             <div className="flex flex-wrap gap-2 mt-4">
+
               <button
                 type="button"
                 disabled={
@@ -5646,6 +6333,7 @@ export default function KabinTasarim() {
                 (PNG)
               </button>
 
+
               <button
                 type="button"
                 disabled={
@@ -5667,6 +6355,7 @@ export default function KabinTasarim() {
 
                 PDF indir
               </button>
+
 
               <button
                 type="button"
@@ -5692,6 +6381,7 @@ export default function KabinTasarim() {
               </button>
             </div>
 
+
             <p className="text-[11px] text-slate-400 mt-2">
               Telefonda
               paylaşım
@@ -5710,14 +6400,18 @@ export default function KabinTasarim() {
               mesajı açılır.
             </p>
 
+
             <p
               role="status"
               className="text-xs text-slate-500 mt-2"
             >
-              {exporting
-                ? 'Görsel hazırlanıyor…'
-                : exportMessage}
+              {
+                exporting
+                  ? 'Görsel hazırlanıyor…'
+                  : exportMessage
+              }
             </p>
+
 
             <details className="mt-5 bg-white rounded-xl border border-slate-200 text-xs">
               <summary className="px-4 py-3 cursor-pointer flex items-center justify-between text-slate-600">
@@ -5738,46 +6432,51 @@ export default function KabinTasarim() {
                 </span>
               </summary>
 
-              <div className="px-4 pb-4 space-y-3 border-t border-slate-100 pt-3">
-                {Object.entries(
-                  WALLS,
-                ).map(
-                  ([
-                    wall,
-                    name,
-                  ]) => (
-                    <div
-                      key={
-                        wall
-                      }
-                    >
-                      <p className="font-semibold mb-1">
-                        {
-                          name
-                        }
-                      </p>
 
-                      <p className="text-slate-500 leading-5">
-                        {config.walls[
+              <div className="px-4 pb-4 space-y-3 border-t border-slate-100 pt-3">
+                {
+                  Object.entries(
+                    WALLS,
+                  ).map(
+                    ([
+                      wall,
+                      name,
+                    ]) => (
+                      <div
+                        key={
                           wall
-                        ].materials
-                          .map(
-                            (
-                              path,
-                              i,
-                            ) =>
-                              `${i + 1}. ${materialName(path)} (%${config.walls[wall].widths[i]})`,
-                          )
-                          .join(
-                            ' · ',
-                          )}
-                      </p>
-                    </div>
-                  ),
-                )}
+                        }
+                      >
+                        <p className="font-semibold mb-1">
+                          {name}
+                        </p>
+
+                        <p className="text-slate-500 leading-5">
+                          {
+                            config.walls[
+                              wall
+                            ].materials
+                              .map(
+                                (
+                                  path,
+                                  i,
+                                ) =>
+                                  `${i + 1}. ${materialName(path)} (%${config.walls[wall].widths[i]})`,
+                              )
+                              .join(
+                                ' · ',
+                              )
+                          }
+                        </p>
+                      </div>
+                    ),
+                  )
+                }
               </div>
             </details>
+
           </section>
+
         </div>
       </div>
     </div>

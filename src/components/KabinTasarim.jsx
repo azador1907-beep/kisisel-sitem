@@ -1361,6 +1361,93 @@ function WallPanel({
 }
 
 
+const CABIN_FONT_OPTIONS = [
+  { id: 'modern', name: 'Modern', family: 'Arial, Helvetica, sans-serif' },
+  { id: 'soft', name: 'Yumuşak', family: '"Trebuchet MS", Arial, sans-serif' },
+  { id: 'classic', name: 'Klasik', family: 'Georgia, "Times New Roman", serif' },
+  { id: 'mono', name: 'Teknik', family: '"Courier New", Courier, monospace' },
+  { id: 'bold', name: 'Güçlü', family: 'Impact, "Arial Black", Arial, sans-serif' },
+  { id: 'narrow', name: 'Dar', family: '"Arial Narrow", Arial, Helvetica, sans-serif' },
+];
+
+const cabinFont = id =>
+  CABIN_FONT_OPTIONS.find(item => item.id === id) || CABIN_FONT_OPTIONS[0];
+
+function CabinLabel({ text, fontKey = 'modern' }) {
+  const label = String(text ?? '')
+    .trim()
+    .toLocaleUpperCase('tr-TR')
+    .slice(0, 18);
+
+  const font = cabinFont(fontKey);
+
+  const texture = useMemo(() => {
+    const canvas = document.createElement('canvas');
+    canvas.width = 1024;
+    canvas.height = 256;
+
+    const context = canvas.getContext('2d');
+    context.clearRect(0, 0, canvas.width, canvas.height);
+
+    context.textAlign = 'center';
+    context.textBaseline = 'middle';
+    context.lineJoin = 'round';
+
+    let fontSize = 142;
+    context.font = `700 ${fontSize}px ${font.family}`;
+    while (context.measureText(label).width > 900 && fontSize > 62) {
+      fontSize -= 4;
+      context.font = `700 ${fontSize}px ${font.family}`;
+    }
+
+    context.shadowColor = 'rgba(0, 0, 0, 0.38)';
+    context.shadowBlur = 12;
+    context.shadowOffsetY = 6;
+    context.strokeStyle = 'rgba(37, 46, 52, 0.72)';
+    context.lineWidth = 9;
+    context.strokeText(label, canvas.width / 2, canvas.height / 2 + 4);
+
+    context.shadowColor = 'transparent';
+    const gradient = context.createLinearGradient(0, 48, 0, 208);
+    gradient.addColorStop(0, '#f8fbfc');
+    gradient.addColorStop(0.35, '#bcc6cb');
+    gradient.addColorStop(0.62, '#6f7a80');
+    gradient.addColorStop(1, '#dce3e6');
+    context.fillStyle = gradient;
+    context.fillText(label, canvas.width / 2, canvas.height / 2 + 4);
+
+    const result = new THREE.CanvasTexture(canvas);
+    result.colorSpace = THREE.SRGBColorSpace;
+    result.minFilter = THREE.LinearFilter;
+    result.magFilter = THREE.LinearFilter;
+    result.generateMipmaps = false;
+    result.needsUpdate = true;
+    return result;
+  }, [label, font.family]);
+
+  useEffect(() => () => texture.dispose(), [texture]);
+
+  if (!label) return null;
+
+  return (
+    <mesh
+      position={[0, -H / 2 + 0.17, -D / 2 + 0.028]}
+      raycast={() => null}
+    >
+      <planeGeometry args={[0.64, 0.16]} />
+      <meshBasicMaterial
+        map={texture}
+        transparent
+        alphaTest={0.02}
+        depthWrite={false}
+        toneMapped={false}
+        side={THREE.DoubleSide}
+      />
+    </mesh>
+  );
+}
+
+
 function WallShadow({
   length,
   height = H,
@@ -2084,6 +2171,12 @@ function KendiAsansorumuz({
         }
       />
 
+
+      <CabinLabel
+        text={config.cabinText ?? ''}
+        fontKey={config.cabinTextFont || 'modern'}
+      />
+
       {config.mirrorMode !==
         'none' && (
         <group
@@ -2780,6 +2873,8 @@ function createCabinOfferMessage(
     `Zemin: ${materialName(config.floor)}`,
     `Tarak / eşik rengi: ${ceilingColor(config.floorTrimColor).name}`,
     `Ayna: ${mirrorText}`,
+    `Kabin yazısı: ${String(config.cabinText ?? '').trim() || 'Yok'}`,
+    `Yazı tipi: ${cabinFont(config.cabinTextFont).name}`,
     '',
     'Bu tasarım için fiyat ve bilgi alabilir miyim?',
   ].join(
@@ -4436,6 +4531,95 @@ export default function KabinTasarim() {
                         }
                       />
                     </button>
+                  </div>
+
+                  <div className="border-t border-slate-100 mt-5 pt-5">
+                    <div className="flex items-center justify-between gap-3 mb-3">
+                      <h3 className="text-sm font-semibold">
+                        Kabin yazısı
+                      </h3>
+
+                      <span className="text-[10px] text-slate-400">
+                        ARKA ALT ORTA
+                      </span>
+                    </div>
+
+                    <p className="text-xs leading-5 text-slate-500 mb-3">
+                      Kabinin arka duvarının alt orta kısmında görünür. Varsayılan yazı HAS DOOR'dur.
+                    </p>
+
+                    <input
+                      type="text"
+                      value={config.cabinText ?? ''}
+                      maxLength={18}
+                      aria-label="Kabin yazısı"
+                      onChange={(event) =>
+                        change(
+                          (old) => ({
+                            ...old,
+                            cabinText: event.target.value
+                              .toLocaleUpperCase('tr-TR')
+                              .slice(0, 18),
+                          }),
+                          'cabin-text',
+                        )
+                      }
+                      onBlur={finishGesture}
+                      placeholder="HAS DOOR"
+                      className="w-full rounded-lg border border-slate-200 bg-white px-3 py-3 text-sm font-semibold tracking-[0.08em] text-slate-800 outline-none transition focus:border-[#e66b43] focus:ring-2 focus:ring-orange-100"
+                    />
+
+                    <div className="mt-4">
+                      <label htmlFor="cabin-text-font" className="mb-2 block text-xs font-medium text-slate-600">
+                        Yazı tipi
+                      </label>
+
+                      <select
+                        id="cabin-text-font"
+                        value={config.cabinTextFont || 'modern'}
+                        onChange={(event) => {
+                          finishGesture();
+                          change((old) => ({
+                            ...old,
+                            cabinTextFont: event.target.value,
+                          }));
+                        }}
+                        className="w-full rounded-lg border border-slate-200 bg-white px-3 py-3 text-sm text-slate-700 outline-none transition focus:border-[#e66b43] focus:ring-2 focus:ring-orange-100"
+                      >
+                        {CABIN_FONT_OPTIONS.map((font) => (
+                          <option key={font.id} value={font.id}>
+                            {font.name}
+                          </option>
+                        ))}
+                      </select>
+
+                      <div
+                        className="mt-2 rounded-lg border border-slate-100 bg-slate-50 px-3 py-3 text-center text-lg text-slate-700"
+                        style={{ fontFamily: cabinFont(config.cabinTextFont).family }}
+                      >
+                        {config.cabinText?.trim() || 'Önizleme'}
+                      </div>
+                    </div>
+
+                    <div className="mt-3 flex items-center justify-between gap-3">
+                      <span className="text-[10px] text-slate-400">
+                        En fazla 18 karakter
+                      </span>
+
+                      <button
+                        type="button"
+                        onClick={() => {
+                          finishGesture();
+                          change((old) => ({
+                            ...old,
+                            cabinText: 'HAS DOOR',
+                          }));
+                        }}
+                        className="rounded-lg bg-slate-50 px-3 py-2 text-[11px] font-medium text-slate-600 hover:bg-slate-100"
+                      >
+                        HAS DOOR'a sıfırla
+                      </button>
+                    </div>
                   </div>
                 </>
               )}

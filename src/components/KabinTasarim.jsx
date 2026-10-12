@@ -48,6 +48,9 @@ import {
   ImageDown,
   FileDown,
   MessageCircle,
+  Menu,
+  LogOut,
+  X,
 } from 'lucide-react';
 
 import {
@@ -3755,8 +3758,72 @@ function CameraView({
   const {
     camera,
     gl,
+    size,
   } =
     useThree();
+
+  /*
+    Dar/uzun ekranlarda (telefon tam ekran) kabinin yanları
+    kesilmesin diye kamera mesafesi ekran oranına göre büyür.
+    Geniş ekranlarda değer 1'dir, görünüm değişmez.
+  */
+  const fit =
+    Math.min(
+      1.9,
+      Math.max(
+        1,
+        0.95 /
+          (size.width /
+            Math.max(
+              size.height,
+              1,
+            )),
+      ),
+    );
+
+  const fitRef =
+    useRef(
+      fit,
+    );
+
+  useEffect(
+    () => {
+      const previous =
+        fitRef.current;
+
+      fitRef.current =
+        fit;
+
+      if (
+        previous === fit ||
+        insideRef.current ||
+        !controls.current
+      ) {
+        return;
+      }
+
+      const target =
+        controls.current.target;
+
+      const offset =
+        camera.position
+          .clone()
+          .sub(target)
+          .multiplyScalar(
+            fit / previous,
+          );
+
+      camera.position
+        .copy(target)
+        .add(offset);
+
+      controls.current.update();
+    },
+    [
+      fit,
+      camera,
+    ],
+  );
 
 
   const clampInsidePosition =
@@ -3989,11 +4056,24 @@ function CameraView({
 
       leaveInsideMode();
 
-      camera.position.set(
-        ...positions[
-          view.name
-        ],
-      );
+      const viewTarget =
+        new THREE.Vector3(
+          0,
+          0.12,
+          -0.28,
+        );
+
+      camera.position
+        .set(
+          ...positions[
+            view.name
+          ],
+        )
+        .sub(viewTarget)
+        .multiplyScalar(
+          fitRef.current,
+        )
+        .add(viewTarget);
 
       /*
         İç mekânda duvara yaklaştığımızda
@@ -4085,8 +4165,8 @@ function CameraView({
             zoomCommand.factor,
 
           0.72,
-
-          8.5,
+          8.5 *
+            fitRef.current,
         );
 
       offset.setLength(
@@ -4477,7 +4557,8 @@ function CameraView({
       }
 
       maxDistance={
-        8.5
+        8.5 *
+          fit
       }
 
       minAzimuthAngle={
@@ -5068,6 +5149,35 @@ export default function KabinTasarim() {
       'walls',
     );
 
+  // Mobil: seçenek penceresi ve menü (masaüstünde etkisizdir)
+  const [
+    sheetOpen,
+    setSheetOpen,
+  ] =
+    useState(
+      false,
+    );
+
+  const [
+    menuOpen,
+    setMenuOpen,
+  ] =
+    useState(
+      false,
+    );
+
+  useEffect(() => {
+    if (!sheetOpen && !menuOpen) return undefined;
+    const onKey = event => {
+      if (event.key === 'Escape') {
+        setSheetOpen(false);
+        setMenuOpen(false);
+      }
+    };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, [sheetOpen, menuOpen]);
+
 
   const [
     selection,
@@ -5184,6 +5294,10 @@ export default function KabinTasarim() {
     id => {
       setSection(
         id,
+      );
+
+      setSheetOpen(
+        true,
       );
 
       focusOptions();
@@ -5340,6 +5454,10 @@ export default function KabinTasarim() {
     next => {
       setSelection(
         next,
+      );
+
+      setSheetOpen(
+        true,
       );
 
       setSection(
@@ -5805,45 +5923,200 @@ export default function KabinTasarim() {
     };
 
 
+  const resetDesign = () => {
+                change(
+                  createCabinConfig(),
+                );
+
+                setSelection({
+                  wall:
+                    'rearCenter',
+
+                  index:
+                    1,
+                });
+
+                setLinked(
+                  false,
+                );
+
+                setFamily(
+                  'paslanmaz',
+                );
+
+                setCeilingTab(
+                  'patterns',
+                );
+
+                setSection(
+                  'walls',
+                );
+
+                setView({
+                  name:
+                    'front',
+
+                  version:
+                    view.version +
+                    1,
+                });
+              };
+
+
+  const mobileSection =
+    categories.find(
+      item =>
+        item.id ===
+        section,
+    ) || categories[0];
+
+
   return (
-    <div className="cabin-studio bg-[#f5f6f7] min-h-[calc(100vh-80px)] text-slate-800 font-sans px-4 sm:px-7 lg:px-10 pt-7 pb-10">
+    <div className={`cabin-studio ${sheetOpen ? 'cabin-sheet-open' : ''} ${menuOpen ? 'cabin-menu-open' : ''} bg-[#f5f6f7] min-h-[calc(100vh-80px)] text-slate-800 font-sans px-4 sm:px-7 lg:px-10 pt-7 pb-10`}>
       <div className="max-w-[1480px] mx-auto">
 
         <div className="cabin-mobile-toolbar">
-          <a href="/">
-            ← Siteye dön
+          <div className="cabin-mobile-toolbar-group">
+            <button
+              type="button"
+              className="cabin-icon-btn"
+              aria-label="Menü"
+              aria-expanded={menuOpen}
+              onClick={() => setMenuOpen(open => !open)}
+            >
+              <Menu size={22} />
+            </button>
+
+            <button
+              type="button"
+              className="cabin-icon-btn"
+              onClick={undo}
+              disabled={!history.past.length}
+              aria-label="Geri al"
+              title="Geri al"
+            >
+              <Undo2 size={20} />
+            </button>
+
+            <button
+              type="button"
+              className="cabin-icon-btn"
+              onClick={redo}
+              disabled={!history.future.length}
+              aria-label="Yinele"
+              title="Yinele"
+            >
+              <Redo2 size={20} />
+            </button>
+          </div>
+
+          <span className="cabin-mobile-brand">
+            HAS DOOR
+          </span>
+
+          <a
+            href="/"
+            className="cabin-exit-btn"
+            aria-label="Siteye dön"
+            title="Siteye dön"
+          >
+            <LogOut size={18} />
           </a>
-
-          <button
-            type="button"
-            disabled={
-              exporting ||
-              pending
-            }
-            onClick={() =>
-              downloadCabin(
-                'png',
-              )
-            }
-          >
-            PNG indir
-          </button>
-
-          <button
-            type="button"
-            disabled={
-              exporting ||
-              pending
-            }
-            onClick={() =>
-              downloadCabin(
-                'pdf',
-              )
-            }
-          >
-            PDF indir
-          </button>
         </div>
+
+        {menuOpen && (
+          <>
+            <button
+              type="button"
+              className="cabin-mobile-backdrop"
+              aria-label="Menüyü kapat"
+              onClick={() => setMenuOpen(false)}
+            />
+
+            <div className="cabin-mobile-menu" role="menu">
+              <button
+                type="button"
+                role="menuitem"
+                disabled={exporting || pending}
+                onClick={() => {
+                  setMenuOpen(false);
+                  downloadCabin('png');
+                }}
+              >
+                <ImageDown size={17} />
+                Resmi indir (PNG)
+              </button>
+
+              <button
+                type="button"
+                role="menuitem"
+                disabled={exporting || pending}
+                onClick={() => {
+                  setMenuOpen(false);
+                  downloadCabin('pdf');
+                }}
+              >
+                <FileDown size={17} />
+                PDF indir
+              </button>
+
+              <button
+                type="button"
+                role="menuitem"
+                disabled={exporting || pending}
+                onClick={() => {
+                  setMenuOpen(false);
+                  shareCabinOffer();
+                }}
+              >
+                <MessageCircle size={17} />
+                Resim + Bilgileri Paylaş
+              </button>
+
+              <button
+                type="button"
+                role="menuitem"
+                onClick={() => {
+                  setMenuOpen(false);
+                  setSheetOpen(false);
+                  resetDesign();
+                }}
+              >
+                <RotateCcw size={17} />
+                Baştan başla
+              </button>
+
+              <a href="/" role="menuitem">
+                <LogOut size={17} />
+                Siteye dön
+              </a>
+            </div>
+          </>
+        )}
+
+        <nav
+          className="cabin-mobile-rail"
+          aria-label="Tasarım kategorileri (mobil)"
+        >
+          {categories.map(({ id, name, icon: Icon }) => (
+            <button
+              key={id}
+              type="button"
+              aria-pressed={sheetOpen && section === id}
+              aria-label={name}
+              onClick={() => {
+                if (sheetOpen && section === id) {
+                  setSheetOpen(false);
+                } else {
+                  chooseSurface(id);
+                }
+              }}
+            >
+              <Icon size={19} strokeWidth={1.7} />
+              <span>{name}</span>
+            </button>
+          ))}
+        </nav>
 
 
         <header className="flex flex-wrap justify-between items-end gap-4 mb-7">
@@ -5917,44 +6190,9 @@ export default function KabinTasarim() {
 
             <button
               type="button"
-              onClick={() => {
-                change(
-                  createCabinConfig(),
-                );
-
-                setSelection({
-                  wall:
-                    'rearCenter',
-
-                  index:
-                    1,
-                });
-
-                setLinked(
-                  false,
-                );
-
-                setFamily(
-                  'paslanmaz',
-                );
-
-                setCeilingTab(
-                  'patterns',
-                );
-
-                setSection(
-                  'walls',
-                );
-
-                setView({
-                  name:
-                    'front',
-
-                  version:
-                    view.version +
-                    1,
-                });
-              }}
+              onClick={
+                resetDesign
+              }
               className="flex items-center gap-2 px-3 py-2.5 text-xs bg-white rounded-lg border border-slate-200"
             >
               <RotateCcw
@@ -5977,6 +6215,22 @@ export default function KabinTasarim() {
             }
             className="bg-white border border-slate-200 rounded-2xl shadow-sm overflow-hidden order-2 lg:order-1 lg:max-h-[calc(100svh-120px)] lg:overflow-y-auto lg:sticky lg:top-24"
           >
+            <div className="cabin-sheet-head">
+              <h2>
+                {mobileSection.name}
+                {' '}
+                seçimi
+              </h2>
+
+              <button
+                type="button"
+                aria-label="Seçim penceresini kapat"
+                onClick={() => setSheetOpen(false)}
+              >
+                <X size={20} />
+              </button>
+            </div>
+
             <nav
               aria-label="Tasarım kategorileri"
               className="grid grid-cols-4 border-b border-slate-100 bg-[#fafafa] p-2 gap-1 sticky top-0 z-20"

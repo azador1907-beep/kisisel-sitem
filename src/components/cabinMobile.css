@@ -1,4 +1,9 @@
-.cabin-mobile-toolbar {
+/* Masaüstünde mobil parçalar görünmez */
+.cabin-mobile-toolbar,
+.cabin-mobile-rail,
+.cabin-mobile-menu,
+.cabin-mobile-backdrop,
+.cabin-sheet-head {
   display: none;
 }
 
@@ -20,325 +25,7 @@
 .cabin-led-option input { width: 20px; height: 20px; margin-top: 2px; accent-color: #9a6534; flex-shrink: 0; }
 .cabin-led-option strong { display: block; font-size: 13px; color: #334155; }
 .cabin-led-option small { display: block; margin-top: 4px; font-size: 12px; line-height: 1.5; color: #475569; }
-@media (max-width: 1023px) {
-  .cabin-studio section > div:first-child { padding-bottom: 44px; }
-  .cabin-studio .cabin-gesture-hint { bottom: 4px; }
-  .cabin-studio .cabin-gesture-hint p { font-size: 11px; line-height: 1.4; padding: 5px 9px; }
-}
 
-@media (max-width: 1023px) {
-
-  .cabin-studio {
-    position: fixed;
-    inset: 0;
-    z-index: 100;
-    padding:
-      env(safe-area-inset-top)
-      0
-      env(safe-area-inset-bottom);
-    min-height: 0;
-    height: 100dvh;
-    overflow: hidden;
-  }
-
-  .cabin-studio > div {
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-  }
-
-  .cabin-mobile-toolbar {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 6px;
-    flex: 0 0 44px;
-    padding: 0 10px;
-    background: white;
-    font-size: 12px;
-    white-space: nowrap;
-    position: relative;
-    z-index: 60;
-  }
-
-  .cabin-mobile-toolbar button {
-    min-height: 40px;
-    padding: 0 8px;
-  }
-
-  .cabin-studio header {
-    display: none;
-  }
-
-  .cabin-studio > div > .grid {
-    display: grid;
-    grid-template-rows:
-      minmax(0, 46fr)
-      minmax(0, 54fr);
-    align-items: stretch;
-    flex: 1;
-    min-height: 0;
-    gap: 0;
-  }
-
-  /*
-    ÜST BÖLÜM
-    3D kabin + görünüm butonları + paylaşım butonu
-  */
-  .cabin-studio section {
-    position: relative;
-    min-height: 0;
-    display: flex;
-    flex-direction: column;
-    overflow: hidden;
-
-    /*
-      Paylaşım butonuna altta yer ayırıyoruz.
-    */
-    padding-bottom: 54px;
-  }
-
-  /*
-    3D kabin alanı
-  */
-  .cabin-studio section > div:first-child {
-    display: flex;
-    flex: 1 1 0;
-    min-height: 0;
-    height: auto;
-    border-radius: 0;
-  }
-
-  .cabin-studio .cabin-preview-canvas {
-    flex: 1;
-    min-height: 0;
-    height: auto !important;
-  }
-
-  .cabin-studio
-    section
-    > div:first-child
-    > div.absolute:first-child {
-    padding: 8px 12px;
-  }
-
-  /*
-    Karşıdan / Sol duvar / Sağ duvar
-  */
-  .cabin-studio section > div:nth-of-type(2) {
-    display: flex;
-    flex: 0 0 auto;
-    margin: 0;
-    padding: 2px 10px;
-    gap: 2px;
-  }
-
-  /*
-    Kabin ölçüsü, panel sayısı gibi masaüstü bilgiler
-  */
-  .cabin-studio section > div:nth-of-type(3) {
-    display: none;
-  }
-
-  /*
-    Masaüstündeki açıklamalar
-  */
-  .cabin-studio section > details,
-  .cabin-studio section > p {
-    display: none;
-  }
-
-  /*
-    PAYLAŞIM ALANI
-
-    KabinTasarim.jsx içindeki:
-    PNG
-    PDF
-    Resim + Bilgileri Paylaş
-
-    butonlarının bulunduğu 4. div.
-  */
-  .cabin-studio section > div:nth-of-type(4) {
-    display: flex !important;
-    position: absolute;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    z-index: 50;
-
-    width: 100%;
-    height: 54px;
-
-    margin: 0 !important;
-    padding: 5px 10px;
-
-    align-items: center;
-    justify-content: center;
-
-    gap: 0;
-
-    background: #e9edef;
-    border-top: 1px solid #d7dde0;
-  }
-
-  /*
-    PNG ve PDF zaten üst mobil çubukta var.
-    Alt bölümdekileri gizliyoruz.
-  */
-  .cabin-studio
-    section
-    > div:nth-of-type(4)
-    > button:nth-of-type(1),
-
-  .cabin-studio
-    section
-    > div:nth-of-type(4)
-    > button:nth-of-type(2) {
-    display: none !important;
-  }
-
-  /*
-    RESİM + BİLGİLERİ PAYLAŞ
-  */
-  .cabin-studio
-    section
-    > div:nth-of-type(4)
-    > button:nth-of-type(3) {
-    display: flex !important;
-
-    align-items: center;
-    justify-content: center;
-
-    width: 100%;
-    height: 44px;
-    min-height: 44px;
-
-    margin: 0;
-    padding: 0 16px;
-
-    border: 0;
-    border-radius: 10px;
-
-    background: #25D366;
-    color: white;
-
-    font-size: 12px;
-    font-weight: 700;
-
-    white-space: nowrap;
-
-    cursor: pointer;
-  }
-
-  .cabin-studio
-    section
-    > div:nth-of-type(4)
-    > button:nth-of-type(3):disabled {
-    opacity: 0.55;
-  }
-
-  /*
-    ALT BÖLÜM
-    Duvar / Ayna / Tavan / Zemin seçenekleri
-  */
-  .cabin-studio aside {
-    align-self: stretch;
-    height: 100%;
-    min-height: 0;
-
-    overflow-y: auto;
-    overscroll-behavior: contain;
-
-    border-radius: 18px 18px 0 0;
-
-    box-shadow:
-      0 -3px 14px
-      #182d4215;
-
-    padding-bottom:
-      calc(
-        12px +
-        env(safe-area-inset-bottom)
-      );
-  }
-
-  .cabin-studio aside nav {
-    padding: 4px;
-  }
-
-  .cabin-studio aside nav button {
-    padding: 7px 4px;
-    gap: 3px;
-  }
-
-  .cabin-studio aside > div {
-    padding: 12px 16px;
-  }
-
-  /*
-    Malzemeleri mobilde yatay kaydır
-  */
-  .cabin-studio aside .cabin-material-grid {
-    display: grid;
-
-    grid-template-rows:
-      repeat(2, 60px);
-
-    grid-auto-flow: column;
-
-    grid-auto-columns:
-      60px;
-
-    grid-template-columns:
-      none;
-
-    overflow-x: auto;
-
-    overscroll-behavior-x:
-      contain;
-
-    padding: 4px;
-  }
-
-  .cabin-studio aside img {
-    max-height: 140px;
-    object-fit: contain;
-  }
-}
-
-
-/*
-  Çok küçük telefonlar
-*/
-@media (max-width: 359px) {
-
-  .cabin-mobile-toolbar {
-    font-size: 11px;
-  }
-
-  .cabin-mobile-toolbar button {
-    padding: 0 5px;
-  }
-
-  .cabin-studio section {
-    padding-bottom: 50px;
-  }
-
-  .cabin-studio section > div:nth-of-type(4) {
-    height: 50px;
-    padding: 4px 8px;
-  }
-
-  .cabin-studio
-    section
-    > div:nth-of-type(4)
-    > button:nth-of-type(3) {
-    height: 42px;
-    min-height: 42px;
-    padding: 0 10px;
-    font-size: 11px;
-  }
-}
 .cabin-zoom-controls {
   position: absolute;
   right: 12px;
@@ -361,3 +48,625 @@
 }
 .cabin-zoom-controls button:hover { background: #f1f5f9; }
 .cabin-zoom-controls button:focus-visible { outline: 2px solid #e66b43; outline-offset: 2px; }
+
+
+/*
+  MOBİL — uygulama görünümü
+  Üstte koyu bar, solda dikey kategori düğmeleri,
+  tam ekran 3D kabin, seçimler koyu açılır pencerede.
+*/
+@media (max-width: 1023px) {
+  .cabin-studio {
+    --m-bar: 54px;
+    --m-navy: #0e1828;
+    --m-panel: #131f33;
+    --m-card: #1b2a42;
+    --m-line: #2a3a55;
+    --m-text: #e8edf4;
+    --m-muted: #a3b0c3;
+    --m-accent: #e66b43;
+    --m-sheet: min(55dvh, 520px);
+
+    position: fixed;
+    inset: 0;
+    z-index: 100;
+    height: 100dvh;
+    min-height: 0;
+    padding: 0 !important;
+    overflow: hidden;
+    background: var(--m-navy) !important;
+  }
+
+  .cabin-studio > div {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    max-width: none;
+  }
+
+  .cabin-studio header {
+    display: none;
+  }
+
+  /* ÜST BAR */
+  .cabin-mobile-toolbar {
+    position: relative;
+    z-index: 70;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex: 0 0 auto;
+    height: calc(var(--m-bar) + env(safe-area-inset-top));
+    padding: env(safe-area-inset-top) 8px 0;
+    background: var(--m-navy);
+    border-bottom: 1px solid #1d2a40;
+    color: var(--m-text);
+  }
+
+  .cabin-mobile-toolbar-group {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+  }
+
+  .cabin-icon-btn {
+    display: grid;
+    place-items: center;
+    width: 42px;
+    height: 42px;
+    border: 0;
+    border-radius: 10px;
+    background: transparent;
+    color: #f5a35c;
+    cursor: pointer;
+    touch-action: manipulation;
+  }
+
+  .cabin-icon-btn:active { background: #1b2a42; }
+  .cabin-icon-btn:disabled { opacity: 0.3; }
+
+  .cabin-mobile-brand {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.26em;
+    color: var(--m-muted);
+  }
+
+  .cabin-exit-btn {
+    display: grid;
+    place-items: center;
+    width: 42px;
+    height: 36px;
+    border: 1px solid var(--m-line);
+    border-radius: 999px;
+    color: var(--m-text);
+  }
+
+  /* MENÜ */
+  .cabin-mobile-backdrop {
+    display: block;
+    position: fixed;
+    inset: 0;
+    z-index: 80;
+    border: 0;
+    background: rgb(5 10 20 / 0.45);
+  }
+
+  .cabin-mobile-menu {
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    z-index: 90;
+    top: calc(var(--m-bar) + env(safe-area-inset-top) + 6px);
+    left: 8px;
+    width: min(270px, calc(100vw - 16px));
+    padding: 6px;
+    border: 1px solid var(--m-line);
+    border-radius: 14px;
+    background: var(--m-panel);
+    box-shadow: 0 14px 40px rgb(0 0 0 / 0.4);
+  }
+
+  .cabin-mobile-menu button,
+  .cabin-mobile-menu a {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    min-height: 46px;
+    padding: 0 12px;
+    border: 0;
+    border-radius: 10px;
+    background: transparent;
+    color: var(--m-text);
+    font-size: 14px;
+    text-align: left;
+    cursor: pointer;
+  }
+
+  .cabin-mobile-menu button:active,
+  .cabin-mobile-menu a:active { background: var(--m-card); }
+  .cabin-mobile-menu button:disabled { opacity: 0.45; }
+  .cabin-mobile-menu svg { color: #f5a35c; flex-shrink: 0; }
+
+  /* SOL DİKEY KATEGORİLER */
+  .cabin-mobile-rail {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    position: absolute;
+    z-index: 45;
+    top: calc(var(--m-bar) + env(safe-area-inset-top) + 10px);
+    left: 8px;
+  }
+
+  .cabin-mobile-rail button {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 3px;
+    width: 52px;
+    height: 52px;
+    border: 1px solid var(--m-line);
+    border-radius: 12px;
+    background: rgb(14 24 40 / 0.92);
+    color: var(--m-muted);
+    font-size: 9px;
+    font-weight: 600;
+    cursor: pointer;
+    touch-action: manipulation;
+    box-shadow: 0 4px 12px rgb(0 0 0 / 0.18);
+  }
+
+  .cabin-mobile-rail button[aria-pressed='true'] {
+    border-color: var(--m-accent);
+    background: var(--m-accent);
+    color: #fff;
+  }
+
+  /* 3D ALAN */
+  .cabin-studio > div > .grid {
+    position: relative;
+    display: block;
+    flex: 1;
+    min-height: 0;
+  }
+
+  .cabin-studio section {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+
+  .cabin-studio.cabin-sheet-open section {
+    bottom: var(--m-sheet);
+  }
+
+  .cabin-studio section > div:first-child {
+    display: flex;
+    flex: 1 1 0;
+    min-height: 0;
+    height: auto;
+    border: 0;
+    border-radius: 0;
+    box-shadow: none;
+  }
+
+  .cabin-studio .cabin-preview-canvas {
+    flex: 1;
+    min-height: 0;
+    height: auto !important;
+  }
+
+  /* "Tasarımınız" yazısı: sol çubuğun yanına */
+  .cabin-studio section > div:first-child > div.absolute:first-child {
+    top: 10px;
+    left: 70px;
+    right: 10px;
+  }
+
+  .cabin-studio section > div:first-child > div.absolute:first-child [role='status'] {
+    display: none;
+  }
+
+  /* Yakınlaştırma: sağda dikey */
+  .cabin-studio .cabin-zoom-controls {
+    top: 50px;
+    right: 10px;
+    bottom: auto;
+    flex-direction: column;
+  }
+
+  .cabin-studio .cabin-zoom-controls button {
+    width: 40px;
+    height: 40px;
+    border-color: var(--m-line);
+    background: rgb(14 24 40 / 0.88);
+    color: var(--m-text);
+    font-size: 22px;
+  }
+
+  .cabin-studio .cabin-gesture-hint {
+    bottom: calc(118px + env(safe-area-inset-bottom));
+  }
+
+  .cabin-studio .cabin-gesture-hint p {
+    padding: 5px 10px;
+    border-color: transparent;
+    background: rgb(14 24 40 / 0.72);
+    color: #e8edf4;
+    font-size: 11px;
+  }
+
+  /* Karşıdan / Sol duvar / Sağ duvar */
+  .cabin-studio section > div:nth-of-type(2) {
+    position: absolute;
+    z-index: 20;
+    left: 70px;
+    right: 10px;
+    bottom: calc(66px + env(safe-area-inset-bottom));
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: center;
+    margin: 0;
+    gap: 0;
+  }
+
+  .cabin-studio section > div:nth-of-type(2) > div {
+    background: rgb(14 24 40 / 0.9);
+    border-color: var(--m-line);
+  }
+
+  .cabin-studio section > div:nth-of-type(2) > div button {
+    color: var(--m-muted);
+  }
+
+  .cabin-studio section > div:nth-of-type(2) > div button.bg-slate-800 {
+    background: var(--m-accent);
+    color: #fff;
+  }
+
+  /* "Görünümü sıfırla" metin düğmesi: zoom'daki ↺ aynı işi yapıyor */
+  .cabin-studio section > div:nth-of-type(2) > button {
+    display: none;
+  }
+
+  /* Masaüstü bilgileri */
+  .cabin-studio section > div:nth-of-type(3),
+  .cabin-studio section > details,
+  .cabin-studio section > p:not([role='status']) {
+    display: none;
+  }
+
+  /* İşlem mesajı (Görsel hazırlanıyor… vb.) */
+  .cabin-studio section > p[role='status'] {
+    position: absolute;
+    z-index: 30;
+    top: 54px;
+    left: 70px;
+    right: 60px;
+    margin: 0;
+    padding: 6px 10px;
+    border-radius: 10px;
+    background: rgb(14 24 40 / 0.88);
+    color: #fff;
+    font-size: 12px;
+  }
+
+  .cabin-studio section > p[role='status']:empty {
+    display: none;
+  }
+
+  /* PAYLAŞ (WhatsApp) — altta yüzen düğme */
+  .cabin-studio section > div:nth-of-type(4) {
+    position: absolute;
+    z-index: 20;
+    left: 70px;
+    right: 10px;
+    bottom: calc(10px + env(safe-area-inset-bottom));
+    display: flex !important;
+    margin: 0 !important;
+    gap: 0;
+  }
+
+  .cabin-studio section > div:nth-of-type(4) > button:nth-of-type(1),
+  .cabin-studio section > div:nth-of-type(4) > button:nth-of-type(2) {
+    display: none !important;
+  }
+
+  .cabin-studio section > div:nth-of-type(4) > button:nth-of-type(3) {
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 46px;
+    border-radius: 12px;
+    font-size: 13px;
+    box-shadow: 0 6px 18px rgb(0 0 0 / 0.2);
+  }
+
+  /* Pencere açıkken alttaki yüzen öğeler gizlenir */
+  .cabin-studio.cabin-sheet-open section > div:nth-of-type(2),
+  .cabin-studio.cabin-sheet-open section > div:nth-of-type(4),
+  .cabin-studio.cabin-sheet-open .cabin-gesture-hint {
+    display: none !important;
+  }
+
+  /* SEÇİM PENCERESİ (koyu) */
+  .cabin-studio aside {
+    display: none;
+  }
+
+  .cabin-studio.cabin-sheet-open aside {
+    display: block;
+    position: absolute;
+    z-index: 50;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: var(--m-sheet);
+    max-height: none;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    border: 1px solid var(--m-line);
+    border-bottom: 0;
+    border-radius: 18px 18px 0 0;
+    background: var(--m-panel);
+    color: var(--m-text);
+    box-shadow: 0 -10px 30px rgb(0 0 0 / 0.35);
+    padding-bottom: env(safe-area-inset-bottom);
+    animation: cabin-sheet-in 0.2s ease-out;
+  }
+
+  @keyframes cabin-sheet-in {
+    from { transform: translateY(24px); opacity: 0; }
+    to { transform: none; opacity: 1; }
+  }
+
+  .cabin-studio aside .cabin-sheet-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+    z-index: 25;
+    margin: 0 16px;
+    padding: 14px 0 12px;
+    border-bottom: 1px solid var(--m-line);
+    background: var(--m-panel);
+  }
+
+  .cabin-studio aside .cabin-sheet-head h2 {
+    margin: 0;
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #fff;
+  }
+
+  .cabin-studio aside .cabin-sheet-head button {
+    display: grid;
+    place-items: center;
+    width: 36px;
+    height: 36px;
+    border: 0;
+    border-radius: 999px;
+    background: transparent;
+    color: var(--m-muted);
+  }
+
+  /* Kategori sekmeleri sol çubukta olduğu için gizli */
+  .cabin-studio aside > nav {
+    display: none;
+  }
+
+  .cabin-studio aside > div:not(.cabin-sheet-head) {
+    padding: 14px 16px 20px;
+  }
+
+  /* Koyu tema renk eşlemeleri */
+  .cabin-studio aside .bg-white,
+  .cabin-studio aside .bg-slate-50,
+  .cabin-studio aside .bg-slate-100,
+  .cabin-studio aside .bg-\[\#fafafa\] {
+    background-color: var(--m-card);
+  }
+
+  .cabin-studio aside .text-slate-900,
+  .cabin-studio aside .text-slate-800,
+  .cabin-studio aside .text-slate-700,
+  .cabin-studio aside h2,
+  .cabin-studio aside h3 {
+    color: #fff;
+  }
+
+  .cabin-studio aside .text-slate-600,
+  .cabin-studio aside .text-slate-500 {
+    color: var(--m-muted);
+  }
+
+  .cabin-studio aside .text-slate-400 {
+    color: #7f8ea6;
+  }
+
+  .cabin-studio aside .border-slate-100,
+  .cabin-studio aside .border-slate-200 {
+    border-color: var(--m-line);
+  }
+
+  .cabin-studio aside .border-slate-400 {
+    border-color: #5b6b85;
+  }
+
+  .cabin-studio aside .bg-\[\#fcf1ec\],
+  .cabin-studio aside .bg-orange-50 {
+    background-color: rgb(230 107 67 / 0.16);
+  }
+
+  .cabin-studio aside .text-\[\#ac4d2d\],
+  .cabin-studio aside .text-orange-800 {
+    color: #ffb48f;
+  }
+
+  .cabin-studio aside .border-\[\#e4a68e\],
+  .cabin-studio aside .border-orange-200,
+  .cabin-studio aside .border-orange-300,
+  .cabin-studio aside .border-orange-400 {
+    border-color: var(--m-accent);
+  }
+
+  .cabin-studio aside .ring-orange-100,
+  .cabin-studio aside .ring-orange-200 {
+    --tw-ring-color: rgb(230 107 67 / 0.45);
+  }
+
+  .cabin-studio aside input[type='text'],
+  .cabin-studio aside input:not([type]),
+  .cabin-studio aside select,
+  .cabin-studio aside textarea {
+    background-color: var(--m-navy);
+    border-color: var(--m-line);
+    color: var(--m-text);
+  }
+
+  .cabin-studio aside .cabin-led-option {
+    border-color: var(--m-line);
+    background: var(--m-card);
+  }
+
+  .cabin-studio aside .cabin-led-option strong { color: #fff; }
+  .cabin-studio aside .cabin-led-option small { color: var(--m-muted); }
+
+  /* Seçili sekme / seçenek düğmeleri */
+  .cabin-studio aside button.border[aria-pressed='true'] {
+    background-color: rgb(230 107 67 / 0.18);
+    border-color: var(--m-accent);
+    color: #fff;
+  }
+
+  .cabin-studio aside .bg-slate-100 > button[aria-pressed='true'],
+  .cabin-studio aside .bg-slate-100 button.bg-white {
+    background-color: var(--m-accent);
+    color: #fff;
+  }
+
+  /* Pencere açıkken: başlık gizli, sol çubuk küçülür */
+  .cabin-studio.cabin-sheet-open section > div:first-child > div.absolute:first-child {
+    display: none;
+  }
+
+  .cabin-studio.cabin-sheet-open .cabin-mobile-rail {
+    gap: 6px;
+    top: calc(var(--m-bar) + env(safe-area-inset-top) + 8px);
+  }
+
+  .cabin-studio.cabin-sheet-open .cabin-mobile-rail button {
+    width: 46px;
+    height: 46px;
+  }
+
+  .cabin-studio.cabin-sheet-open .cabin-zoom-controls {
+    top: 8px;
+  }
+
+  /* Malzemeler: videodaki gibi kart ızgarası */
+  .cabin-studio aside .cabin-material-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 8px;
+    padding: 2px;
+  }
+
+  .cabin-studio aside .cabin-material-grid > button {
+    border-radius: 10px;
+    border-color: var(--m-line);
+  }
+
+  .cabin-studio aside .cabin-material-grid > button[aria-pressed='true'] {
+    border-color: var(--m-accent);
+  }
+
+  .cabin-studio aside img {
+    max-height: 140px;
+    object-fit: contain;
+  }
+}
+
+@media (max-width: 1023px) and (min-width: 600px) {
+  .cabin-studio aside .cabin-material-grid {
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+  }
+}
+
+/* Çok küçük telefonlar */
+@media (max-width: 359px) {
+  .cabin-mobile-rail button {
+    width: 46px;
+    height: 46px;
+    font-size: 8px;
+  }
+
+  .cabin-studio section > div:first-child > div.absolute:first-child,
+  .cabin-studio section > div:nth-of-type(2),
+  .cabin-studio section > div:nth-of-type(4) {
+    left: 62px;
+  }
+
+  .cabin-studio section > div:nth-of-type(2) > div button {
+    padding-inline: 8px;
+  }
+}
+
+/* Yatay telefon: seçim penceresi sağda açılır */
+@media (max-width: 1023px) and (orientation: landscape) and (max-height: 520px) {
+  .cabin-studio {
+    --m-bar: 46px;
+  }
+
+  .cabin-studio.cabin-sheet-open section {
+    bottom: 0;
+    right: min(52vw, 460px);
+  }
+
+  .cabin-studio.cabin-sheet-open aside {
+    left: auto;
+    top: 0;
+    right: 0;
+    width: min(52vw, 460px);
+    height: auto;
+    border-radius: 18px 0 0 0;
+    border-bottom: 1px solid var(--m-line);
+  }
+
+  .cabin-mobile-rail button,
+  .cabin-studio.cabin-sheet-open .cabin-mobile-rail button {
+    width: 44px;
+    height: 44px;
+  }
+
+  .cabin-mobile-rail {
+    gap: 5px;
+    top: calc(var(--m-bar) + 6px);
+  }
+
+  .cabin-studio section > div:nth-of-type(2) {
+    bottom: 8px;
+    left: 64px;
+    right: auto;
+  }
+
+  .cabin-studio section > div:nth-of-type(4) {
+    left: auto;
+    right: 10px;
+    bottom: 8px;
+    width: 230px;
+  }
+
+  .cabin-studio .cabin-gesture-hint {
+    display: none;
+  }
+}

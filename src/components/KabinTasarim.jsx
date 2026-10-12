@@ -28,7 +28,6 @@ import {
   OrbitControls,
   useTexture,
   Html,
-  AdaptiveDpr,
 } from '@react-three/drei';
 
 import {
@@ -99,23 +98,17 @@ const W = 1.72;
 const H = 2.38;
 const D = 1.78;
 
-/*
-  Dokunmatik cihaz (telefon/tablet): daha düşük çözünürlük ve
-  doku filtreleme ile akıcı çalışma.
-*/
-const IS_TOUCH =
-  typeof window !== 'undefined' &&
-  Boolean(
-    window.matchMedia?.('(pointer: coarse)').matches,
-  );
 
 const INSIDE_EYE_Y = 0.12;
 const INSIDE_SIDE_MARGIN = 0.13;
 const INSIDE_REAR_MARGIN = 0.16;
-const INSIDE_FRONT_MARGIN = 0.13;
 
-const CABIN_ENTRY_Z =
-  D / 2 - 0.12;
+/*
+  İçeride kamera kapı boşluğuna kadar gelebilir; böylece
+  içeri girerken/çıkarken kamera zıplamaz.
+*/
+const INSIDE_DOORWAY_Z =
+  D / 2 + 0.34;
 
 
 /*
@@ -406,10 +399,7 @@ function useSurfaceTexture(
             : THREE.SRGBColorSpace;
 
         copy.anisotropy =
-          Math.min(
-            gl.capabilities.getMaxAnisotropy(),
-            IS_TOUCH ? 4 : 16,
-          );
+          gl.capabilities.getMaxAnisotropy();
 
         copy.minFilter =
           THREE.LinearMipmapLinearFilter;
@@ -3615,70 +3605,44 @@ function CameraView({
     useThree();
 
   /*
-    Dar/uzun ekranlarda (telefon tam ekran) kabinin yanları
-    kesilmesin diye kamera mesafesi ekran oranına göre büyür.
-    Geniş ekranlarda değer 1'dir, görünüm değişmez.
+    Dar/uzun ekranlarda (telefon) kamera yerinden oynamadan
+    görüş açısı genişler; kabin her ekranda aynı genişlikte
+    görünür. Panel açılıp kapanınca kamera ileri-geri gitmez.
   */
-  const fit =
-    Math.min(
-      1.9,
-      Math.max(
-        1,
-        0.95 /
-          (size.width /
-            Math.max(
-              size.height,
-              1,
-            )),
-      ),
+  const aspect =
+    size.width /
+    Math.max(
+      size.height,
+      1,
     );
 
-  const fitRef =
-    useRef(
-      fit,
-    );
+  const fovFor = (
+    base,
+    referenceAspect,
+    maximum,
+  ) =>
+    aspect >= referenceAspect
+      ? base
+      : Math.min(
+          maximum,
+          THREE.MathUtils.radToDeg(
+            2 *
+              Math.atan(
+                Math.tan(
+                  THREE.MathUtils.degToRad(base / 2),
+                ) *
+                  referenceAspect /
+                  aspect,
+              ),
+          ),
+        );
 
+  const outsideFov =
+    fovFor(34, 0.95, 80);
 
+  const insideFov =
+    fovFor(54, 0.9, 88);
 
-  useEffect(
-    () => {
-      const previous =
-        fitRef.current;
-
-      fitRef.current =
-        fit;
-
-      if (
-        previous === fit ||
-        insideRef.current ||
-        !controls.current
-      ) {
-        return;
-      }
-
-      const target =
-        controls.current.target;
-
-      const offset =
-        camera.position
-          .clone()
-          .sub(target)
-          .multiplyScalar(
-            fit / previous,
-          );
-
-      camera.position
-        .copy(target)
-        .add(offset);
-
-      controls.current.update();
-    },
-    [
-      fit,
-      camera,
-      invalidate,
-    ],
-  );
 
 
   const clampInsidePosition =
@@ -3705,8 +3669,7 @@ function CameraView({
             -D / 2 +
               INSIDE_REAR_MARGIN,
 
-            D / 2 -
-              INSIDE_FRONT_MARGIN,
+            INSIDE_DOORWAY_Z,
           );
       },
 
@@ -3779,7 +3742,7 @@ function CameraView({
         camera.position.z =
           Math.min(
             camera.position.z,
-            CABIN_ENTRY_Z,
+            INSIDE_DOORWAY_Z,
           );
 
         clampInsidePosition(
@@ -3841,19 +3804,58 @@ function CameraView({
   */
   useEffect(
     () => {
-      camera.fov =
+      const from =
+        camera.fov;
+      const to =
         inside
-          ? camera.aspect < 1
-            ? 84
-            : 66
-          : 34;
-      camera.updateProjectionMatrix();
-      invalidate();
+          ? insideFov
+          : outsideFov;
+
+      if (Math.abs(from - to) < 0.05) {
+        return undefined;
+      }
+
+      /*
+        Görüş açısı kısa bir animasyonla değişir;
+        içeri girip çıkarken görüntü zıplamaz.
+      */
+      const started =
+        performance.now();
+      let frame =
+        0;
+
+      const step = now => {
+        const t =
+          Math.min(
+            1,
+            (now - started) / 320,
+          );
+        const eased =
+          1 - Math.pow(1 - t, 3);
+
+        camera.fov =
+          from +
+          (to - from) * eased;
+        camera.updateProjectionMatrix();
+        invalidate();
+
+        if (t < 1) {
+          frame =
+            requestAnimationFrame(step);
+        }
+      };
+
+      frame =
+        requestAnimationFrame(step);
+
+      return () =>
+        cancelAnimationFrame(frame);
     },
     [
       inside,
       camera,
-      size,
+      insideFov,
+      outsideFov,
       invalidate,
     ],
   );
@@ -3899,17 +3901,32 @@ function CameraView({
         if (
           amount < 0 &&
           camera.position.z >
-            D / 2 -
-              INSIDE_FRONT_MARGIN +
-              0.04
+            INSIDE_DOORWAY_Z + 0.02
         ) {
           leaveInsideMode();
 
-          camera.position.set(
-            0,
-            0.1,
-            1.75,
+          /*
+            Kapının hemen önüne, bulunduğu hizada çık.
+            İçeri girme eşiğinden biraz uzakta durur ki
+            tekrar içeri çekilip gidip gelme olmasın.
+          */
+          const exitTarget =
+            new THREE.Vector3(0, 0.12, -0.28);
+          const away =
+            camera.position
+              .clone()
+              .sub(exitTarget);
+          away.y = 0;
+          if (away.lengthSq() < 0.0001) {
+            away.set(0, 0, 1);
+          }
+          away.setLength(
+            ORBIT_ENTER_DISTANCE + 0.18,
           );
+          camera.position
+            .copy(exitTarget)
+            .add(away);
+          camera.position.y = 0.1;
 
           if (controls.current) {
             controls.current.target.set(
@@ -3972,24 +3989,12 @@ function CameraView({
 
       leaveInsideMode();
 
-      const viewTarget =
-        new THREE.Vector3(
-          0,
-          0.12,
-          -0.28,
-        );
-
       camera.position
         .set(
           ...positions[
             view.name
           ],
-        )
-        .sub(viewTarget)
-        .multiplyScalar(
-          fitRef.current,
-        )
-        .add(viewTarget);
+        );
 
       /*
         İç mekânda duvara yaklaştığımızda
@@ -4083,8 +4088,7 @@ function CameraView({
             zoomCommand.factor,
 
           0.72,
-          8.5 *
-            fitRef.current,
+          8.5,
         );
 
       offset.setLength(
@@ -4449,7 +4453,7 @@ function CameraView({
           const closeness =
             THREE.MathUtils.clamp(
               (distance - ORBIT_ENTER_DISTANCE) /
-                (3.4 - ORBIT_ENTER_DISTANCE),
+                (2.9 - ORBIT_ENTER_DISTANCE),
               0,
               1,
             );
@@ -4501,7 +4505,6 @@ function CameraView({
       ref={
         controls
       }
-      regress={IS_TOUCH}
 
       /*
         İçeri girildiğinde OrbitControls tamamen kapanır.
@@ -4543,8 +4546,7 @@ function CameraView({
       }
 
       maxDistance={
-        8.5 *
-          fit
+        8.5
       }
 
       touches={{
@@ -7668,14 +7670,10 @@ export default function KabinTasarim() {
                       100,
                   }}
                   frameloop="demand"
-                  dpr={
-                    IS_TOUCH
-                      ? [1, 1.5]
-                      : [1.5, 2]
-                  }
-                  performance={{
-                    min: 0.55,
-                  }}
+                  dpr={[
+                    1.5,
+                    2,
+                  ]}
                   gl={{
                     antialias:
                       true,
@@ -7704,10 +7702,6 @@ export default function KabinTasarim() {
                       '#e9edef',
                     ]}
                   />
-
-                  {IS_TOUCH && (
-                    <AdaptiveDpr />
-                  )}
 
                   <hemisphereLight
                     args={[

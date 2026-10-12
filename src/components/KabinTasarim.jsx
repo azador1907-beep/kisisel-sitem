@@ -28,6 +28,7 @@ import {
   OrbitControls,
   useTexture,
   Html,
+  AdaptiveDpr,
 } from '@react-three/drei';
 
 import {
@@ -98,6 +99,16 @@ const W = 1.72;
 const H = 2.38;
 const D = 1.78;
 
+/*
+  Dokunmatik cihaz (telefon/tablet): daha düşük çözünürlük ve
+  doku filtreleme ile akıcı çalışma.
+*/
+const IS_TOUCH =
+  typeof window !== 'undefined' &&
+  Boolean(
+    window.matchMedia?.('(pointer: coarse)').matches,
+  );
+
 const INSIDE_EYE_Y = 0.12;
 const INSIDE_SIDE_MARGIN = 0.13;
 const INSIDE_REAR_MARGIN = 0.16;
@@ -106,8 +117,33 @@ const INSIDE_FRONT_MARGIN = 0.13;
 const CABIN_ENTRY_Z =
   D / 2 - 0.12;
 
-const CABIN_ENTRY_MIN_Z =
-  D / 2 - 0.48;
+
+/*
+  Kamera kabine bu mesafeden fazla yaklaşırsa ya da
+  kabin hacminin içine girerse first-person moda geçer.
+  Böylece çapraz açıyla yakınlaşınca da kamera
+  duvarların içinden dışarı dönmez.
+*/
+const ORBIT_ENTER_DISTANCE = 1.5;
+
+function shouldEnterInside(
+  position,
+  target,
+) {
+  const insideBox =
+    Math.abs(position.x) < W / 2 - 0.04 &&
+    position.y > -H / 2 + 0.08 &&
+    position.y < H / 2 - 0.08 &&
+    position.z < D / 2 &&
+    position.z > -D / 2 + 0.05;
+
+  const close =
+    Boolean(target) &&
+    position.distanceTo(target) <
+      ORBIT_ENTER_DISTANCE;
+
+  return insideBox || close;
+}
 
 
 const steel = {
@@ -370,7 +406,10 @@ function useSurfaceTexture(
             : THREE.SRGBColorSpace;
 
         copy.anisotropy =
-          gl.capabilities.getMaxAnisotropy();
+          Math.min(
+            gl.capabilities.getMaxAnisotropy(),
+            IS_TOUCH ? 4 : 16,
+          );
 
         copy.minFilter =
           THREE.LinearMipmapLinearFilter;
@@ -2256,6 +2295,105 @@ function SceneCapture({
 }
 
 
+/*
+  LED ışık efektleri için yumuşak geçişli dokular.
+  Pahalı alan ışıkları yerine toplamalı (additive) gradyan
+  katmanlarla gerçekçi hale ve duvara vuran ışık verilir.
+*/
+const ledTextureCache =
+  new Map();
+
+function ledTexture(kind) {
+  if (ledTextureCache.has(kind)) {
+    return ledTextureCache.get(kind);
+  }
+
+  const size = 128;
+  const canvas =
+    document.createElement('canvas');
+  canvas.width = size;
+  canvas.height = size;
+  const context =
+    canvas.getContext('2d');
+  const image =
+    context.createImageData(size, size);
+
+  const smooth = t =>
+    t <= 0 ? 0 : t >= 1 ? 1 : t * t * (3 - 2 * t);
+
+  for (let y = 0; y < size; y += 1) {
+    for (let x = 0; x < size; x += 1) {
+      const u = (x + 0.5) / size;
+      const v = (y + 0.5) / size;
+      const across = (u - 0.5) * 2;
+      let value;
+
+      if (kind === 'halo') {
+        // Şeridin hemen çevresi: dar, parlak
+        value =
+          Math.exp(-(across * across) / 0.045) *
+          smooth(Math.min(v, 1 - v) / 0.04);
+      } else if (kind === 'wash') {
+        // Panellere yayılan ışık: geniş, uçlara doğru söner
+        value =
+          Math.exp(-(across * across) / 0.16) *
+          smooth(Math.min(v, 1 - v) / 0.12);
+      } else {
+        // Tavan LED'inden duvara vuran ışık (cove):
+        // üstte güçlü, aşağı doğru söner
+        const fromTop = v;
+        value =
+          Math.pow(1 - fromTop, 2.4) *
+          smooth(Math.min(u, 1 - u) / 0.08);
+      }
+
+      const index = (y * size + x) * 4;
+      const c = Math.round(value * 255);
+      image.data[index] = c;
+      image.data[index + 1] = c;
+      image.data[index + 2] = c;
+      image.data[index + 3] = 255;
+    }
+  }
+
+  context.putImageData(image, 0, 0);
+
+  const texture =
+    new THREE.CanvasTexture(canvas);
+  texture.colorSpace =
+    THREE.SRGBColorSpace;
+  texture.needsUpdate = true;
+  ledTextureCache.set(kind, texture);
+  return texture;
+}
+
+const LED_CORE_COLOR = '#fff7ea';
+const LED_GLOW_COLOR = '#ffd59a';
+
+function LedGlowMaterial({
+  kind,
+  color = LED_GLOW_COLOR,
+  opacity,
+}) {
+  const map =
+    useMemo(
+      () => ledTexture(kind),
+      [kind],
+    );
+
+  return (
+    <meshBasicMaterial
+      map={map}
+      color={color}
+      transparent
+      opacity={opacity}
+      blending={THREE.AdditiveBlending}
+      depthWrite={false}
+      toneMapped={false}
+    />
+  );
+}
+
 function CeilingLedStrips({
   enabled,
 }) {
@@ -2263,303 +2401,85 @@ function CeilingLedStrips({
     return null;
   }
 
-  const insetX =
-    0.07;
+  const inset = 0.07;
+  const profile = 0.022;
+  const thickness = 0.012;
+  const ledY = H / 2 - 0.044;
+  const across = W - inset * 2 + profile;
+  const deep = D - inset * 2 + profile;
+  const washHeight = 0.62;
 
-  const insetZ =
-    0.07;
-
-  const profile =
-    0.022;
-
-  const thickness =
-    0.012;
-
-  const ledY =
-    H / 2 -
-    0.044;
-
-  const horizontalLength =
-    W -
-    insetX *
-      2 +
-    profile;
-
-  const verticalLength =
-    D -
-    insetZ *
-      2 +
-    profile;
-
-  const x =
-    W / 2 -
-    insetX;
-
-  const z =
-    D / 2 -
-    insetZ;
-
+  /*
+    Şeritler: tavan kenarında ince alüminyum profil,
+    altında parlak çekirdek ve yumuşak hale.
+  */
   const strips = [
-    {
-      id:
-        'rear',
+    { id: 'rear', position: [0, 0, -(D / 2 - inset)], length: across, rotate: 0 },
+    { id: 'front', position: [0, 0, D / 2 - inset], length: across, rotate: 0 },
+    { id: 'left', position: [-(W / 2 - inset), 0, 0], length: deep, rotate: Math.PI / 2 },
+    { id: 'right', position: [W / 2 - inset, 0, 0], length: deep, rotate: Math.PI / 2 },
+  ];
 
-      position: [
-        0,
-        0,
-        -z,
-      ],
-
-      size: [
-        horizontalLength,
-        thickness,
-        profile,
-      ],
-
-      glowSize: [
-        horizontalLength +
-          0.025,
-        0.002,
-        profile +
-          0.04,
-      ],
-
-      lightWidth:
-        horizontalLength,
-
-      lightHeight:
-        0.04,
-    },
-
-    {
-      id:
-        'front',
-
-      position: [
-        0,
-        0,
-        z,
-      ],
-
-      size: [
-        horizontalLength,
-        thickness,
-        profile,
-      ],
-
-      glowSize: [
-        horizontalLength +
-          0.025,
-        0.002,
-        profile +
-          0.04,
-      ],
-
-      lightWidth:
-        horizontalLength,
-
-      lightHeight:
-        0.04,
-    },
-
-    {
-      id:
-        'left',
-
-      position: [
-        -x,
-        0,
-        0,
-      ],
-
-      size: [
-        profile,
-        thickness,
-        verticalLength,
-      ],
-
-      glowSize: [
-        profile +
-          0.04,
-        0.002,
-        verticalLength +
-          0.025,
-      ],
-
-      lightWidth:
-        0.04,
-
-      lightHeight:
-        verticalLength,
-    },
-
-    {
-      id:
-        'right',
-
-      position: [
-        x,
-        0,
-        0,
-      ],
-
-      size: [
-        profile,
-        thickness,
-        verticalLength,
-      ],
-
-      glowSize: [
-        profile +
-          0.04,
-        0.002,
-        verticalLength +
-          0.025,
-      ],
-
-      lightWidth:
-        0.04,
-
-      lightHeight:
-        verticalLength,
-    },
+  /*
+    Duvarların üst kısmına vuran sıcak ışık.
+    Ön taraf kapı boşluğu olduğu için yok.
+  */
+  const washes = [
+    { id: 'rear', position: [0, H / 2 - washHeight / 2, -D / 2 + 0.006], rotation: [0, 0, 0], width: W - 0.04 },
+    { id: 'left', position: [-W / 2 + 0.006, H / 2 - washHeight / 2, 0], rotation: [0, Math.PI / 2, 0], width: D - 0.04 },
+    { id: 'right', position: [W / 2 - 0.006, H / 2 - washHeight / 2, 0], rotation: [0, -Math.PI / 2, 0], width: D - 0.04 },
   ];
 
   return (
-    <group
-      name="optional-ceiling-leds"
-      position={[
-        0,
-        ledY,
-        0,
-      ]}
-    >
-      {
-        strips.map(
-          strip => (
-            <group
-              key={
-                strip.id
-              }
-              position={
-                strip.position
-              }
-            >
-              <mesh>
-                <boxGeometry
-                  args={
-                    strip.size
-                  }
-                />
-
-                <meshStandardMaterial
-                  color="#e7e1d5"
-                  metalness={
-                    0.35
-                  }
-                  roughness={
-                    0.3
-                  }
-                />
-              </mesh>
-
-
-              <mesh
-                position={[
-                  0,
-                  -0.008,
-                  0,
-                ]}
-              >
-                <boxGeometry
-                  args={[
-                    Math.max(
-                      strip.size[0] -
-                        0.006,
-                      0.008,
-                    ),
-
-                    0.004,
-
-                    Math.max(
-                      strip.size[2] -
-                        0.006,
-                      0.008,
-                    ),
-                  ]}
-                />
-
-                <meshBasicMaterial
-                  color="#fff5de"
-                  toneMapped={
-                    false
-                  }
-                />
-              </mesh>
-
-
-              <mesh
-                position={[
-                  0,
-                  -0.012,
-                  0,
-                ]}
-              >
-                <boxGeometry
-                  args={
-                    strip.glowSize
-                  }
-                />
-
-                <meshBasicMaterial
-                  color="#ffe6b0"
-                  transparent
-                  opacity={
-                    0.17
-                  }
-                  depthWrite={
-                    false
-                  }
-                  toneMapped={
-                    false
-                  }
-                />
-              </mesh>
-
-
-              <rectAreaLight
-                position={[
-                  0,
-                  -0.018,
-                  0,
-                ]}
-                rotation={[
-                  -Math.PI /
-                    2,
-
-                  0,
-
-                  0,
-                ]}
-                width={
-                  strip.lightWidth
-                }
-                height={
-                  strip.lightHeight
-                }
-                intensity={
-                  3
-                }
-                color="#fff1d6"
+    <group name="optional-ceiling-leds">
+      <group position={[0, ledY, 0]}>
+        {strips.map(strip => (
+          <group
+            key={strip.id}
+            position={strip.position}
+            rotation={[0, strip.rotate, 0]}
+          >
+            <mesh>
+              <boxGeometry args={[strip.length, thickness, profile]} />
+              <meshStandardMaterial
+                color="#d9d6cf"
+                metalness={0.6}
+                roughness={0.32}
               />
-            </group>
-          ),
-        )
-      }
+            </mesh>
+
+            <mesh position={[0, -0.0075, 0]}>
+              <boxGeometry args={[strip.length - 0.006, 0.004, profile - 0.008]} />
+              <meshBasicMaterial
+                color={LED_CORE_COLOR}
+                toneMapped={false}
+              />
+            </mesh>
+
+            <mesh
+              position={[0, -0.011, 0]}
+              rotation={[Math.PI / 2, 0, Math.PI / 2]}
+            >
+              <planeGeometry args={[0.16, strip.length + 0.04]} />
+              <LedGlowMaterial kind="halo" opacity={0.75} />
+            </mesh>
+          </group>
+        ))}
+      </group>
+
+      {washes.map(wash => (
+        <mesh
+          key={wash.id}
+          position={wash.position}
+          rotation={wash.rotation}
+        >
+          <planeGeometry args={[wash.width, washHeight]} />
+          <LedGlowMaterial kind="cove" opacity={0.65} />
+        </mesh>
+      ))}
     </group>
   );
 }
-
 
 function WallLedStrips({
   config,
@@ -2570,118 +2490,49 @@ function WallLedStrips({
     return null;
   }
 
+  const length = H - 0.14;
+
   const strip = (
     key,
     x,
   ) => (
     <group
       key={key}
-      position={[
-        x,
-        0.06,
-        0.04,
-      ]}
+      position={[x, 0.06, 0.04]}
     >
+      {/* Panel birleşimindeki alüminyum profil */}
       <mesh>
-        <boxGeometry
-          args={[
-            0.026,
-            H -
-              0.12,
-            0.012,
-          ]}
-        />
-
+        <boxGeometry args={[0.026, H - 0.12, 0.012]} />
         <meshStandardMaterial
           color="#d7d3c8"
-          metalness={
-            0.7
-          }
-          roughness={
-            0.25
-          }
+          metalness={0.7}
+          roughness={0.25}
         />
       </mesh>
 
-      <mesh
-        position={[
-          0,
-          0,
-          0.008,
-        ]}
-      >
-        <boxGeometry
-          args={[
-            0.012,
-            H -
-              0.14,
-            0.008,
-          ]}
-        />
-
+      {/* Opal difüzör: parlak çekirdek */}
+      <mesh position={[0, 0, 0.0075]}>
+        <boxGeometry args={[0.013, length, 0.004]} />
         <meshBasicMaterial
-          color="#fff1d6"
-          toneMapped={
-            false
-          }
+          color={LED_CORE_COLOR}
+          toneMapped={false}
         />
       </mesh>
 
-      <mesh
-        position={[
-          0,
-          0,
-          0.014,
-        ]}
-      >
-        <planeGeometry
-          args={[
-            0.05,
-            H -
-              0.14,
-          ]}
-        />
-
-        <meshBasicMaterial
-          color="#ffe6b5"
-          transparent
-          opacity={
-            0.12
-          }
-          depthWrite={
-            false
-          }
-          toneMapped={
-            false
-          }
-        />
+      {/* Çekirdek çevresindeki yumuşak hale */}
+      <mesh position={[0, 0, 0.011]}>
+        <planeGeometry args={[0.12, length + 0.02]} />
+        <LedGlowMaterial kind="halo" opacity={0.7} />
       </mesh>
 
-      <rectAreaLight
-        position={[
-          0,
-          0,
-          0.025,
-        ]}
-        rotation={[
-          0,
-          Math.PI,
-          0,
-        ]}
-        width={
-          0.035
-        }
-        height={
-          H -
-          0.14
-        }
-        intensity={
-          2
-        }
-        color="#fff1d6"
-      />
+      {/* Komşu panellere yayılan sıcak ışık */}
+      <mesh position={[0, 0, -0.034]}>
+        <planeGeometry args={[0.62, H - 0.06]} />
+        <LedGlowMaterial kind="wash" opacity={0.3} />
+      </mesh>
     </group>
   );
+
 
   const seams = (
     wall,
@@ -3759,6 +3610,7 @@ function CameraView({
     camera,
     gl,
     size,
+    invalidate,
   } =
     useThree();
 
@@ -3785,6 +3637,8 @@ function CameraView({
     useRef(
       fit,
     );
+
+
 
   useEffect(
     () => {
@@ -3822,6 +3676,7 @@ function CameraView({
     [
       fit,
       camera,
+      invalidate,
     ],
   );
 
@@ -3873,10 +3728,12 @@ function CameraView({
         );
 
         camera.updateMatrixWorld();
+        invalidate();
       },
 
       [
         camera,
+        invalidate,
       ],
     );
 
@@ -3954,6 +3811,55 @@ function CameraView({
     );
 
 
+  const leaveInsideMode =
+    useCallback(
+      () => {
+        insideRef.current =
+          false;
+
+        setInside(
+          false,
+        );
+
+        dragRef.current.active =
+          false;
+
+        if (
+          controls.current
+        ) {
+          controls.current.enabled =
+            true;
+        }
+      },
+
+      [],
+    );
+
+  /*
+    İçeride geniş açı: dar telefon ekranında da duvarların
+    tamamı görünsün. Dışarı çıkınca normal açıya dönülür.
+  */
+  useEffect(
+    () => {
+      camera.fov =
+        inside
+          ? camera.aspect < 1
+            ? 84
+            : 66
+          : 34;
+      camera.updateProjectionMatrix();
+      invalidate();
+    },
+    [
+      inside,
+      camera,
+      size,
+      invalidate,
+    ],
+  );
+
+
+
   const moveInside =
     useCallback(
       amount => {
@@ -3987,45 +3893,55 @@ function CameraView({
         );
 
         /*
+          Girişe kadar geri gelip geri gitmeye devam edersek
+          kabinden çıkıp dış görünüme döneriz.
+        */
+        if (
+          amount < 0 &&
+          camera.position.z >
+            D / 2 -
+              INSIDE_FRONT_MARGIN +
+              0.04
+        ) {
+          leaveInsideMode();
+
+          camera.position.set(
+            0,
+            0.1,
+            1.75,
+          );
+
+          if (controls.current) {
+            controls.current.target.set(
+              0,
+              0.12,
+              -0.28,
+            );
+            controls.current.update();
+          }
+
+          return;
+        }
+
+
+        /*
           Kamera ne olursa olsun kabinin dışına çıkamaz.
         */
         clampInsidePosition(
           camera.position,
         );
-
         camera.updateMatrixWorld();
+        invalidate();
       },
-
       [
         camera,
         clampInsidePosition,
+        leaveInsideMode,
+        invalidate,
       ],
     );
 
 
-  const leaveInsideMode =
-    useCallback(
-      () => {
-        insideRef.current =
-          false;
-
-        setInside(
-          false,
-        );
-
-        dragRef.current.active =
-          false;
-
-        if (
-          controls.current
-        ) {
-          controls.current.enabled =
-            true;
-        }
-      },
-
-      [],
-    );
 
 
   /*
@@ -4086,6 +4002,7 @@ function CameraView({
         100;
 
       camera.updateProjectionMatrix();
+      invalidate();
 
       if (
         controls.current
@@ -4107,6 +4024,7 @@ function CameraView({
       camera,
       view,
       leaveInsideMode,
+      invalidate,
     ],
   );
 
@@ -4188,25 +4106,10 @@ function CameraView({
         first-person moda geç.
       */
       if (
-        camera.position.z <=
-          CABIN_ENTRY_Z &&
-
-        camera.position.z >=
-          CABIN_ENTRY_MIN_Z &&
-
-        Math.abs(
-          camera.position.x,
-        ) <
-          W / 2 -
-            0.08 &&
-
-        camera.position.y >
-          -H / 2 +
-            0.08 &&
-
-        camera.position.y <
-          H / 2 -
-            0.08
+        shouldEnterInside(
+          camera.position,
+          controls.current?.target,
+        )
       ) {
         enterInsideMode();
       }
@@ -4239,6 +4142,23 @@ function CameraView({
       const element =
         gl.domElement;
 
+      /*
+        Telefonda iki parmak: açınca ileri, kapatınca geri yürü.
+        Tek parmak: bulunduğun yerden etrafa bak.
+      */
+      const pointers =
+        new Map();
+
+      let pinchDistance =
+        0;
+
+      const currentPinch = () => {
+        const [a, b] = [...pointers.values()];
+        return Math.hypot(
+          a.x - b.x,
+          a.y - b.y,
+        );
+      };
 
       const onPointerDown =
         event => {
@@ -4251,39 +4171,70 @@ function CameraView({
             return;
           }
 
-          /*
-            Telefonda ikinci parmağın bakışı
-            bozmasını engelle.
-          */
-          if (
-            event.isPrimary ===
-            false
-          ) {
+          pointers.set(
+            event.pointerId,
+            {
+              x: event.clientX,
+              y: event.clientY,
+            },
+          );
+
+          element.setPointerCapture?.(
+            event.pointerId,
+          );
+
+          if (pointers.size >= 2) {
+            dragRef.current.active =
+              false;
+            pinchDistance =
+              currentPinch();
             return;
           }
 
           dragRef.current = {
             active:
               true,
-
             pointerId:
               event.pointerId,
-
             x:
               event.clientX,
-
             y:
               event.clientY,
           };
-
-          element.setPointerCapture?.(
-            event.pointerId,
-          );
         };
-
 
       const onPointerMove =
         event => {
+          if (pointers.has(event.pointerId)) {
+            pointers.set(
+              event.pointerId,
+              {
+                x: event.clientX,
+                y: event.clientY,
+              },
+            );
+          }
+
+          if (pointers.size >= 2) {
+            const next =
+              currentPinch();
+            const delta =
+              next - pinchDistance;
+
+            if (Math.abs(delta) > 6) {
+              pinchDistance =
+                next;
+              moveInside(
+                THREE.MathUtils.clamp(
+                  delta * 0.006,
+                  -0.12,
+                  0.12,
+                ),
+              );
+            }
+            return;
+          }
+
           const drag =
             dragRef.current;
 
@@ -4309,28 +4260,18 @@ function CameraView({
           drag.y =
             event.clientY;
 
-          /*
-            Sağa / sola sınırsız bakış.
-          */
           yawRef.current -=
             deltaX *
             0.0042;
 
-          /*
-            Yukarı / aşağı bakış.
-            Tam 90 dereceye değdirmiyoruz;
-            aksi hâlde kamera ters dönebilir.
-          */
           pitchRef.current =
             THREE.MathUtils.clamp(
               pitchRef.current -
                 deltaY *
                   0.0038,
-
               -Math.PI /
                 2 +
                 0.06,
-
               Math.PI /
                 2 -
                 0.06,
@@ -4339,33 +4280,44 @@ function CameraView({
           applyInsideLook();
         };
 
-
       const endPointer =
         event => {
-          if (
-            dragRef.current.pointerId !==
-            event.pointerId
-          ) {
-            return;
-          }
-
-          dragRef.current.active =
-            false;
-
-          dragRef.current.pointerId =
-            null;
+          pointers.delete(
+            event.pointerId,
+          );
 
           try {
             element.releasePointerCapture?.(
               event.pointerId,
             );
           } catch {
-            /*
-              Pointer capture zaten bırakılmış olabilir.
-            */
+            /* Pointer capture zaten bırakılmış olabilir. */
+          }
+
+          if (
+            dragRef.current.pointerId ===
+            event.pointerId
+          ) {
+            dragRef.current.active =
+              false;
+            dragRef.current.pointerId =
+              null;
+          }
+
+          /*
+            İki parmaktan biri kalkınca kalan parmakla
+            zıplamadan bakmaya devam et.
+          */
+          if (pointers.size === 1) {
+            const [[id, point]] = [...pointers.entries()];
+            dragRef.current = {
+              active: true,
+              pointerId: id,
+              x: point.x,
+              y: point.y,
+            };
           }
         };
-
 
       /*
         Mouse tekeri içeride ileri / geri hareket eder.
@@ -4479,28 +4431,61 @@ function CameraView({
           return;
         }
 
+        /*
+          Kabine yaklaştıkça yana ve yukarı/aşağı dönüş
+          daraltılır. Böylece kamera kabin köşesinden ya da
+          tavandan geçmez; yakınlaşınca kapının karşısına
+          gelip içeri girer.
+        */
+        const orbit =
+          controls.current;
+
+        if (orbit) {
+          const distance =
+            camera.position.distanceTo(
+              orbit.target,
+            );
+
+          const closeness =
+            THREE.MathUtils.clamp(
+              (distance - ORBIT_ENTER_DISTANCE) /
+                (3.4 - ORBIT_ENTER_DISTANCE),
+              0,
+              1,
+            );
+
+          const azimuth =
+            THREE.MathUtils.lerp(
+              0.34,
+              1.35,
+              closeness,
+            );
+
+          orbit.minAzimuthAngle =
+            -azimuth;
+          orbit.maxAzimuthAngle =
+            azimuth;
+          orbit.minPolarAngle =
+            THREE.MathUtils.lerp(
+              1.18,
+              0.42,
+              closeness,
+            );
+          orbit.maxPolarAngle =
+            THREE.MathUtils.lerp(
+              1.9,
+              2.38,
+              closeness,
+            );
+        }
+
         if (
-          camera.position.z <=
-            CABIN_ENTRY_Z &&
-
-          camera.position.z >=
-            CABIN_ENTRY_MIN_Z &&
-
-          Math.abs(
-            camera.position.x,
-          ) <
-            W / 2 -
-              0.08 &&
-
-          camera.position.y >
-            -H / 2 +
-              0.08 &&
-
-          camera.position.y <
-            H / 2 -
-              0.08
-        ) {
-          enterInsideMode();
+        shouldEnterInside(
+          camera.position,
+          controls.current?.target,
+        )
+      ) {
+        enterInsideMode();
         }
       },
 
@@ -4516,6 +4501,7 @@ function CameraView({
       ref={
         controls
       }
+      regress={IS_TOUCH}
 
       /*
         İçeri girildiğinde OrbitControls tamamen kapanır.
@@ -4559,22 +4545,6 @@ function CameraView({
       maxDistance={
         8.5 *
           fit
-      }
-
-      minAzimuthAngle={
-        -1.35
-      }
-
-      maxAzimuthAngle={
-        1.35
-      }
-
-      minPolarAngle={
-        0.42
-      }
-
-      maxPolarAngle={
-        2.38
       }
 
       touches={{
@@ -7697,10 +7667,15 @@ export default function KabinTasarim() {
                     far:
                       100,
                   }}
-                  dpr={[
-                    1.5,
-                    2,
-                  ]}
+                  frameloop="demand"
+                  dpr={
+                    IS_TOUCH
+                      ? [1, 1.5]
+                      : [1.5, 2]
+                  }
+                  performance={{
+                    min: 0.55,
+                  }}
                   gl={{
                     antialias:
                       true,
@@ -7729,6 +7704,10 @@ export default function KabinTasarim() {
                       '#e9edef',
                     ]}
                   />
+
+                  {IS_TOUCH && (
+                    <AdaptiveDpr />
+                  )}
 
                   <hemisphereLight
                     args={[
